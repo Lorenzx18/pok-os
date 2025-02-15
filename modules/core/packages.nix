@@ -74,6 +74,7 @@
     nh
     ninja
     nixfmt-rfc-style
+    obs-studio
     pavucontrol
     pciutils
     pkg-config
