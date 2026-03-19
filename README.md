@@ -3,10 +3,11 @@
 NixOS configuration based on [ZaneyOS](https://gitlab.com/zaney/zaneyos), designed for newcomers and experienced users alike.
 
 
-### Message from the author:
-Thanks for your interest in my nixos configuration. 
+#####  Message from the author:
+**Thanks for your interest in my nixos configuration. 
 Please note this config has not been receiving regular updates as I do not use this config on a daily basis. 
-If you are un formiliar with nixos I would suggest starting with a simpler config. You may have to do some troubleshooting if you install this config. 
+If you are un formiliar with nixos I would suggest starting with a simpler config. You may have to do some troubleshooting if you install this config. **
+
 
 ![Black Don OS Desktop](img/desktop-screenshot.png)
 
