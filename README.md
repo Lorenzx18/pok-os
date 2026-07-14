@@ -35,8 +35,11 @@ step 4 or the installed system will not boot.
    ```
 4. **Generate the real hardware config** (replaces the placeholder):
    ```bash
-   sudo nixos-generate-config --root /mnt --show-hardware-config > hosts/default/hardware.nix
+   sudo ./generate-hardware-config.sh
    ```
+   This writes `hosts/default/hardware.nix` from your actual disks. For a
+   different host use `--host <name>`; on an already-installed system add
+   `--root /`.
 5. Set your GPU PCI IDs in `hosts/default/variables.nix`:
    ```bash
    lspci | grep VGA   # note the two Bus IDs, e.g. 0000:01:00.0 and 0000:06:00.0
@@ -50,9 +53,11 @@ step 4 or the installed system will not boot.
 
 ### Already have a booting NixOS
 
-Clone to `~/pok-os`, run steps 4–5, then:
+Clone to `~/pok-os`, then:
 
 ```bash
+cd ~/pok-os
+sudo ./generate-hardware-config.sh --root /   # regenerates hosts/default/hardware.nix
 sudo nixos-rebuild switch --flake .#default
 ```
 
@@ -80,7 +85,8 @@ nfu   # nix flake update && sudo nixos-rebuild switch --flake .#default
 
 ```
 pok-os/
-├── flake.nix            # Inputs + per-host configurations (mkHost)
+├── flake.nix                      # Inputs + per-host configurations (mkHost)
+├── generate-hardware-config.sh    # Regenerates hosts/<host>/hardware.nix
 ├── hosts/
 │   └── default/         # The one host (variables.nix, hardware.nix, host-packages.nix)
 ├── modules/
@@ -131,7 +137,8 @@ stylixImage = ../../wallpapers/my-wallpaper.jpg;
 
 1. Copy `hosts/default/` to `hosts/<my-host>/` and edit its `variables.nix`
    (set `timeZone`, GPU `intelID`/`nvidiaID`, monitor layout, etc.).
-2. Run `sudo nixos-generate-config --show-hardware-config > hosts/<my-host>/hardware.nix`.
+2. Run `sudo ./generate-hardware-config.sh --host <my-host>` (add `--root /` on an
+   already-installed system) to generate `hosts/<my-host>/hardware.nix`.
 3. Add the host in `flake.nix` via `mkHost { hostname = "<my-host>"; profile = "nvidia-laptop"; username = "pok"; };`.
 4. Build: `sudo nixos-rebuild switch --flake .#<my-host>`.
 
