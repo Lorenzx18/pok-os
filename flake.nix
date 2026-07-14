@@ -1,5 +1,5 @@
 {
-  description = "Black Don OS (Based on ZaneyOS)";
+  description = "Pok OS (Based on ZaneyOS)";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -61,20 +61,8 @@
         # Users will create their own host configurations during installation
         default = mkHost {
           hostname = "default";
-          profile = "amd";
-          username = "user";
-        };
-
-        nix-tester = mkHost {
-          hostname = "nix-tester";
-          profile = "intel";
-          username = "don";
-        };
-
-        nix-test = mkHost {
-          hostname = "nix-test";
-          profile = "intel";
-          username = "don";
+          profile = "nvidia-laptop";
+          username = "pok";
         };
       };
 

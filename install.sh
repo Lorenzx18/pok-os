@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 ######################################
-# Black Don OS - Simplified Installer
+# Pok OS - Simplified Installer
 # A NixOS configuration for everyone
 ######################################
 
@@ -35,9 +35,9 @@ print_info() {
 
 # Welcome
 clear
-print_header "Black Don OS - Simplified Installation"
+print_header "Pok OS - Simplified Installation"
 echo ""
-echo -e "${BLUE}Welcome! This installer will set up Black Don OS with sensible defaults.${NC}"
+echo -e "${BLUE}Welcome! This installer will set up Pok OS with sensible defaults.${NC}"
 echo -e "${BLUE}You can customize everything later by editing your variables.nix file.${NC}"
 echo ""
 sleep 2
@@ -448,7 +448,7 @@ fi
 echo ""
 
 # Build configuration
-print_header "Building Black Don OS"
+print_header "Building Pok OS"
 echo -e "${YELLOW}This will take 10-20 minutes depending on your hardware...${NC}"
 echo ""
 
@@ -456,7 +456,7 @@ read -p "Ready to build? [Y/n]: " build_confirm
 if [[ $build_confirm =~ ^[Nn]$ ]]; then
   echo ""
   print_info "You can build manually later with:"
-  echo -e "  ${GREEN}sudo nixos-rebuild switch --flake ~/black-don-os#$hostname${NC}"
+  echo -e "  ${GREEN}sudo nixos-rebuild switch --flake ~/pok-os#$hostname${NC}"
   exit 0
 fi
 
@@ -466,13 +466,13 @@ if sudo nixos-rebuild switch --flake .#"$hostname"; then
   echo ""
   print_header "Installation Successful!"
   echo ""
-  print_success "Black Don OS has been installed!"
+  print_success "Pok OS has been installed!"
   echo ""
   echo -e "${BLUE}What's next:${NC}"
-  echo -e "  1. Your configuration is in: ${GREEN}~/black-don-os/hosts/$hostname/${NC}"
+  echo -e "  1. Your configuration is in: ${GREEN}~/pok-os/hosts/$hostname/${NC}"
   echo -e "  2. Both Hyprland and Niri are available - select at login screen"
-  echo -e "  3. Customize: ${GREEN}~/black-don-os/hosts/$hostname/variables.nix${NC}"
-  echo -e "  4. Rebuild: ${GREEN}sudo nixos-rebuild switch --flake ~/black-don-os#$hostname${NC}"
+  echo -e "  3. Customize: ${GREEN}~/pok-os/hosts/$hostname/variables.nix${NC}"
+  echo -e "  4. Rebuild: ${GREEN}sudo nixos-rebuild switch --flake ~/pok-os#$hostname${NC}"
   echo ""
   echo -e "${YELLOW}Tip: Update your monitor settings in variables.nix for optimal display${NC}"
   echo ""
@@ -497,7 +497,7 @@ else
   print_error "Build failed"
   echo ""
   echo -e "${YELLOW}To retry manually:${NC}"
-  echo -e "  ${GREEN}cd ~/black-don-os${NC}"
+  echo -e "  ${GREEN}cd ~/pok-os${NC}"
   echo -e "  ${GREEN}sudo nixos-rebuild switch --flake .#$hostname${NC}"
   exit 1
 fi

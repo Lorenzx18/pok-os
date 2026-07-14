@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 ######################################
-# Steam Deck Host Setup Script for Black Don OS
-# Author: Black Don
+# Steam Deck Host Setup Script for Pok OS
+# Author: Pok
 # Creates a Steam Deck optimized configuration with auto-login to gamescope session
 #######################################
 
@@ -30,11 +30,11 @@ print_warning() {
   echo -e "${YELLOW}Warning: ${1}${NC}"
 }
 
-print_header "Black Don OS - Steam Deck Host Setup"
+print_header "Pok OS - Steam Deck Host Setup"
 
 # Check if we're in the correct directory
 if [[ ! -f "flake.nix" ]] || [[ ! -d "hosts" ]]; then
-  print_error "This script must be run from the Black Don OS root directory"
+  print_error "This script must be run from the Pok OS root directory"
   echo "Please cd to your zaneyos directory and run this script again"
   exit 1
 fi
@@ -112,9 +112,9 @@ if [[ -z "$username" ]]; then
   username="$currentUser"
 fi
 
-read -rp "Full name for git [Black Don]: " gitUsername
+read -rp "Full name for git [Pok]: " gitUsername
 if [[ -z "$gitUsername" ]]; then
-  gitUsername="Black Don"
+  gitUsername="Pok"
 fi
 
 read -rp "Email for git [rj.jones@flosstech.com]: " gitEmail
@@ -434,17 +434,17 @@ cat > "INSTALL-$newHostName.md" << EOF
 - Power on Steam Deck while holding Volume Down
 - Select boot device from boot menu
 
-### 2. Clone Black Don OS configuration
+### 2. Clone Pok OS configuration
 \`\`\`bash
 # Clone the repository
-git clone https://gitlab.com/theblackdon/black-don-os.git
-cd black-don-os
+git clone https://github.com/Lorenzx18/pok-os.git
+cd pok-os
 \`\`\`
 
 ### 3. Run the installation script
 \`\`\`bash
 # Make sure your hostname matches: $newHostName
-./install-black-don-os.sh
+./install-pok-os.sh
 \`\`\`
 
 ### 4. Post-installation configuration
@@ -483,7 +483,7 @@ dcli rebuild
 
 ## Building from Another Computer
 
-To deploy this configuration from your existing Black Don OS computer:
+To deploy this configuration from your existing Pok OS computer:
 \`\`\`bash
 dcli deploy $newHostName
 \`\`\`

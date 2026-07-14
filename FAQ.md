@@ -1,12 +1,12 @@
-# 💬 Black-Don-OS FAQ
+# 💬 Pok-OS FAQ
 
-Welcome to the Black-Don-OS FAQ! This guide covers common questions and solutions for managing your Black-Don-OS system.
+Welcome to the Pok-OS FAQ! This guide covers common questions and solutions for managing your Pok-OS system.
 
 ## 🚀 Getting Started
 
-### **❄ What is Black-Don-OS?**
+### **❄ What is Pok-OS?**
 
-Black-Don-OS is a customized NixOS configuration designed for multi-host environments with a focus on NVIDIA GPU support and modern desktop experiences. It's built on the foundation of ZaneyOS but tailored for Don's specific workflow and sharing on YouTube.
+Pok-OS is a customized NixOS configuration designed for multi-host environments with a focus on NVIDIA GPU support and modern desktop experiences. It's built on the foundation of ZaneyOS but tailored for Don's specific workflow and sharing on YouTube.
 
 **Key Features:**
 - Multi-host configuration management
@@ -18,7 +18,7 @@ Black-Don-OS is a customized NixOS configuration designed for multi-host environ
 
 ### **🔧 What is dcli?**
 
-The `dcli` utility is a command-line tool designed to simplify managing your Black-Don-OS environment. It provides a comprehensive set of commands for performing common tasks like building configurations, managing hosts, and system maintenance.
+The `dcli` utility is a command-line tool designed to simplify managing your Pok-OS environment. It provides a comprehensive set of commands for performing common tasks like building configurations, managing hosts, and system maintenance.
 
 **Common dcli commands:**
 ```bash
@@ -33,7 +33,7 @@ dcli update              # Update flake and rebuild system
 **Full dcli help:**
 ```bash
 ❯ dcli
-Black-Don-OS CLI Utility -- version 1.0
+Pok-OS CLI Utility -- version 1.0
 
 Usage: dcli [command] [options]
 
@@ -54,7 +54,7 @@ Examples:
 
 ## 🏠 Host Management
 
-### **🖥️ How do I add a new computer to my Black-Don-OS setup?**
+### **🖥️ How do I add a new computer to my Pok-OS setup?**
 
 Use the automated setup script:
 
@@ -77,17 +77,17 @@ You can switch configurations using either dcli or standard NixOS commands:
 dcli deploy nix-desktop
 
 # Using standard NixOS rebuild
-sudo nixos-rebuild switch --flake ~/black-don-os#nix-desktop
+sudo nixos-rebuild switch --flake ~/pok-os#nix-desktop
 ```
 
-### **🔄 How do I update my Black-Don-OS system?**
+### **🔄 How do I update my Pok-OS system?**
 
 ```bash
 # Update everything with dcli
 dcli update
 
 # Or manually
-cd ~/black-don-os
+cd ~/pok-os
 nix flake update
 sudo nixos-rebuild switch --flake .#your-hostname
 ```
@@ -209,9 +209,9 @@ terminal = "wezterm";  # Options: kitty, alacritty, wezterm, ghostty
 
 ### **📝 How do I configure development environments?**
 
-Black-Don-OS includes a Flutter development environment. Access it with:
+Pok-OS includes a Flutter development environment. Access it with:
 ```bash
-cd ~/black-don-os
+cd ~/pok-os
 nix develop
 ```
 
@@ -271,7 +271,7 @@ sudo nix-collect-garbage -d
 dcli build your-hostname
 
 # Or manually
-nixos-rebuild build --flake ~/black-don-os#your-hostname
+nixos-rebuild build --flake ~/pok-os#your-hostname
 ```
 
 ### **🔄 How do I contribute or share my modifications?**
@@ -285,16 +285,16 @@ Or share your configuration as inspiration for others!
 
 ### **📋 How do I back up my configuration?**
 
-Your entire configuration is in `~/black-don-os/`. Simply:
+Your entire configuration is in `~/pok-os/`. Simply:
 ```bash
 # Git-based backup
-cd ~/black-don-os
+cd ~/pok-os
 git add -A
 git commit -m "Backup my configuration"
 git push
 
 # Or copy the directory
-cp -r ~/black-don-os ~/black-don-os-backup-$(date +%Y%m%d)
+cp -r ~/pok-os ~/pok-os-backup-$(date +%Y%m%d)
 ```
 
 ## ❓ Still Need Help?
@@ -315,4 +315,4 @@ cp -r ~/black-don-os ~/black-don-os-backup-$(date +%Y%m%d)
 
 ---
 
-**Note:** Black-Don-OS is based on ZaneyOS and continues to evolve. This FAQ covers the Black-Don-OS specific features and changes.
+**Note:** Pok-OS is based on ZaneyOS and continues to evolve. This FAQ covers the Pok-OS specific features and changes.

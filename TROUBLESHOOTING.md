@@ -1,6 +1,6 @@
-# Black Don OS - Troubleshooting Guide
+# Pok OS - Troubleshooting Guide
 
-Quick solutions for common issues with Black Don OS.
+Quick solutions for common issues with Pok OS.
 
 ## Installation Issues
 
@@ -27,7 +27,7 @@ Quick solutions for common issues with Black Don OS.
 
 3. **Try manual installation:**
    ```bash
-   cd ~/black-don-os
+   cd ~/pok-os
    sudo nixos-rebuild switch --flake .#YOUR-HOSTNAME --show-trace
    ```
 
@@ -39,7 +39,7 @@ Quick solutions for common issues with Black Don OS.
 
 1. **Update flake inputs:**
    ```bash
-   cd ~/black-don-os
+   cd ~/pok-os
    nix flake update
    sudo nixos-rebuild switch --flake .#YOUR-HOSTNAME
    ```
@@ -51,7 +51,7 @@ Quick solutions for common issues with Black Don OS.
 
 3. **Verify your hostname exists:**
    ```bash
-   ls ~/black-don-os/hosts/
+   ls ~/pok-os/hosts/
    nix flake show
    ```
 
@@ -66,25 +66,25 @@ Quick solutions for common issues with Black Don OS.
    # Find your GPU bus IDs
    lspci | grep VGA
    
-   # Update in ~/black-don-os/hosts/YOUR-HOSTNAME/variables.nix:
+   # Update in ~/pok-os/hosts/YOUR-HOSTNAME/variables.nix:
    intelID = "PCI:0:2:0";    # Your Intel GPU ID
    nvidiaID = "PCI:1:0:0";   # Your NVIDIA GPU ID
    
    # Rebuild
-   sudo nixos-rebuild switch --flake ~/black-don-os#YOUR-HOSTNAME
+   sudo nixos-rebuild switch --flake ~/pok-os#YOUR-HOSTNAME
    ```
 
 2. **Regenerate hardware config if needed:**
    ```bash
-   sudo nixos-generate-config --show-hardware-config > ~/black-don-os/hosts/YOUR-HOSTNAME/hardware.nix
-   sudo nixos-rebuild switch --flake ~/black-don-os#YOUR-HOSTNAME
+   sudo nixos-generate-config --show-hardware-config > ~/pok-os/hosts/YOUR-HOSTNAME/hardware.nix
+   sudo nixos-rebuild switch --flake ~/pok-os#YOUR-HOSTNAME
    ```
 
 ## Display Issues
 
 ### Monitor Not Working or Wrong Resolution
 
-**Solution:** Update monitor configuration in `~/black-don-os/hosts/YOUR-HOSTNAME/variables.nix`:
+**Solution:** Update monitor configuration in `~/pok-os/hosts/YOUR-HOSTNAME/variables.nix`:
 
 ```bash
 # First, find your monitors (after logging in)
@@ -98,7 +98,7 @@ extraMonitorSettings = ''
 '';
 
 # Rebuild
-sudo nixos-rebuild switch --flake ~/black-don-os#YOUR-HOSTNAME
+sudo nixos-rebuild switch --flake ~/pok-os#YOUR-HOSTNAME
 ```
 
 ### Black Screen After Login
@@ -122,7 +122,7 @@ sudo nixos-rebuild switch --flake ~/black-don-os#YOUR-HOSTNAME
 
 3. **Try rebuilding:**
    ```bash
-   sudo nixos-rebuild switch --flake ~/black-don-os#YOUR-HOSTNAME
+   sudo nixos-rebuild switch --flake ~/pok-os#YOUR-HOSTNAME
    ```
 
 ## Window Manager Issues
@@ -141,7 +141,7 @@ No rebuild needed!
 
 **Problem:** Using DMS or Noctalia but hyprlock keeps activating
 
-**Solution:** Disable hyprlock in `~/black-don-os/hosts/YOUR-HOSTNAME/variables.nix`:
+**Solution:** Disable hyprlock in `~/pok-os/hosts/YOUR-HOSTNAME/variables.nix`:
 
 ```nix
 enableHyprlock = false;
@@ -149,7 +149,7 @@ enableHyprlock = false;
 
 Then rebuild:
 ```bash
-sudo nixos-rebuild switch --flake ~/black-don-os#YOUR-HOSTNAME
+sudo nixos-rebuild switch --flake ~/pok-os#YOUR-HOSTNAME
 ```
 
 ## Package Issues
@@ -170,7 +170,7 @@ nix search nixpkgs packagename
 
 **Problem:** Want Discord, extra browsers, or other apps
 
-**Solution:** Enable optional package groups in `~/black-don-os/hosts/YOUR-HOSTNAME/variables.nix`:
+**Solution:** Enable optional package groups in `~/pok-os/hosts/YOUR-HOSTNAME/variables.nix`:
 
 ```nix
 enableCommunicationApps = true;  # Discord, Teams, Zoom, Telegram
@@ -180,7 +180,7 @@ enableProductivityApps = true;   # Obsidian, GNOME Boxes
 
 Rebuild to install:
 ```bash
-sudo nixos-rebuild switch --flake ~/black-don-os#YOUR-HOSTNAME
+sudo nixos-rebuild switch --flake ~/pok-os#YOUR-HOSTNAME
 ```
 
 ## System Recovery
@@ -272,7 +272,7 @@ sudo systemctl restart bluetooth
 
 **Solution for NVIDIA:**
 
-Update `~/black-don-os/hosts/YOUR-HOSTNAME/variables.nix`:
+Update `~/pok-os/hosts/YOUR-HOSTNAME/variables.nix`:
 ```nix
 # In Hyprland settings, VRR is already configured
 # Try toggling vrr setting in hyprland.nix if needed
@@ -294,7 +294,7 @@ lspci | grep VGA
 lsblk
 
 # Current config
-cd ~/black-don-os
+cd ~/pok-os
 git log --oneline -5
 ls hosts/
 
@@ -314,18 +314,18 @@ journalctl -xeu display-manager | tail -50
 
 ```bash
 # Rebuild current system
-sudo nixos-rebuild switch --flake ~/black-don-os#YOUR-HOSTNAME
+sudo nixos-rebuild switch --flake ~/pok-os#YOUR-HOSTNAME
 
 # Test build without switching
-sudo nixos-rebuild build --flake ~/black-don-os#YOUR-HOSTNAME
+sudo nixos-rebuild build --flake ~/pok-os#YOUR-HOSTNAME
 
 # Update flake inputs
-cd ~/black-don-os
+cd ~/pok-os
 nix flake update
 
 # Clean old generations
 sudo nix-collect-garbage -d
-sudo nixos-rebuild switch --flake ~/black-don-os#YOUR-HOSTNAME
+sudo nixos-rebuild switch --flake ~/pok-os#YOUR-HOSTNAME
 
 # List generations
 sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
@@ -342,7 +342,7 @@ sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
 
 2. **Commit your working configs:**
    ```bash
-   cd ~/black-don-os
+   cd ~/pok-os
    git add -A
    git commit -m "Working configuration"
    ```
@@ -351,7 +351,7 @@ sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
 
 4. **Update regularly:**
    ```bash
-   cd ~/black-don-os
+   cd ~/pok-os
    git pull
    nix flake update
    sudo nixos-rebuild switch --flake .#YOUR-HOSTNAME
@@ -359,4 +359,4 @@ sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
 
 ---
 
-*Can't find your issue? Check ~/black-don-os/CLAUDE.md for more technical details or consult the NixOS community.*
+*Can't find your issue? Check ~/pok-os/CLAUDE.md for more technical details or consult the NixOS community.*

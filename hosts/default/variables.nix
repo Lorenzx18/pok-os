@@ -1,10 +1,10 @@
 {
   # Git Configuration ( For Pulling Software Repos )
-  gitUsername = "user";
-  gitEmail = "user@example.com";
+  gitUsername = "Lorenzx18";
+  gitEmail = "gandalaurence16@gmail.com";
 
   # System Configuration
-  timeZone = "America/New_York";
+  timeZone = "Asia/Manila";
 
   # Hyprland Settings
   # ex "monitor=HDMI-A-1, 1920x1080@60,auto,1"
@@ -34,13 +34,13 @@
   enableNFS = true;
 
   # Enable Printing Support
-  printEnable = false;
+  printEnable = true;
 
   # Enable Thunar GUI File Manager
   thunarEnable = true;
 
   # Enable Gaming Support (controllers, gamescope, protonup-qt)
-  gamingSupportEnable = false;
+  gamingSupportEnable = true;
 
   # Enable Flutter Development Environment
   flutterdevEnable = false;
@@ -49,19 +49,19 @@
   stylixEnable = true;
 
   # Enable Syncthing File Synchronization
-  syncthingEnable = false;
+  syncthingEnable = true;
 
   # Enable Communication Apps (Teams, Zoom, Telegram, Discord)
-  enableCommunicationApps = false;
+  enableCommunicationApps = true;
 
   # Enable Extra Browsers (Chromium, Google Chrome)
-  enableExtraBrowsers = false;
+  enableExtraBrowsers = true;
 
   # Enable Productivity Apps (Obsidian, GNOME Boxes, QuickEmu)
-  enableProductivityApps = false;
+  enableProductivityApps = true;
 
   # Enable AI Code Editors (cursor, claude-code, gemini-cli)
-  aiCodeEditorsEnable = false;
+  aiCodeEditorsEnable = true;
 
   # Enable Hyprlock (Hyprland lock screen)
   # Set to false if using DMS or Noctalia lock screens

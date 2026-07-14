@@ -6,12 +6,12 @@ pkgs.writeShellScriptBin "webapp-remove" ''
   #!${pkgs.bash}/bin/bash
   set -euo pipefail
 
-  # Black Don OS Web App Removal Tool
+  # Pok OS Web App Removal Tool
   VERSION="1.0.0"
 
   # --- Helper Functions ---
   print_help() {
-    echo "Black Don OS Web App Removal Tool -- version $VERSION"
+    echo "Pok OS Web App Removal Tool -- version $VERSION"
     echo ""
     echo "Usage: webapp-remove [APP_NAME]"
     echo ""

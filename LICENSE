@@ -1,7 +1,7 @@
 MIT License
 
 Copyright (c) 2024 Tyler Kelley (Original ZaneyOS)
-Copyright (c) 2025 Black Don (Black-Don-OS modifications)
+Copyright (c) 2025 Pok (Pok-OS modifications)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,9 +23,9 @@ SOFTWARE.
 
 ---
 
-Black-Don-OS is a customized derivative of ZaneyOS, maintaining the same open-source
-MIT license. This project includes modifications and enhancements specifically
-tailored for multi-host NVIDIA-focused environments and YouTube content creation.
+Pok-OS is a customized derivative of ZaneyOS, maintaining the same open-source
+MIT license. This project includes modifications and enhancements tailored for
+multi-host NVIDIA laptop environments.
 
 Original ZaneyOS: https://gitlab.com/zaney/zaneyos
-Black-Don-OS: https://gitlab.com/theblackdon/black-don-os
+Pok-OS: https://github.com/Lorenzx18/pok-os

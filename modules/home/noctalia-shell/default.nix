@@ -110,7 +110,7 @@ in
                 id = "Volume";
               }
               {
-                customIconPath = "/home/don/black-don-os/modules/home/fastfetch/blackdontrans.png";
+                customIconPath = "/home/don/pok-os/modules/home/fastfetch/blackdontrans.png";
                 icon = "noctalia";
                 id = "ControlCenter";
                 useDistroLogo = false;
@@ -202,7 +202,7 @@ in
         general = {
           animationDisabled = false;
           animationSpeed = 1;
-          avatarImage = "/home/don/black-don-os/modules/home/fastfetch/blackdontrans.png";
+          avatarImage = "/home/don/pok-os/modules/home/fastfetch/blackdontrans.png";
           compactLockScreen = false;
           dimDesktop = true;
           forceBlackScreenCorners = false;

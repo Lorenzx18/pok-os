@@ -1,4 +1,4 @@
-# webapp-install - Web App Installer for Black Don OS
+# webapp-install - Web App Installer for Pok OS
 
 A NixOS-integrated script for creating desktop entries for web applications using Helium browser, inspired by Omarchy's webapp installer.
 
@@ -12,7 +12,7 @@ A NixOS-integrated script for creating desktop entries for web applications usin
 
 ## Installation
 
-The script is already included in your Black Don OS configuration. After rebuilding your system, the `webapp-install` command will be available:
+The script is already included in your Pok OS configuration. After rebuilding your system, the `webapp-install` command will be available:
 
 ```bash
 dcli rebuild
@@ -160,9 +160,9 @@ webapp-install "PDF Viewer" "https://pdfviewer.com" "icon.png" "" "application/p
 
 ## Comparison with Omarchy
 
-This implementation is inspired by Omarchy's webapp installer but adapted for Black Don OS:
+This implementation is inspired by Omarchy's webapp installer but adapted for Pok OS:
 
-| Feature | Omarchy | Black Don OS |
+| Feature | Omarchy | Pok OS |
 |---------|---------|--------------|
 | Browser | Custom launcher | Helium browser |
 | Package Manager | System packages | Nix packages |
@@ -171,7 +171,7 @@ This implementation is inspired by Omarchy's webapp installer but adapted for Bl
 | Icon Download | ✅ curl | ✅ curl (nix) |
 | Desktop Entry | ✅ | ✅ |
 
-## Integration with Black Don OS
+## Integration with Pok OS
 
 The script is integrated into your dotfiles at:
 ```
@@ -193,4 +193,4 @@ To modify the script:
 
 ## License
 
-Part of Black Don OS - see repository license.
+Part of Pok OS - see repository license.

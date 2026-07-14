@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-Black Don OS is a user-friendly NixOS configuration based on ZaneyOS, designed for newcomers and experienced users. It features a simplified installation process with sensible defaults and easy customization.
+Pok OS is a user-friendly NixOS configuration based on ZaneyOS, designed for newcomers and experienced users. It features a simplified installation process with sensible defaults and easy customization.
 
 ## Common Development Commands
 
@@ -43,12 +43,12 @@ git push origin BRANCH-NAME
 
 ## Repository Information
 
-**GitLab Repository**: https://gitlab.com/theblackdon/black-don-os
+**GitLab Repository**: https://github.com/Lorenzx18/pok-os
 
 ### Branch Strategy
 - **main**: Public-facing simplified configuration for distribution
 - **bdos-beta-0.4**: Development branch for new features
-- **dons-personal**: Don's personal hosts and settings (not public-facing)
+- **pok-personal**: Don's personal hosts and settings (not public-facing)
 
 ## Architecture Overview
 

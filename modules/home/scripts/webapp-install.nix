@@ -6,13 +6,13 @@ pkgs.writeShellScriptBin "webapp-install" ''
     #!${pkgs.bash}/bin/bash
     set -euo pipefail
 
-    # Black Don OS Web App Installer
+    # Pok OS Web App Installer
     # Creates desktop entries for web applications using Chromium browser
     VERSION="1.0.0"
 
     # --- Helper Functions ---
     print_help() {
-      echo "Black Don OS Web App Installer -- version $VERSION"
+      echo "Pok OS Web App Installer -- version $VERSION"
       echo ""
       echo "Usage: webapp-install [OPTIONS] [APP_NAME URL ICON_REF]"
       echo ""

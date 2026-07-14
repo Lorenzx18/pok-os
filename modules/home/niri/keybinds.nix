@@ -256,7 +256,7 @@ in
 
       // === Noctalia Config Sync ===
       Ctrl+Shift+S {
-          spawn "sh" "-c" "/home/don/black-don-os/modules/home/noctalia-shell/sync-from-gui.py && notify-send 'Noctalia Config' 'Settings synced to Nix template' -i preferences-system";
+          spawn "sh" "-c" "/home/don/pok-os/modules/home/noctalia-shell/sync-from-gui.py && notify-send 'Noctalia Config' 'Settings synced to Nix template' -i preferences-system";
       }
 
       // === System Controls ===

@@ -19,7 +19,7 @@ The `sync-from-gui.py` script allows you to configure Noctalia through the GUI a
 #      (Shows notification when complete)
 #
 #    Method B: Run script manually
-cd /home/don/black-don-os/modules/home/noctalia-shell
+cd /home/don/pok-os/modules/home/noctalia-shell
 ./sync-from-gui.py
 
 # 3. Test the build
@@ -230,7 +230,7 @@ This gives you both:
 
 ## See Also
 
-- Main docs: `/home/don/black-don-os/claude/noctalia-gui-editable-config.md`
+- Main docs: `/home/don/pok-os/claude/noctalia-gui-editable-config.md`
 - Noctalia config: `default.nix`
 - User settings: `~/.config/noctalia/settings.json`
 - Noctalia docs: https://docs.noctalia.dev

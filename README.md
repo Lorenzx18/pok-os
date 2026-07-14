@@ -1,4 +1,4 @@
-# ❄️ Black Don OS - Powered by NixOS ❄️
+# ❄️ Pok OS - Powered by NixOS ❄️
 
 NixOS configuration based on [ZaneyOS](https://gitlab.com/zaney/zaneyos), designed for newcomers and experienced users alike.
 
@@ -9,11 +9,11 @@ Please note this config has not been receiving regular updates as I do not use t
 If you are un formiliar with nixos I would suggest starting with a simpler config. You may have to do some troubleshooting if you install this config. **
 
 
-![Black Don OS Desktop](img/desktop-screenshot.png)
+![Pok OS Desktop](img/desktop-screenshot.png)
 
-## 🌟 What is Black Don OS?
+## 🌟 What is Pok OS?
 
-Black Don OS is a pre-configured NixOS setup that makes it easy to get started with NixOS. It features:
+Pok OS is a pre-configured NixOS setup that makes it easy to get started with NixOS. It features:
 
 - 🪟 **Dual Window Managers** - Both Hyprland and Niri available at login (no rebuild needed!)
 - 🎨 **Beautiful Desktop** - Modern Wayland compositors with smooth animations
@@ -42,15 +42,15 @@ Black Don OS is a pre-configured NixOS setup that makes it easy to get started w
 - **Graphics**: Dedicated GPU (NVIDIA/AMD) for best compositor performance
 - **Display**: 1920x1080 or higher, multi-monitor supported
 
-> **💡 Note:** Black Don OS works great on older hardware too! The minimal install is lightweight, and you can enable heavier features only if you want them.
+> **💡 Note:** Pok OS works great on older hardware too! The minimal install is lightweight, and you can enable heavier features only if you want them.
 
 ### Installation
 
-Black Don OS installs directly on your hardware, replacing or dual-booting with your existing system.
+Pok OS installs directly on your hardware, replacing or dual-booting with your existing system.
 
 > **📝 Note:** Don't be intimidated by the steps below! The process is straightforward:
 > 1. Boot NixOS ISO → Install base NixOS → Reboot
-> 2. Run Black Don OS installer → Reboot
+> 2. Run Pok OS installer → Reboot
 > 3. Done! The whole process takes about 30-45 minutes.
 
 #### Step 1: Create NixOS Installation Media
@@ -84,7 +84,7 @@ Black Don OS installs directly on your hardware, replacing or dual-booting with 
    - Click "Restart now" when installation completes
    - Remove the USB drive when prompted
 
-#### Step 3: Install Black Don OS
+#### Step 3: Install Pok OS
 1. **Log in to your new NixOS system** with the user you created
 
 2. **Open a terminal** (press `Super` key and type "terminal")
@@ -94,10 +94,10 @@ Black Don OS installs directly on your hardware, replacing or dual-booting with 
    nix-shell -p git pciutils
    ```
 
-4. **Clone and run the Black Don OS installer**:
+4. **Clone and run the Pok OS installer**:
    ```bash
-   git clone https://gitlab.com/theblackdon/black-don-os
-   cd black-don-os
+   git clone https://github.com/Lorenzx18/pok-os
+   cd pok-os
    ./install.sh
    ```
 
@@ -105,7 +105,7 @@ The installer will:
 - ✅ Detect your hardware automatically
 - ✅ Ask for hostname and username (only 3 questions!)
 - ✅ Generate hardware configuration
-- ✅ Build and install Black Don OS
+- ✅ Build and install Pok OS
 - ✅ Set up both Hyprland and Niri window managers
 
 5. **Reboot to complete installation**:
@@ -116,7 +116,7 @@ The installer will:
 **That's it!** After the final reboot, you'll see the SDDM login screen where you can:
 - Log in with your username
 - Choose between Hyprland or Niri from the session menu
-- Enjoy your new Black Don OS desktop!
+- Enjoy your new Pok OS desktop!
 
 ### What You Get Out of the Box
 
@@ -134,7 +134,7 @@ The installer will:
 After installation, customize your system by editing:
 
 ```bash
-~/black-don-os/hosts/YOUR-HOSTNAME/variables.nix
+~/pok-os/hosts/YOUR-HOSTNAME/variables.nix
 ```
 
 ### Common Customizations
@@ -200,7 +200,7 @@ Both window managers are always available - just select which one you want at lo
 
 ## 🎮 GPU Support
 
-Black Don OS automatically detects and configures:
+Pok OS automatically detects and configures:
 
 - **NVIDIA Desktop** - Full NVIDIA driver support
 - **NVIDIA Laptop** - Hybrid Intel/NVIDIA with Prime
@@ -211,7 +211,7 @@ Black Don OS automatically detects and configures:
 ## 📁 Project Structure
 
 ```
-black-don-os/
+pok-os/
 ├── hosts/              # Your host configurations
 │   ├── YOUR-HOST/      # Your computer's config
 │   └── default/        # Template for new hosts
@@ -228,7 +228,7 @@ black-don-os/
 
 ### Adding a New Computer
 
-To install Black Don OS on another computer:
+To install Pok OS on another computer:
 
 1. Clone the repo on the new machine
 2. Run `./install.sh` with a different hostname
@@ -245,7 +245,7 @@ They can have completely different settings, packages, and features enabled.
 ### Updating Your System
 
 ```bash
-cd ~/black-don-os
+cd ~/pok-os
 dcli pull      # Pull latest changes
 dcli update    # Update flake inputs and rebuild
 # or use the alias:
@@ -262,7 +262,7 @@ If the build fails, try:
 dcli diag
 
 # Rebuild with detailed output
-sudo nixos-rebuild switch --flake ~/black-don-os#YOUR-HOSTNAME --show-trace
+sudo nixos-rebuild switch --flake ~/pok-os#YOUR-HOSTNAME --show-trace
 ```
 
 ### Monitor Not Working
@@ -293,7 +293,7 @@ enableHyprlock = false;  # in variables.nix
 
 ## 🛠️ dcli - Don's CLI Tool
 
-Black Don OS includes `dcli`, a powerful command-line utility for managing your system:
+Pok OS includes `dcli`, a powerful command-line utility for managing your system:
 
 ### Quick Commands
 ```bash
@@ -340,6 +340,6 @@ Based on ZaneyOS. See [LICENSE](LICENSE) for details.
 
 ---
 
-**Enjoy your Black Don OS experience!** 🚀
+**Enjoy your Pok OS experience!** 🚀
 
 *Made with ❤️ for the NixOS community*

@@ -134,7 +134,7 @@ If the Material Symbols Rounded font is not showing up, the error message "Pleas
 
 - [DankMaterialShell GitHub](https://github.com/AvengeMedia/DankMaterialShell)
 - [Quickshell Documentation](https://quickshell.outfoxxed.me/)
-- [Black Don OS Documentation](../../README.md)
+- [Pok OS Documentation](../../README.md)
 
 ## Uninstalling
 
