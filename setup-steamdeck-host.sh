@@ -478,14 +478,14 @@ lspci | grep VGA
 
 ### 6. Rebuild with updated configuration
 \`\`\`bash
-dcli rebuild
+sudo nixos-rebuild switch --flake .#$newHostName
 \`\`\`
 
 ## Building from Another Computer
 
 To deploy this configuration from your existing Pok OS computer:
 \`\`\`bash
-dcli deploy $newHostName
+sudo nixos-rebuild switch --flake .#$newHostName
 \`\`\`
 
 ## Configuration Details

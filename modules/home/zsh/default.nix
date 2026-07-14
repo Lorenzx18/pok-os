@@ -86,16 +86,9 @@ in
       sv = "sudo nvim";
       v = "nvim";
       c = "clear";
-      fr = "dcli rebuild";
-      fu = "dcli update";
-      rebuild = "dcli rebuild";
-      update = "dcli update";
-      cleanup = "dcli cleanup";
       ncg = "nix-collect-garbage --delete-old && sudo nix-collect-garbage -d && sudo /run/current-system/bin/switch-to-configuration boot";
       cat = "bat";
       man = "batman";
-      hosts = "dcli list-hosts";
-      switch = "dcli switch-host";
     };
   };
 }

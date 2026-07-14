@@ -76,15 +76,6 @@ in
       # System aliases
       c = "clear";
 
-      # dcli aliases (PRESERVED - don't remove!)
-      fr = "dcli rebuild";
-      fu = "dcli update";
-      rebuild = "dcli rebuild";
-      update = "dcli update";
-      cleanup = "dcli cleanup";
-      hosts = "dcli list-hosts";
-      switchhost = "dcli switch-host"; # 'switch' is reserved in fish
-
       # NixOS specific
       ncg = "nix-collect-garbage --delete-old && sudo nix-collect-garbage -d && sudo /run/current-system/bin/switch-to-configuration boot";
 

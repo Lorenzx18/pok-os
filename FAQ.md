@@ -6,51 +6,14 @@ Welcome to the Pok-OS FAQ! This guide covers common questions and solutions for 
 
 ### **❄ What is Pok-OS?**
 
-Pok-OS is a customized NixOS configuration designed for multi-host environments with a focus on NVIDIA GPU support and modern desktop experiences. It's built on the foundation of ZaneyOS but tailored for Don's specific workflow and sharing on YouTube.
+Pok-OS is a customized NixOS configuration designed for multi-host environments with a focus on NVIDIA GPU support and modern desktop experiences. It's built on the foundation of ZaneyOS and tailored for a clean, reproducible desktop experience.
 
 **Key Features:**
 - Multi-host configuration management
 - NVIDIA GPU optimization (desktop and laptop)
 - Hyprland Wayland compositor
-- Custom dcli management tool
 - Stylix theming system
 - Flake-based reproducible builds
-
-### **🔧 What is dcli?**
-
-The `dcli` utility is a command-line tool designed to simplify managing your Pok-OS environment. It provides a comprehensive set of commands for performing common tasks like building configurations, managing hosts, and system maintenance.
-
-**Common dcli commands:**
-```bash
-dcli build <hostname>      # Build configuration for a specific host
-dcli deploy <hostname>     # Build and switch to configuration
-dcli status               # Show current system status
-dcli list-hosts          # List available host configurations
-dcli cleanup             # Clean up old system generations
-dcli update              # Update flake and rebuild system
-```
-
-**Full dcli help:**
-```bash
-❯ dcli
-Pok-OS CLI Utility -- version 1.0
-
-Usage: dcli [command] [options]
-
-Commands:
-  build <host>    - Build configuration for specific host
-  deploy <host>   - Build and switch to configuration  
-  status          - Show current system status
-  list-hosts      - List available host configurations
-  cleanup         - Clean up old system generations
-  update          - Update flake and rebuild system
-  help           - Show this help message
-
-Examples:
-  dcli build nix-desktop     # Build desktop configuration
-  dcli deploy nixos-leno     # Deploy laptop configuration
-  dcli status               # Check system status
-```
 
 ## 🏠 Host Management
 
@@ -70,24 +33,17 @@ This will guide you through:
 
 ### **⚙️ How do I switch between different host configurations?**
 
-You can switch configurations using either dcli or standard NixOS commands:
+Rebuild and switch to a host configuration with standard NixOS commands:
 
 ```bash
-# Using dcli (recommended)
-dcli deploy nix-desktop
-
-# Using standard NixOS rebuild
 sudo nixos-rebuild switch --flake ~/pok-os#nix-desktop
 ```
 
 ### **🔄 How do I update my Pok-OS system?**
 
 ```bash
-# Update everything with dcli
-dcli update
-
-# Or manually
 cd ~/pok-os
+git pull
 nix flake update
 sudo nixos-rebuild switch --flake .#your-hostname
 ```
@@ -230,14 +186,11 @@ For other development environments, modify the `devShells` section in `flake.nix
 ### **🔍 How do I diagnose system issues?**
 
 ```bash
-# Generate diagnostic report
-dcli status
-
 # Check system logs
 journalctl -f
 
 # Test configuration without switching
-dcli build your-hostname
+nixos-rebuild build --flake ~/pok-os#your-hostname
 ```
 
 ### **🛠️ Installation failed - what do I do?**
@@ -254,9 +207,6 @@ Common solutions:
 ### **💾 How do I free up disk space?**
 
 ```bash
-# Clean old generations
-dcli cleanup
-
 # Manual cleanup
 nix-collect-garbage -d
 sudo nix-collect-garbage -d
@@ -267,10 +217,6 @@ sudo nix-collect-garbage -d
 ### **🔨 How do I test changes without switching?**
 
 ```bash
-# Build without switching
-dcli build your-hostname
-
-# Or manually
 nixos-rebuild build --flake ~/pok-os#your-hostname
 ```
 
@@ -300,12 +246,11 @@ cp -r ~/pok-os ~/pok-os-backup-$(date +%Y%m%d)
 ## ❓ Still Need Help?
 
 ### **📚 Documentation Resources:**
-- `README-BLACK-DON-OS.md` - Main documentation
-- `dcli.md` - Complete dcli reference
+- `README.md` - Main documentation
 - `INSTALL-TROUBLESHOOTING.md` - Installation help
 
 ### **🎥 Video Resources:**
-- Check Don's YouTube channel for setup tutorials and tips
+- Check online for setup tutorials and tips
 - Visual guides for common configurations
 
 ### **🤝 Community:**

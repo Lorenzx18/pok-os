@@ -59,8 +59,7 @@ Pok-OS is a customized NixOS configuration based on ZaneyOS, tailored for Don's 
 
 ### 📚 Documentation
 
-- **README-BLACK-DON-OS.md**: Comprehensive setup and usage guide
-- **dcli.md**: Complete dcli documentation
+- **README.md**: Comprehensive setup and usage guide
 - **INSTALL-TROUBLESHOOTING.md**: Installation troubleshooting guide
 - **INSTALL-nix-desktop.md**: Specific installation guide for desktop setup
 

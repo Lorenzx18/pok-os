@@ -175,9 +175,7 @@ extraMonitorSettings = ''
 
 After making changes, rebuild:
 ```bash
-dcli rebuild
-# or simply use the alias:
-fr
+sudo nixos-rebuild switch --flake .#default
 ```
 
 ## 🪟 Window Managers
@@ -246,10 +244,8 @@ They can have completely different settings, packages, and features enabled.
 
 ```bash
 cd ~/pok-os
-dcli pull      # Pull latest changes
-dcli update    # Update flake inputs and rebuild
-# or use the alias:
-fu             # Fast update
+git pull       # Pull latest changes
+sudo nixos-rebuild switch --flake .#default  # Rebuild and apply
 ```
 
 ## 🆘 Troubleshooting
@@ -258,9 +254,6 @@ fu             # Fast update
 
 If the build fails, try:
 ```bash
-# Generate diagnostic report
-dcli diag
-
 # Rebuild with detailed output
 sudo nixos-rebuild switch --flake ~/pok-os#YOUR-HOSTNAME --show-trace
 ```
@@ -291,32 +284,22 @@ If using DMS or Noctalia lock screens:
 enableHyprlock = false;  # in variables.nix
 ```
 
-## 🛠️ dcli - Don's CLI Tool
+## 🛠️ Rebuilding Your System
 
-Pok OS includes `dcli`, a powerful command-line utility for managing your system:
+Pok OS is managed entirely through Nix flakes and Home Manager. To apply changes:
 
-### Quick Commands
 ```bash
-dcli rebuild      # Rebuild current system
-dcli update       # Update and rebuild
-dcli list-hosts   # List available configurations
-dcli cleanup      # Remove old generations
-dcli diag         # Generate diagnostic report
-
-# Convenient aliases
-fr                # Fast rebuild (dcli rebuild)
-fu                # Fast update (dcli update)
+sudo nixos-rebuild switch --flake .#default
 ```
 
-See [dcli.md](dcli.md) for complete documentation.
+Replace `default` with your hostname. Use `git pull` to fetch updates, then rebuild.
 
 ## 💡 Tips for NixOS Newcomers
 
-- **Use dcli commands** - Simpler than remembering nixos-rebuild syntax
 - **Everything is declarative** - Your entire system is defined in text files
 - **Rebuilding is safe** - If something breaks, boot into the previous generation
-- **No reinstall needed** - Just edit files and rebuild with `fr`
-- **Git is your friend** - Use `dcli commit` to track your configuration changes
+- **No reinstall needed** - Just edit files and rebuild
+- **Git is your friend** - Commit your configuration changes to track them
 - **Read the variables** - Most customization happens in `variables.nix`
 
 ## 🤝 Getting Help
