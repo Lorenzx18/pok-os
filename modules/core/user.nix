@@ -45,14 +45,11 @@ in
     isNormalUser = true;
     description = "${gitUsername}";
     extraGroups = [
-      "adbusers"
       "docker"
       "libvirtd" # For VirtManager
       "lp"
       "networkmanager"
-      "scanner"
       "wheel" # sudo access
-      "vboxusers" # For VirtualBox
     ];
     # Use configured shell based on defaultShell variable
     shell = shellPackage;

@@ -17,30 +17,49 @@ Home Manager. It is built on top of [ZaneyOS](https://gitlab.com/zaney/zaneyos).
 
 ## 🚀 Installation
 
-Pok OS is installed directly with the NixOS flake, no custom installer or ISO
-required.
+Pok OS installs straight from the flake — no custom installer or ISO required.
+The shipped `hosts/default/hardware.nix` is a **placeholder** (it has no real
+disk UUIDs and no bootloader), so you must regenerate it for your machine in
+step 4 or the installed system will not boot.
 
-### 1. Install base NixOS
+### Fresh machine
 
-Use the official [NixOS ISO](https://nixos.org/download) (Graphical or Minimal)
-to install a **minimal base NixOS** first (partition, set a user, enable flakes).
-Reboot into it.
+1. Boot the official [NixOS ISO](https://nixos.org/download) (Graphical or
+   Minimal) and get a shell with networking.
+2. Partition, format, and mount your disk at `/mnt` (ESP → `/mnt/boot`,
+   root → `/mnt`).
+3. Clone this repo as the target config:
+   ```bash
+   git clone https://github.com/Lorenzx18/pok-os /mnt/etc/nixos
+   cd /mnt/etc/nixos
+   ```
+4. **Generate the real hardware config** (replaces the placeholder):
+   ```bash
+   sudo nixos-generate-config --root /mnt --show-hardware-config > hosts/default/hardware.nix
+   ```
+5. Set your GPU PCI IDs in `hosts/default/variables.nix`:
+   ```bash
+   lspci | grep VGA   # note the two Bus IDs, e.g. 0000:01:00.0 and 0000:06:00.0
+   # edit intelID / nvidiaID (format "PCI:1:0:0")
+   ```
+6. Install:
+   ```bash
+   sudo nixos-install --flake /mnt/etc/nixos#default
+   ```
+7. Reboot. At the SDDM login, pick **Hyprland** or **Niri**.
 
-### 2. Install Pok OS from the flake
+### Already have a booting NixOS
 
-From the installer shell (or your freshly installed system):
+Clone to `~/pok-os`, run steps 4–5, then:
 
 ```bash
-sudo nixos-install --flake github:Lorenzx18/pok-os#default
+sudo nixos-rebuild switch --flake .#default
 ```
 
-This builds and installs the `default` host configuration. After it finishes,
-reboot.
+> To target a different host, replace `default` with that host's name (and make
+> sure it exists in `flake.nix` / `hosts/`).
 
-> On subsequent machines, or to target a different host, replace `default` with
-> that host's name (and make sure it exists in `flake.nix` / `hosts/`).
-
-### 3. Apply updates / rebuild
+### Apply updates / rebuild
 
 Once installed, you manage the system with `nixos-rebuild` (Home Manager is
 invoked automatically by the flake):
