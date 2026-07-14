@@ -1,328 +1,160 @@
-# ❄️ Pok OS - Powered by NixOS ❄️
+# ❄️ Pok OS — Powered by NixOS ❄️
 
-NixOS configuration based on [ZaneyOS](https://gitlab.com/zaney/zaneyos), designed for newcomers and experienced users alike.
-
-
-#####  Message from the author:
-**Thanks for your interest in my nixos configuration. 
-Please note this config has not been receiving regular updates as I do not use this config on a daily basis. 
-If you are un formiliar with nixos I would suggest starting with a simpler config. You may have to do some troubleshooting if you install this config. **
-
+A personal, flake-based [NixOS](https://nixos.org) configuration. It provides a
+reproducible Wayland desktop with **both Hyprland and Niri** available at the
+login screen, themed with Stylix, and managed entirely through Nix flakes and
+Home Manager. It is built on top of [ZaneyOS](https://gitlab.com/zaney/zaneyos).
 
 ![Pok OS Desktop](img/desktop-screenshot.png)
 
-## 🌟 What is Pok OS?
+## ✨ Features
 
-Pok OS is a pre-configured NixOS setup that makes it easy to get started with NixOS. It features:
+- 🪟 **Dual Window Managers** — Hyprland and Niri, both available at login (no rebuild to switch)
+- 🎨 **Stylix theming** — system-wide color coordination from a single wallpaper
+- 📦 **Modular** — enable only the features you need in `variables.nix`
+- 🎮 **Multi-GPU** — NVIDIA (desktop + hybrid laptop), AMD, Intel, and VM profiles
+- 🔁 **Reproducible** — one `flake.nix`, rebuild anytime, roll back on failure
 
-- 🪟 **Dual Window Managers** - Both Hyprland and Niri available at login (no rebuild needed!)
-- 🎨 **Beautiful Desktop** - Modern Wayland compositors with smooth animations
-- 📦 **Modular Design** - Enable only the features you need
-- 🎮 **Multi-GPU Support** - NVIDIA, AMD, Intel, and hybrid laptop configurations
-- 🚀 **Quick Installation** - Simple installer with sensible defaults
-- 📚 **Great for Learning** - Perfect for NixOS newcomers
+## 🚀 Installation
 
-## ⚡ Quick Start
+Pok OS is installed directly with the NixOS flake, no custom installer or ISO
+required.
 
-### System Requirements
+### 1. Install base NixOS
 
-**Minimum Requirements:**
-- **CPU**: 64-bit processor (x86_64)
-- **RAM**: 4 GB (8 GB recommended)
-- **Storage**: 30 GB free space (50 GB+ recommended)
-- **Graphics**: Any GPU with basic 3D acceleration
-- **Display**: 1280x720 or higher resolution
-- **Boot**: UEFI or Legacy BIOS support
-- **Internet**: Required during installation
+Use the official [NixOS ISO](https://nixos.org/download) (Graphical or Minimal)
+to install a **minimal base NixOS** first (partition, set a user, enable flakes).
+Reboot into it.
 
-**Recommended for Best Experience:**
-- **CPU**: Modern quad-core processor (Intel i5/Ryzen 5 or better)
-- **RAM**: 16 GB or more
-- **Storage**: 100 GB+ SSD
-- **Graphics**: Dedicated GPU (NVIDIA/AMD) for best compositor performance
-- **Display**: 1920x1080 or higher, multi-monitor supported
+### 2. Install Pok OS from the flake
 
-> **💡 Note:** Pok OS works great on older hardware too! The minimal install is lightweight, and you can enable heavier features only if you want them.
-
-### Installation
-
-Pok OS installs directly on your hardware, replacing or dual-booting with your existing system.
-
-> **📝 Note:** Don't be intimidated by the steps below! The process is straightforward:
-> 1. Boot NixOS ISO → Install base NixOS → Reboot
-> 2. Run Pok OS installer → Reboot
-> 3. Done! The whole process takes about 30-45 minutes.
-
-#### Step 1: Create NixOS Installation Media
-1. Download the **GNOME ISO** from [nixos.org/download](https://nixos.org/download)
-   - Choose "GNOME, 64-bit Intel/AMD" under "Graphical ISO image"
-2. Create a bootable USB drive with the ISO using:
-   - [Etcher](https://etcher.balena.io/) (Windows/Mac/Linux)
-   - [Rufus](https://rufus.ie/) (Windows)
-   - `dd` command (Linux)
-3. Boot your computer from the USB drive
-
-#### Step 2: Install Base NixOS System
-1. **Boot from the NixOS ISO** - you'll see the GNOME desktop
-2. **Connect to WiFi** (if needed) using the network icon in the top-right corner
-3. **Open the NixOS installer**:
-   - Double-click the "Install NixOS" icon on the desktop
-   - Or search for "Calamares" in the application menu
-
-4. **Follow the graphical installer**:
-   - **Welcome**: Select your language
-   - **Location**: Choose your timezone
-   - **Keyboard**: Select your keyboard layout
-   - **Partitions**: Choose how to set up your disk
-     - "Erase disk" for a clean install (recommended for beginners)
-     - "Manual partitioning" for advanced users or dual-boot
-   - **Users**: Create your username and password
-   - **Summary**: Review your choices
-   - **Install**: Click "Install" and wait (takes 10-15 minutes)
-
-5. **Reboot into your new NixOS system**:
-   - Click "Restart now" when installation completes
-   - Remove the USB drive when prompted
-
-#### Step 3: Install Pok OS
-1. **Log in to your new NixOS system** with the user you created
-
-2. **Open a terminal** (press `Super` key and type "terminal")
-
-3. **Install required tools**:
-   ```bash
-   nix-shell -p git pciutils
-   ```
-
-4. **Clone and run the Pok OS installer**:
-   ```bash
-   git clone https://github.com/Lorenzx18/pok-os
-   cd pok-os
-   ./install.sh
-   ```
-
-The installer will:
-- ✅ Detect your hardware automatically
-- ✅ Ask for hostname and username (only 3 questions!)
-- ✅ Generate hardware configuration
-- ✅ Build and install Pok OS
-- ✅ Set up both Hyprland and Niri window managers
-
-5. **Reboot to complete installation**:
-   ```bash
-   reboot
-   ```
-
-**That's it!** After the final reboot, you'll see the SDDM login screen where you can:
-- Log in with your username
-- Choose between Hyprland or Niri from the session menu
-- Enjoy your new Pok OS desktop!
-
-### What You Get Out of the Box
-
-- **Browser**: Zen Browser
-- **Terminal**: Kitty
-- **Shell**: Zsh with starship prompt
-- **Bar**: Noctalia (DMS also available as an option)
-- **File Manager**: Thunar
-- **Window Managers**: Both Hyprland and Niri
-- **Theming**: Stylix for system-wide color coordination
-- **Feature Modules**: Enable multiple features like Gaming Support, and Additional Browsers
-
-## 🎨 Customization
-
-After installation, customize your system by editing:
+From the installer shell (or your freshly installed system):
 
 ```bash
-~/pok-os/hosts/YOUR-HOSTNAME/variables.nix
+sudo nixos-install --flake github:Lorenzx18/pok-os#default
 ```
 
-### Common Customizations
+This builds and installs the `default` host configuration. After it finishes,
+reboot.
 
-#### Change Bar
-```nix
-barChoice = "noctalia"; # Options: "dms", "noctalia"
-# NOTE: If you change to "dms", run 'dms-install' after rebuilding
-```
+> On subsequent machines, or to target a different host, replace `default` with
+> that host's name (and make sure it exists in `flake.nix` / `hosts/`).
 
-#### Change Your Wallpaper
-```nix
-stylixImage = ../../wallpapers/Valley.jpg;  # Choose from wallpapers/ directory
-```
+### 3. Apply updates / rebuild
 
-#### Enable Optional Features
-```nix
-enableCommunicationApps = true;  # Discord, Teams, Zoom, Telegram
-enableExtraBrowsers = true;      # Chromium, Firefox, Brave
-enableProductivityApps = true;   # Obsidian, GNOME Boxes
-controllerSupportEnable = true;  # Gaming controllers
-```
+Once installed, you manage the system with `nixos-rebuild` (Home Manager is
+invoked automatically by the flake):
 
-#### Change Default Apps
-```nix
-browser = "firefox";    # or "vivaldi", "brave", "chromium"
-terminal = "alacritty"; # or "ghostty", "kitty"
-defaultShell = "fish";  # or "zsh"
-```
-
-#### Configure Your Monitors
-```nix
-extraMonitorSettings = ''
-  monitor=HDMI-A-1,1920x1080@60,0x0,1
-  monitor=DP-1,2560x1440@144,1920x0,1
-'';
-```
-
-After making changes, rebuild:
 ```bash
+cd ~/pok-os
 sudo nixos-rebuild switch --flake .#default
 ```
 
-## 🪟 Window Managers
+Convenient shell aliases are provided:
 
-Both window managers are always available - just select which one you want at login!
-
-### Hyprland
-- Modern Wayland compositor
-- Beautiful animations
-- Tiling window management
-- Great for productivity
-
-### Niri
-- Scrollable tiling compositor
-- Unique workflow
-- Smooth animations
-- Innovative window management
-
-**No rebuild needed to switch!** Just log out and select the other at the login screen.
-
-## 🎮 GPU Support
-
-Pok OS automatically detects and configures:
-
-- **NVIDIA Desktop** - Full NVIDIA driver support
-- **NVIDIA Laptop** - Hybrid Intel/NVIDIA with Prime
-- **AMD** - Open-source AMDGPU drivers
-- **Intel** - Integrated graphics
-- **Virtual Machines** - Optimized for VMs
+```bash
+nrs   # sudo nixos-rebuild switch --flake .#default
+nfu   # nix flake update && sudo nixos-rebuild switch --flake .#default
+```
 
 ## 📁 Project Structure
 
 ```
 pok-os/
-├── hosts/              # Your host configurations
-│   ├── YOUR-HOST/      # Your computer's config
-│   └── default/        # Template for new hosts
+├── flake.nix            # Inputs + per-host configurations (mkHost)
+├── hosts/
+│   └── default/         # The one host (variables.nix, hardware.nix, host-packages.nix)
 ├── modules/
-│   ├── core/          # System configuration
-│   ├── drivers/       # GPU drivers
-│   └── home/          # User environment (Hyprland, Niri, etc.)
-├── profiles/          # Hardware profiles (nvidia, amd, intel, vm)
-├── wallpapers/        # Desktop wallpapers
-└── install.sh         # Simple installer
+│   ├── core/            # System configuration (boot, network, drivers, features)
+│   ├── drivers/         # GPU drivers (amd, intel, nvidia, nvidia-prime, vm)
+│   └── home/            # User environment (Hyprland, Niri, shells, apps)
+├── profiles/            # Hardware profiles (amd, intel, nvidia, nvidia-laptop, vm)
+├── wallpapers/          # placeholder.png + your own wallpapers
+└── img/                 # Screenshots used by this README
 ```
 
-## 🔧 Advanced Usage
+## 🎨 Customization
 
-### Adding a New Computer
+Almost everything is controlled from `hosts/default/variables.nix`. After
+editing, rebuild with `nrs` (or `sudo nixos-rebuild switch --flake .#default`).
 
-To install Pok OS on another computer:
+```nix
+# hosts/default/variables.nix
+timeZone          = "Asia/Manila";
+keyboardLayout    = "us";
+browser           = "zen";        # zen, firefox, vivaldi, brave, chromium
+terminal          = "kitty";      # kitty, alacritty, ghostty
+defaultShell      = "zsh";        # zsh, fish
+barChoice         = "noctalia";   # noctalia (or dms)
+enableHyprlock    = false;        # set false if using DMS/Noctalia lock screen
 
-1. Clone the repo on the new machine
-2. Run `./install.sh` with a different hostname
-3. Your configurations are kept separate in `hosts/`
-
-### Multiple Hosts
-
-Each computer gets its own directory under `hosts/`:
-- `hosts/my-desktop/` - Your desktop configuration
-- `hosts/my-laptop/` - Your laptop configuration
-
-They can have completely different settings, packages, and features enabled.
-
-### Updating Your System
-
-```bash
-cd ~/pok-os
-git pull       # Pull latest changes
-sudo nixos-rebuild switch --flake .#default  # Rebuild and apply
+# Optional features (all default to false except where noted)
+gamingSupportEnable   = true;
+printEnable           = true;
+syncthingEnable       = true;
+enableCommunicationApps = true;
+enableExtraBrowsers   = true;
+enableProductivityApps = true;
+aiCodeEditorsEnable   = true;
+# flutterdevEnable    = false;   # intentionally off
 ```
+
+### Wallpaper
+
+The repo ships with a `wallpapers/placeholder.png` so the build works out of the
+box. Drop your own image into `wallpapers/` and point Stylix at it:
+
+```nix
+stylixImage = ../../wallpapers/my-wallpaper.jpg;
+```
+
+### Adding another machine
+
+1. Copy `hosts/default/` to `hosts/<my-host>/` and edit its `variables.nix`
+   (set `timeZone`, GPU `intelID`/`nvidiaID`, monitor layout, etc.).
+2. Run `sudo nixos-generate-config --show-hardware-config > hosts/<my-host>/hardware.nix`.
+3. Add the host in `flake.nix` via `mkHost { hostname = "<my-host>"; profile = "nvidia-laptop"; username = "pok"; };`.
+4. Build: `sudo nixos-rebuild switch --flake .#<my-host>`.
+
+## 🪟 Window Managers
+
+Both are always available — choose at the SDDM login screen, no rebuild needed:
+
+- **Hyprland** — modern tiling Wayland compositor with smooth animations.
+- **Niri** — scrollable tiling compositor with a unique workflow.
+
+## 🎮 GPU Support
+
+Selected by the `profile` argument in `flake.nix`:
+
+- `nvidia` — dedicated NVIDIA
+- `nvidia-laptop` — hybrid Intel/NVIDIA (Prime)
+- `amd` — AMDGPU
+- `intel` — integrated
+- `vm` — virtual machine
 
 ## 🆘 Troubleshooting
 
-### Build Failures
-
-If the build fails, try:
 ```bash
-# Rebuild with detailed output
-sudo nixos-rebuild switch --flake ~/pok-os#YOUR-HOSTNAME --show-trace
-```
+# Verbose rebuild
+sudo nixos-rebuild switch --flake .#default --show-trace
 
-### Monitor Not Working
+# Find monitor names (after first login)
+hyprctl monitors
 
-Update your monitor settings in `hosts/YOUR-HOSTNAME/variables.nix`:
-```bash
-# Find your monitors
-hyprctl monitors  # (after first login)
-
-# Update extraMonitorSettings with correct output names
-```
-
-### NVIDIA Prime Not Working
-
-For hybrid laptops, find your GPU IDs:
-```bash
+# Hybrid laptop GPU IDs
 lspci | grep VGA
+# → update intelID / nvidiaID in variables.nix
 
-# Update intelID and nvidiaID in variables.nix
+# Roll back if a build breaks
+sudo nixos-rebuild switch --rollback
 ```
-
-### Hyprlock Conflicting with Other Lock Screens
-
-If using DMS or Noctalia lock screens:
-```nix
-enableHyprlock = false;  # in variables.nix
-```
-
-## 🛠️ Rebuilding Your System
-
-Pok OS is managed entirely through Nix flakes and Home Manager. To apply changes:
-
-```bash
-sudo nixos-rebuild switch --flake .#default
-```
-
-Replace `default` with your hostname. Use `git pull` to fetch updates, then rebuild.
-
-## 💡 Tips for NixOS Newcomers
-
-- **Everything is declarative** - Your entire system is defined in text files
-- **Rebuilding is safe** - If something breaks, boot into the previous generation
-- **No reinstall needed** - Just edit files and rebuild
-- **Git is your friend** - Commit your configuration changes to track them
-- **Read the variables** - Most customization happens in `variables.nix`
-
-## 🤝 Getting Help
-
-- Check `hosts/default/variables.nix` for all available options
-- Read the [NixOS Wiki](https://nixos.wiki/)
-- Visit [NixOS Discourse](https://discourse.nixos.org/)
-- Check original [ZaneyOS documentation](https://gitlab.com/zaney/zaneyos)
 
 ## 📜 Credits
 
-- **ZaneyOS** - Original configuration by Tyler Kelley
-- **NixOS** - The amazing Linux distribution
-- **Hyprland** - Modern Wayland compositor
-- **Niri** - Innovative scrollable compositor
-- **Stylix** - System-wide theming
+- **ZaneyOS** — original configuration by Tyler Kelley (Don Williams)
+- **NixOS**, **Hyprland**, **Niri**, **Stylix**, **Home Manager**
 
 ## 📄 License
 
-Based on ZaneyOS. See [LICENSE](LICENSE) for details.
-
----
-
-**Enjoy your Pok OS experience!** 🚀
-
-*Made with ❤️ for the NixOS community*
+Based on ZaneyOS (MIT). See [LICENSE](LICENSE) for details.

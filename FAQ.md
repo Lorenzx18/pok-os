@@ -19,17 +19,18 @@ Pok-OS is a customized NixOS configuration designed for multi-host environments 
 
 ### **🖥️ How do I add a new computer to my Pok-OS setup?**
 
-Use the automated setup script:
+Add a host manually (no installer script needed):
 
 ```bash
-./setup-new-host.sh
+# From the repo root
+mkdir -p hosts/my-host && cp hosts/default/*.nix hosts/my-host/
+sudo nixos-generate-config --show-hardware-config > hosts/my-host/hardware.nix
 ```
 
-This will guide you through:
-1. Choosing a hostname (avoid "default")
-2. Selecting GPU profile (nvidia, nvidia-laptop, amd, intel, vm)
-3. Configuring user settings
-4. Creating installation documentation
+Then:
+1. Edit `hosts/my-host/variables.nix` (timezone, GPU `intelID`/`nvidiaID`, monitors)
+2. Add the host in `flake.nix` via `mkHost { hostname = "my-host"; profile = "nvidia-laptop"; username = "pok"; };`
+3. Build: `sudo nixos-rebuild switch --flake .#my-host`
 
 ### **⚙️ How do I switch between different host configurations?**
 
@@ -195,9 +196,6 @@ nixos-rebuild build --flake ~/pok-os#your-hostname
 
 ### **🛠️ Installation failed - what do I do?**
 
-See the comprehensive troubleshooting guide:
-- `INSTALL-TROUBLESHOOTING.md`
-
 Common solutions:
 1. Check network connectivity
 2. Verify hardware detection
@@ -247,7 +245,7 @@ cp -r ~/pok-os ~/pok-os-backup-$(date +%Y%m%d)
 
 ### **📚 Documentation Resources:**
 - `README.md` - Main documentation
-- `INSTALL-TROUBLESHOOTING.md` - Installation help
+- `hosts/default/variables.nix` - All per-host options
 
 ### **🎥 Video Resources:**
 - Check online for setup tutorials and tips

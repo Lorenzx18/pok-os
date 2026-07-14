@@ -164,25 +164,20 @@ Previously this was conditional based on `windowManager` variable, but now both 
 
 This allows users to disable hyprlock if using alternative lock screens (DMS, Noctalia).
 
-## Installation Script
+## Installation
 
-### Simple Installer (`install.sh`)
-The simplified installer asks only essential questions:
-1. **Hostname** (with warning about not using "default")
-2. **Username** (defaults to current user)
-3. **GPU Profile** (auto-detected, confirms with user)
+Pok OS is installed directly from the flake — there is no custom installer or
+ISO. On a machine with a minimal base NixOS (flakes enabled):
 
-Everything else uses sensible defaults:
-- Git config: username@hostname
-- Timezone: America/New_York
-- Keyboard: us
-- Browser: zen
-- Terminal: kitty
-- Shell: zsh
-- Bar: waybar
-- All optional features: false (faster install)
+```bash
+sudo nixos-install --flake github:Lorenzx18/pok-os#default
+```
 
-Users can customize everything later via `variables.nix`.
+Then rebuild/apply updates with:
+
+```bash
+sudo nixos-rebuild switch --flake .#default
+```
 
 ## Hardware Support
 
@@ -194,18 +189,10 @@ Users can customize everything later via `variables.nix`.
 - **vm**: Virtual machine optimized
 
 ### Adding New Hosts
-New hosts can be added by:
-1. Running `./install.sh` on target hardware
-2. Script auto-generates hardware config
-3. Script creates host directory and variables.nix
-4. Script adds host to flake.nix
-5. Script builds and switches to new configuration
-
-Manual process:
-1. `mkdir -p hosts/NEW-HOST`
-2. `nixos-generate-config --show-hardware-config > hosts/NEW-HOST/hardware.nix`
-3. Create `hosts/NEW-HOST/variables.nix` based on template
-4. Update `flake.nix` to include new host
+1. `mkdir -p hosts/NEW-HOST && cp hosts/default/*.nix hosts/NEW-HOST/`
+2. `sudo nixos-generate-config --show-hardware-config > hosts/NEW-HOST/hardware.nix`
+3. Edit `hosts/NEW-HOST/variables.nix` (timeZone, GPU IDs, monitors, etc.)
+4. Add the host in `flake.nix` via `mkHost { hostname = "NEW-HOST"; profile = "nvidia-laptop"; username = "pok"; };`
 5. Build: `sudo nixos-rebuild switch --flake .#NEW-HOST`
 
 ## Common Development Tasks

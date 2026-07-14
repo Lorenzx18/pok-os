@@ -59,9 +59,7 @@ Pok-OS is a customized NixOS configuration based on ZaneyOS, tailored for a clea
 
 ### 📚 Documentation
 
-- **README.md**: Comprehensive setup and usage guide
-- **INSTALL-TROUBLESHOOTING.md**: Installation troubleshooting guide
-- **INSTALL-nix-desktop.md**: Specific installation guide for desktop setup
+- **README.md**: Setup and usage guide (flake-based install)
 
 ### 🏗️ Installation & Setup
 
