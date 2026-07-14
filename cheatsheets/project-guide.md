@@ -1,8 +1,8 @@
-# Project Guide — ZaneyOS
+# Project Guide — Pok OS
 
 Scope
 - A reproducible NixOS flake tailored for desktop systems with per-host overrides, GPU/VM profiles, and an integrated Home Manager layer (Hyprland, Waybar, shells, scripts).
-- Repo location is expected at ~/zaneyos. If you place it elsewhere, update modules/core/nh.nix (programs.nh.flake) to the new path.
+- Repo location is expected at ~/pok-os. If you place it elsewhere, update modules/core/nh.nix (programs.nh.flake) to the new path.
 
 Quick commands
 - Build and switch (preferred: nh/zcli)
@@ -61,7 +61,7 @@ High-level architecture
 - modules/core
   - default.nix composes focused NixOS modules: boot, flatpak, fonts, hardware, network, nfs, nh, packages, printing, display manager (conditional greetd/sddm), security, services (PipeWire, SSH, Bluetooth, fstrim; smartd conditional on profile), steam, stylix, syncthing, system (nix settings, locales, env vars), thunar, user (Home Manager), virtualisation, xserver
   - user.nix integrates Home Manager and creates users.${username}; passes extraSpecialArgs { inputs, username, host, profile } to the home layer
-  - nh.nix enables nh, configures GC, and pins programs.nh.flake = /home/${username}/zaneyos
+  - nh.nix enables nh, configures GC, and pins programs.nh.flake = /home/${username}/pok-os
 - modules/drivers
   - Aggregates AMD, Intel, NVIDIA, NVIDIA Prime, and VM guest services
   - nvidia-prime-drivers.nix exposes options.drivers.nvidia-prime.{enable,intelBusID,nvidiaBusID} consumed by the nvidia-laptop profile
@@ -84,7 +84,7 @@ Common workflows
 Validation and troubleshooting
 - nix flake check for a quick sanity test
 - zcli diag to produce a detailed hardware/system report
-- If the repo is not under ~/zaneyos, update modules/core/nh.nix so zcli/nh operate on the correct path
+- If the repo is not under ~/pok-os, update modules/core/nh.nix so zcli/nh operate on the correct path
 
 Documentation pointers
 - README.md: requirements, first-time install methods, upgrade overview

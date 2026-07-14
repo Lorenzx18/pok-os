@@ -26,7 +26,7 @@
         "break"
         {
           type = "os";
-          key = "OS - BlackDon's OS";
+          key = "OS - Pok OS";
           keyColor = "31";
         }
         {

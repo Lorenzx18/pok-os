@@ -1,6 +1,6 @@
-# Guía para Principiantes de ZaneyOS: Personalización Básica
+# Guía para Principiantes de Pok OS: Personalización Básica
 
-¡Bienvenido! Esta guía es para quienes son nuevos en Nix y quieren realizar personalizaciones comunes y seguras en su instalación de ZaneyOS. Mantendremos todo simple y al grano.
+¡Bienvenido! Esta guía es para quienes son nuevos en Nix y quieren realizar personalizaciones comunes y seguras en su instalación de Pok OS. Mantendremos todo simple y al grano.
 
 ## Diseño del repositorio (dónde cambiar las cosas)
 
@@ -52,7 +52,7 @@ Edita `modules/home/hyprland/binds.nix`. Por ejemplo, cambiar la terminal de Sup
 
 ## Aplicar y probar tus cambios
 
-Preferido (específico de ZaneyOS):
+Preferido (específico de Pok OS):
 - `zcli rebuild`
   - Nota: el alias `fr` está obsoleto.
 

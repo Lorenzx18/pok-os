@@ -35,7 +35,7 @@ print_header "Pok OS - Steam Deck Host Setup"
 # Check if we're in the correct directory
 if [[ ! -f "flake.nix" ]] || [[ ! -d "hosts" ]]; then
   print_error "This script must be run from the Pok OS root directory"
-  echo "Please cd to your zaneyos directory and run this script again"
+  echo "Please cd to your pok-os directory and run this script again"
   exit 1
 fi
 

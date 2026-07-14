@@ -98,11 +98,11 @@
       ##### Display Menu #####
 
       bind d display-menu -T "#[align=centre]Dotfiles" -x C -y C \
-        "ZaneyOS flake.nix"        f  "display-popup -E 'nvim ~/zaneyos/flake.nix'" \
-        "ZaneyOS packages"         p  "display-popup -E 'nvim ~/zaneyos/modules/core/packages.nix'" \
-        "ZaneyOS keybinds"         k  "display-popup -E 'nvim ~/zaneyos/modules/home/hyprland/binds.nix'" \
-        "ZaneyOS env variables"    e  "display-popup -E 'nvim ~/zaneyos/modules/home/hyprland/env.nix'" \
-        "ZaneyOS windowrules"      w  "display-popup -E 'nvim ~/zaneyos/modules/home/hyprland/windowrules.nix'" \
+        "Pok OS flake.nix"         f  "display-popup -E 'nvim ~/pok-os/flake.nix'" \
+        "Pok OS packages"          p  "display-popup -E 'nvim ~/pok-os/modules/core/packages.nix'" \
+        "Pok OS keybinds"          k  "display-popup -E 'nvim ~/pok-os/modules/home/hyprland/binds.nix'" \
+        "Pok OS env variables"     e  "display-popup -E 'nvim ~/pok-os/modules/home/hyprland/env.nix'" \
+        "Pok OS windowrules"       w  "display-popup -E 'nvim ~/pok-os/modules/home/hyprland/windowrules.nix'" \
         "Exit"              q  ""
 
 

@@ -74,7 +74,7 @@ in
           "disk" = {
             format = " {free}";
             tooltip = true;
-            # Not working with zaneyos window open then closes
+            # Not working with the hyprland window open then closes
             #on-click = "${terminal} -e sh -c df -h ; read";
           };
           "network" = {

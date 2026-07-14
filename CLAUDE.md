@@ -48,7 +48,7 @@ git push origin BRANCH-NAME
 ### Branch Strategy
 - **main**: Public-facing simplified configuration for distribution
 - **bdos-beta-0.4**: Development branch for new features
-- **pok-personal**: Don's personal hosts and settings (not public-facing)
+- **pok-personal**: Your personal hosts and settings (not public-facing)
 
 ## Architecture Overview
 

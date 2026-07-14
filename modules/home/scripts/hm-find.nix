@@ -6,7 +6,7 @@ pkgs.writeShellScriptBin "hm-find" ''
   #===============================================
   # This script searches recent journalctl entries for Home Manager errors
   # It identifies backup files that prevent rebuilds and allows removal.
-  # Author: Don Williams
+  # Author: Pok
   # Creation Date: May 6th, 2025
   # Revision History:
   #-----------------------------------------------

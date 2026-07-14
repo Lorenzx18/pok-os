@@ -1,12 +1,12 @@
-# Guía de Personalización de Hyprland en ZaneyOS
+# Guía de Personalización de Hyprland en Pok OS
 
-Esta guía ofrece una visión práctica para personalizar tu experiencia con Hyprland en ZaneyOS. Veremos los archivos más relevantes, qué hacen y pequeños cambios seguros que puedes aplicar.
+Esta guía ofrece una visión práctica para personalizar tu experiencia con Hyprland en Pok OS. Veremos los archivos más relevantes, qué hacen y pequeños cambios seguros que puedes aplicar.
 
 Nota: Estos archivos están escritos en Nix. Un pequeño error de sintaxis puede romper las compilaciones. Realiza un cambio a la vez y mantén tus ediciones bajo control de versiones.
 
 ## Aplicar tus cambios
 
-Preferido (específico de ZaneyOS):
+Preferido (específico de Pok OS):
 - `zcli rebuild`
   - Nota: el alias `fr` está obsoleto.
 

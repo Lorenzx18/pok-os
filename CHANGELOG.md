@@ -6,7 +6,7 @@
 
 ### 🎉 Initial Pok-OS Release
 
-Pok-OS is a customized NixOS configuration based on ZaneyOS, tailored for Don's specific needs and designed for easy sharing and deployment across multiple hosts.
+Pok-OS is a customized NixOS configuration based on ZaneyOS, tailored for a clean, reproducible multi-host setup and designed for easy sharing and deployment across multiple machines.
 
 ### ✨ Key Features
 
@@ -25,7 +25,7 @@ Pok-OS is a customized NixOS configuration based on ZaneyOS, tailored for Don's 
 
 ### 🛠️ New Tools & Scripts
 
-- **dcli (Don CLI)**: Multi-host management utility replacing zcli
+- **dcli (Pok CLI)**: Multi-host management utility replacing zcli
   - `dcli build <host>` - Build configuration for specific host
   - `dcli deploy <host>` - Build and switch to configuration
   - `dcli status` - Show current system status

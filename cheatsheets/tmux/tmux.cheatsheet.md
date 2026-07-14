@@ -78,8 +78,8 @@ Menu (display-menu)
   - g: global packages (ddubsOS)
   - k: keybinds (Hyprland)
   - w: window rules (Hyprland)
-  - z: ZaneyOS flake.nix
-  - p: ZaneyOS packages
+  - z: Pok OS flake.nix
+  - p: Pok OS packages
   - q: Exit
 
 Notes
