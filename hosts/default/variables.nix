@@ -81,7 +81,7 @@
   #stylixImage = ../../wallpapers/mountainscapedark.jpg;
   #stylixImage = ../../wallpapers/Rainnight.jpg;
   #stylixImage = ../../wallpapers/zaney-wallpaper.jpg;
-  stylixImage = ../../wallpapers/55.png;
+  stylixImage = ../../wallpapers/placeholder.png;
 
   # Set Waybar (temporarily disabled - use DMS or Noctalia)
   # Includes alternates such as:

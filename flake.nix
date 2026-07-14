@@ -67,7 +67,7 @@
       };
 
       # Flutter development environment
-      devShells = flake-utils.lib.eachDefaultSystem (
+      devShells = (flake-utils.lib.eachDefaultSystem (
         system:
         let
           pkgs = import nixpkgs {
@@ -86,7 +86,7 @@
           androidSdk = androidComposition.androidsdk;
         in
         {
-          default =
+          devShells.default =
             with pkgs;
             mkShell rec {
               ANDROID_SDK_ROOT = "${androidSdk}/libexec/android-sdk";
@@ -97,6 +97,6 @@
               ];
             };
         }
-      );
+      )).devShells;
     };
 }
