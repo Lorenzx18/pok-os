@@ -15,5 +15,8 @@ lib.mkIf stylixEnable {
     qt.enable = true;
   };
 
+  # Explicitly enable cursor config generation (silences home-manager deprecation)
+  home.pointerCursor.enable = true;
+
   services.nwg-drawer-stylix.enable = true;
 }

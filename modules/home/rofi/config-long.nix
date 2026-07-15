@@ -10,7 +10,7 @@
     }
     mainbox {
       orientation: vertical;
-      children: [ "inputbar", "listbox" ];
+      children: [ "inputbar", "listview" ];
     }
     inputbar {
       padding: 75px 40px;

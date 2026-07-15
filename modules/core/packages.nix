@@ -23,7 +23,7 @@
     hyprlock.enable = true; # Resolve pam issue, can be disabled per-host via enableHyprlock
     fuse.userAllowOther = true;
     mtr.enable = true;
-    adb.enable = true;
+    # adb.enable = true;
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
@@ -34,11 +34,6 @@
   virtualisation.libvirtd.enable = true;
 
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.allowUnfreePredicate =
-    pkg:
-    builtins.elem (lib.getName pkg) [
-      "zed"
-    ];
 
   environment.systemPackages = with pkgs; [
     amfora # Fancy Terminal Browser For Gemini Protocol
@@ -56,7 +51,7 @@
     gdu # graphical disk usage
     gedit # Simple Graphical Text Editor
     gimp # Great Photo Editor
-    glxinfo # Needed for inxi -G GPU info
+    mesa-demos # Needed for inxi -G GPU info
     gping # graphical ping
     tuigreet # The Login Manager (Sometimes Referred To As Display Manager)
     htop # Simple Terminal Based System Monitor
@@ -74,7 +69,7 @@
     ncdu # Disk Usage Analyzer With Ncurses Interface
     nitch # small fetch util
     # Nix Language Packages
-    nixfmt-rfc-style # Nix Formatter
+    nixfmt # Nix Formatter
     nixd # Nix Language Server
     nil # Nix Language Server
     onefetch # shows current build info and stats
@@ -99,12 +94,17 @@
     nwg-drawer # drawer GUI
     nwg-look # Look GUI
     rofi-emoji # rofi-emoji-wayland merged into rofi-emoji in nixpkgs-unstable
-    youtube-music
+    pear-desktop
     zen-browser # Default browser
     # Development Tools
     zed-editor # Code editor with AI features
     popsicle
+    android-tools
     # AI code editors (cursor, claude-code, gemini-cli) moved to modules/core/ai-code-editors.nix
+    opencode
+    tgpt
+    neovim
+    vim
     gum
     gtk3
     gtk4

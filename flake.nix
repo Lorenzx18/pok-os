@@ -7,7 +7,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nvf.url = "github:notashelf/nvf";
     stylix.url = "github:danth/stylix";
     flake-utils.url = "github:numtide/flake-utils";
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
@@ -19,7 +18,6 @@
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.quickshell.follows = "quickshell";
     };
     helium-browser = {
       url = "github:fpletz/flake";
@@ -93,7 +91,7 @@
               buildInputs = [
                 flutter
                 androidSdk
-                jdk11
+                jdk21
               ];
             };
         }

@@ -2,6 +2,7 @@
   profile,
   pkgs,
   lib,
+  config,
   host,
   ...
 }:
@@ -16,6 +17,8 @@ in
 
   programs.zsh = {
     enable = true;
+    # Lock in legacy (home-directory) dotDir behavior to silence stateVersion warning
+    dotDir = config.home.homeDirectory;
     autosuggestion.enable = true;
     syntaxHighlighting = {
       enable = true;
@@ -59,7 +62,7 @@ in
         if defaultShell == "fish" then
           ''
             if [[ $(ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]; then
-              shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
+               [[ -o login ]] && LOGIN_OPTION='--login' || LOGIN_OPTION=""
               exec fish $LOGIN_OPTION
             fi
           ''

@@ -120,7 +120,7 @@ in
     environment.systemPackages = with pkgs; [
       sysc-greet
       kitty # Required by sysc-greet
-      swww # Required for wallpapers
+      awww # Required for wallpapers
     ];
 
     # Create necessary directories

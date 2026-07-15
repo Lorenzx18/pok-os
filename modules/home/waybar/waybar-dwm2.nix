@@ -16,7 +16,7 @@
         "hyprland/window" = {
           format = "{title}";
           "max-length" = 333;
-          "seperate-outputs" = true;
+          "separate-outputs" = true;
         };
         clock = {
           format = "<span foreground='#282828'> </span><span>{:%I:%M %a %d}</span>";

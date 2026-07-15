@@ -2,6 +2,7 @@
   host,
   pkgs,
   lib,
+  config,
   ...
 }: let
   inherit (import ../../hosts/${host}/variables.nix) gamingSupportEnable;
@@ -19,8 +20,9 @@ lib.mkIf gamingSupportEnable {
     # Enable Steam hardware udev rules (includes controller support)
     steam-hardware.enable = true;
 
-    # Enable xpadneo for better Xbox controller support (especially for wireless)
-    xpadneo.enable = true;
+    # Enable xpadneo for better Xbox controller support (especially for wireless).
+    # The out-of-tree module fails to build on Linux >= 6.18, so skip it there.
+    xpadneo.enable = lib.versionOlder config.boot.kernelPackages.kernel.version "6.18";
   };
 
   # Additional udev rules for controller permissions and configuration

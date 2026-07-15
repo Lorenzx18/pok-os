@@ -138,7 +138,7 @@ in
 
       # Wayland/Qt support
       qt6.qtwayland # Qt6 Wayland support
-      libsForQt5.qt5.qtwayland # Qt5 Wayland support
+      qt5.qtwayland # Qt5 Wayland support
 
       # Optional but recommended
       gammastep # Screen temperature adjustment (blue light filter)

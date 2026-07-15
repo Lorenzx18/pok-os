@@ -39,6 +39,22 @@ in
   console.keyMap = "${consoleKeyMap}";
   system.stateVersion = "23.11"; # Do not change!
 
+  # Work around an upstream nixpkgs-unstable regression: cpplint-2.0.2's own
+  # test suite fails to build against current Python. Skip its tests so it can
+  # be used as a (transitive) build input.
+  nixpkgs.overlays = [
+    (final: prev: {
+      cpplint = prev.cpplint.overrideAttrs (_: {
+        doCheck = false;
+      });
+      python3Packages = prev.python3Packages // {
+        cpplint = prev.python3Packages.cpplint.overrideAttrs (_: {
+          doCheck = false;
+        });
+      };
+    })
+  ];
+
   # Enable nix-ld for running unpackaged programs like adb
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
@@ -48,7 +64,7 @@ in
     openssl
     libGL
     # Android-specific libraries
-    jdk11
+    jdk21
     android-tools
     androidenv.androidPkgs.platform-tools
   ];

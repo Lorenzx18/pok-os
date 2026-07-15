@@ -26,17 +26,17 @@ pkgs.writeShellScriptBin "niri-gaming-mode.sh" ''
   if [ -f "$STATE_FILE" ]; then
       # Gaming mode is ON, switch to NORMAL
       echo "Switching to NORMAL mode - monitors adjacent"
-      niri msg output DP-1 position set -- $NORMAL_DP1_X $NORMAL_DP1_Y
-      niri msg output DP-2 position set -- $NORMAL_DP2_X $NORMAL_DP2_Y
-      niri msg output DP-3 position set -- $NORMAL_DP3_X $NORMAL_DP3_Y
+      niri msg output DP-1 position set $NORMAL_DP1_X $NORMAL_DP1_Y
+      niri msg output DP-2 position set $NORMAL_DP2_X $NORMAL_DP2_Y
+      niri msg output DP-3 position set $NORMAL_DP3_X $NORMAL_DP3_Y
       rm "$STATE_FILE"
       ${pkgs.libnotify}/bin/notify-send "Gaming Mode OFF" "Monitors restored to normal positions" -i input-gaming
   else
       # Gaming mode is OFF, switch to GAMING
       echo "Switching to GAMING mode - cursor trapped on main monitor"
-      niri msg output DP-1 position set -- $GAMING_DP1_X $GAMING_DP1_Y
-      niri msg output DP-2 position set -- $GAMING_DP2_X $GAMING_DP2_Y
-      niri msg output DP-3 position set -- $GAMING_DP3_X $GAMING_DP3_Y
+      niri msg output DP-1 position set $GAMING_DP1_X $GAMING_DP1_Y
+      niri msg output DP-2 position set $GAMING_DP2_X $GAMING_DP2_Y
+      niri msg output DP-3 position set $GAMING_DP3_X $GAMING_DP3_Y
       touch "$STATE_FILE"
       ${pkgs.libnotify}/bin/notify-send "Gaming Mode ON" "Cursor confined to main monitor (DP-1)" -i input-gaming
   fi

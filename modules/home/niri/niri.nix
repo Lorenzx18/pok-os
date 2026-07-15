@@ -37,6 +37,7 @@ let
   startupModule = import ./startup.nix {
     inherit
       host
+      pkgs
       stylixImage
       startupApps
       barChoice
@@ -63,12 +64,13 @@ in
     niri
     udiskie
     xwayland-satellite
-    swww
+    awww
     grim
     slurp
     wl-clipboard
     swappy
     xdg-desktop-portal-gnome
+    mate-polkit # Polkit authentication agent for privilege elevation
   ];
 
   # Generate Niri config.kdl

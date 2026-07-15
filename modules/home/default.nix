@@ -9,7 +9,6 @@ let
   inherit (variables) waybarChoice;
 
   # New variable system
-  windowManager = variables.windowManager or "hyprland";
   barChoice = variables.barChoice or "waybar";
   defaultShell = variables.defaultShell or "zsh";
   useNvidia = variables.useNvidia or false;
@@ -41,7 +40,6 @@ in
     ./htop.nix
     ./kitty.nix
     ./lazygit.nix
-    ./nvf.nix
     ./nwg-drawer.nix
     ./obs-studio.nix
     ./rofi

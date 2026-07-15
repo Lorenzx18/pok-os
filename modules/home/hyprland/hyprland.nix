@@ -21,7 +21,7 @@ let
 in
 {
   home.packages = with pkgs; [
-    swww
+    awww
     grim
     slurp
     wl-clipboard
@@ -55,6 +55,8 @@ in
   };
   wayland.windowManager.hyprland = {
     enable = true;
+    # Keep legacy hyprlang config format (default changed to "lua" in home-manager)
+    configType = "hyprlang";
     # Use stable package from nixpkgs to avoid version parsing issues
     # package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     systemd = {
@@ -72,7 +74,7 @@ in
         "dbus-update-activation-environment --all --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
         "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
         "systemctl --user start hyprpolkitagent"
-        "killall -q swww-daemon;sleep .5 && swww-daemon"
+        "killall -q awww-daemon;sleep .5 && awww-daemon"
       ]
       ++ (
         if actualBarChoice == "dms" then
@@ -95,7 +97,7 @@ in
         "killall -q swaync;sleep .5 && swaync"
         "nm-applet --indicator"
         "pypr &"
-        "sleep 1.5 && swww img ${stylixImage}"
+        "sleep 1.5 && awww img ${stylixImage}"
       ]
       ++ startupApps;
 
@@ -137,7 +139,6 @@ in
         disable_hyprland_logo = true;
         disable_splash_rendering = true;
         enable_swallow = false;
-        vfr = true; # Variable Frame Rate
         vrr = 2; # Variable Refresh Rate  Might need to set to 0 for NVIDIA/AQ_DRM_DEVICES
         # Screen flashing to black momentarily or going black when app is fullscreen
         # Try setting vrr to 0
@@ -148,7 +149,6 @@ in
       };
 
       dwindle = {
-        pseudotile = true;
         preserve_split = true;
         force_split = 2;
       };

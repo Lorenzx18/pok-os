@@ -1,9 +1,9 @@
-{pkgs, ...}: {
+{pkgs, useNvidia, ...}: {
   programs.btop = {
     enable = true;
     package = pkgs.btop.override {
-      rocmSupport = true;
-      cudaSupport = true;
+      rocmSupport = !useNvidia; # ROCm backend only useful on AMD/other GPUs
+      cudaSupport = useNvidia;  # CUDA backend only on NVIDIA
     };
     settings = {
       vim_keys = true;
