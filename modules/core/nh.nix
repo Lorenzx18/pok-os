@@ -1,6 +1,6 @@
 {
   pkgs,
-  username,
+  repoPath,
   ...
 }: {
   programs.nh = {
@@ -9,7 +9,7 @@
       enable = true;
       extraArgs = "--keep-since 7d --keep 5";
     };
-    flake = "/home/${username}/pok-os";
+    flake = "${repoPath}";
   };
 
   environment.systemPackages = with pkgs; [

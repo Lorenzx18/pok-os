@@ -1,4 +1,4 @@
-{ pkgs, host, ... }:
+{ pkgs, lib, host, ... }:
 let
   variables = import ../../hosts/${host}/variables.nix;
   defaultShell = variables.defaultShell or "zsh";
@@ -18,6 +18,8 @@ in
       confirm_os_window_close = 0;
       scrollback_lines = 10000;
       enable_audio_bell = false;
+      background_opacity = lib.mkForce "0.85";
+      dynamic_background_opacity = true;
       mouse_hide_wait = 60;
       cursor_trail = 1;
       tab_fade = 1;

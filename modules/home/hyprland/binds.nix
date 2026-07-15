@@ -12,7 +12,7 @@ let
   # Determine launcher command based on barChoice
   launcherCommand =
     if barChoice == "noctalia" then
-      "noctalia-shell ipc call launcher toggle"
+      "noctalia ipc call launcher toggle"
     else if barChoice == "dms" then
       "$HOME/.local/bin/dms ipc call spotlight toggle"
     else
@@ -22,9 +22,9 @@ let
   noctaliaBinds =
     if barChoice == "noctalia" then
       [
-        "$modifier,comma,exec,noctalia-shell ipc call settings toggle"
-        "$modifier ALT,S,exec,noctalia-shell ipc call settings toggle"
-        "$modifier SHIFT,C,exec,noctalia-shell ipc call controlCenter toggle"
+        "$modifier,comma,exec,noctalia ipc call settings toggle"
+        "$modifier ALT,S,exec,noctalia ipc call settings toggle"
+        "$modifier SHIFT,C,exec,noctalia ipc call controlCenter toggle"
       ]
     else
       [ ];

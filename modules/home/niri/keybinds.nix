@@ -14,30 +14,70 @@ let
   # Determine launcher command based on barChoice
   launcherCommand =
     if barChoice == "noctalia" then
-      ''"noctalia-shell" "ipc" "call" "launcher" "toggle"''
+      ''"noctalia" "msg" "panel-toggle" "launcher"''
     else if barChoice == "dms" then
       ''"${dmsPath}" "ipc" "call" "spotlight" "toggle"''
     # waybar or default
     else
       ''"rofi" "-show" "drun"'';
 
-  # Noctalia-specific keybinds
+  # Noctalia-specific keybinds (v5 IPC: `noctalia msg ...`)
   noctaliaKeybinds =
     if barChoice == "noctalia" then
       ''
-        // === Noctalia Controls ===
+        // === Noctalia Controls (v5 IPC) ===
         Mod+Comma {
-            spawn "noctalia-shell" "ipc" "call" "settings" "toggle";
+            spawn-sh "noctalia msg settings-toggle";
         }
         Mod+Alt+S {
-            spawn "noctalia-shell" "ipc" "call" "settings" "toggle";
+            spawn-sh "noctalia msg settings-toggle";
         }
         Mod+Shift+C {
-            spawn "noctalia-shell" "ipc" "call" "controlCenter" "toggle";
+            spawn-sh "noctalia msg panel-toggle control-center";
+        }
+        // Power/session panel (power off, reboot, logout, etc.)
+        Ctrl+Shift+L {
+            spawn-sh "noctalia msg panel-toggle session";
+        }
+        // Wallpaper: random
+        Mod+Shift+W {
+            spawn-sh "noctalia msg wallpaper-random";
+        }
+        // Wallpaper: open selector
+        Mod+Ctrl+W {
+            spawn-sh "noctalia msg panel-toggle wallpaper";
         }
       ''
     else
       "";
+
+  # Audio & Brightness keybinds.
+  # With Noctalia (v5) we route through `noctalia msg` so the OSD/theme syncs;
+  # otherwise fall back to direct wpctl/brightnessctl (your binds.kdl scheme).
+  audioBrightnessKeybinds =
+    if barChoice == "noctalia" then
+      ''
+        // === Audio & Brightness (Noctalia v5) ===
+        XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "noctalia msg volume-up"; }
+        XF86AudioLowerVolume allow-when-locked=true { spawn-sh "noctalia msg volume-down"; }
+        XF86AudioMute        allow-when-locked=true { spawn-sh "noctalia msg volume-mute"; }
+        XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+        XF86MonBrightnessUp   allow-when-locked=true { spawn-sh "noctalia msg brightness-up"; }
+        XF86MonBrightnessDown allow-when-locked=true { spawn-sh "noctalia msg brightness-down"; }
+      ''
+    # dms already provides its own audio/brightness IPC binds
+    else if barChoice == "dms" then
+      ""
+    else
+      ''
+        // === Audio & Brightness (direct, non-noctalia) ===
+        XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+"; }
+        XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
+        XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
+        XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+        XF86MonBrightnessUp   allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
+        XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
+      '';
 
   # DMS-specific keybinds
   dmsKeybinds =
@@ -105,6 +145,7 @@ in
 
       ${noctaliaKeybinds}
       ${dmsKeybinds}
+      ${audioBrightnessKeybinds}
 
       // === Security ===
       Super+L { spawn "hyprlock"; }
@@ -123,7 +164,7 @@ in
       Mod+Alt+F { maximize-column; }
       Mod+Shift+F { fullscreen-window; }
       Mod+W { toggle-window-floating; }
-      Mod+Ctrl+W { switch-focus-between-floating-and-tiling; }
+      Mod+Ctrl+Q { switch-focus-between-floating-and-tiling; }
       Mod+V { toggle-column-tabbed-display; }
 
       // === Focus Navigation ===

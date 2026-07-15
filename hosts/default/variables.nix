@@ -75,13 +75,11 @@
   defaultShell = "zsh"; # Options: "fish" or "zsh"
 
   # Set Stylix Image
-  #stylixImage = ../../wallpapers/AnimeGirlNightSky.jpg;
-  #stylixImage = ../../wallpapers/nix-wallpaper-stripes-logo.png;
-  #stylixImage = ../../wallpapers/beautifulmountainscape.png;
-  #stylixImage = ../../wallpapers/mountainscapedark.jpg;
-  #stylixImage = ../../wallpapers/Rainnight.jpg;
-  #stylixImage = ../../wallpapers/zaney-wallpaper.jpg;
-  stylixImage = ../../wallpapers/placeholder.png;
+  # The Stylix default wallpaper is pinned in the repo (wallpapers/) so the
+  # build stays pure/reproducible. Your full collection lives in
+  # ~/Pictures/Wallpapers (used by wallsetter / random wallpapers).
+  # To change the Stylix wallpaper, drop the image in wallpapers/ and update:
+  stylixImage = ../../wallpapers/dark-samurai-lily-valley-desktop-wallpaper-4k.jpg;
 
   # Set Waybar (temporarily disabled - use DMS or Noctalia)
   # Includes alternates such as:

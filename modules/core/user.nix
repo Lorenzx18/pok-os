@@ -4,6 +4,7 @@
   username,
   host,
   profile,
+  repoPath,
   ...
 }:
 let
@@ -29,6 +30,7 @@ in
         username
         host
         profile
+        repoPath
         ;
     };
     users.${username} = {

@@ -57,6 +57,7 @@ in
     ./yazi
     ./zoxide.nix
     ./environment.nix
+    ./dotfiles
   ]
 
   # Window Managers - Both always available, user selects at login

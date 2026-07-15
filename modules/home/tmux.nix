@@ -1,5 +1,5 @@
 # Tmux is a terminal multiplexer that allows you to run multiple terminal sessions in a single window.
-{pkgs, ...}: {
+{pkgs, repoPath, ...}: {
   programs.tmux = {
     enable = true;
     mouse = true;
@@ -87,7 +87,7 @@
       bind C-z display-popup \
         -w 90% \
         -h 90% \
-        -E 'nvim ~/ddubsos/flake.nix'
+        -E 'nvim ${repoPath}/flake.nix'
       #bind C-g display-popup -E "bash -i ~/.tmux/scripts/chat-popup.sh"
       bind C-t display-popup \
         -d "#{pane_current_path}" \
@@ -98,11 +98,11 @@
       ##### Display Menu #####
 
       bind d display-menu -T "#[align=centre]Dotfiles" -x C -y C \
-        "Pok OS flake.nix"         f  "display-popup -E 'nvim ~/pok-os/flake.nix'" \
-        "Pok OS packages"          p  "display-popup -E 'nvim ~/pok-os/modules/core/packages.nix'" \
-        "Pok OS keybinds"          k  "display-popup -E 'nvim ~/pok-os/modules/home/hyprland/binds.nix'" \
-        "Pok OS env variables"     e  "display-popup -E 'nvim ~/pok-os/modules/home/hyprland/env.nix'" \
-        "Pok OS windowrules"       w  "display-popup -E 'nvim ~/pok-os/modules/home/hyprland/windowrules.nix'" \
+        "Pok OS flake.nix"         f  "display-popup -E 'nvim ${repoPath}/flake.nix'" \
+        "Pok OS packages"          p  "display-popup -E 'nvim ${repoPath}/modules/core/packages.nix'" \
+        "Pok OS keybinds"          k  "display-popup -E 'nvim ${repoPath}/modules/home/hyprland/binds.nix'" \
+        "Pok OS env variables"     e  "display-popup -E 'nvim ${repoPath}/modules/home/hyprland/env.nix'" \
+        "Pok OS windowrules"       w  "display-popup -E 'nvim ${repoPath}/modules/home/hyprland/windowrules.nix'" \
         "Exit"              q  ""
 
 

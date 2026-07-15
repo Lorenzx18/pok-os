@@ -1,4 +1,7 @@
-{ ... }:
+{ barChoice ? "waybar" }:
+let
+  noctalia = barChoice == "noctalia";
+in
 ''
   config-notification {
       disable-failed
@@ -20,6 +23,8 @@
           // Natural scrolling inverts scroll direction
           // Up swipe scrolls down, down swipe scrolls up (natural direction)
           natural-scroll
+          // Tap-to-click
+          tap
       }
       mouse {
           accel-profile "adaptive"
@@ -28,7 +33,7 @@
       trackpoint {
       }
 
-      focus-follows-mouse
+      focus-follows-mouse max-scroll-amount="0%"
       warp-mouse-to-focus
   }
 
@@ -48,28 +53,50 @@
 
       border {
           width 2
-          active-color "#cba6f7"
-          inactive-color "#45475a"
-          urgent-color "#f5c2e7"
+          active-color   "${if noctalia then "#e47167" else "#cba6f7"}"
+          inactive-color "${if noctalia then "#291614" else "#45475b"}"
+          urgent-color   "${if noctalia then "#cd736b" else "#f5c2e7"}"
       }
 
       focus-ring {
           off
-          width 2
-          active-color   "#808080"
-          inactive-color "#505050"
+          width 6
+          active-color   "${if noctalia then "#e47167" else "#7fc8ff"}"
+          inactive-color "${if noctalia then "#291614" else "#505050"}"
+          ${if noctalia then ''urgent-color "#cd736b"'' else ""}
       }
 
       shadow {
+          ${if noctalia then ''color "#29161470"'' else ''color "#0007"''}
           softness 30
           spread 5
           offset x=0 y=5
-          color "#0007"
       }
+
+      ${if noctalia then ''
+      tab-indicator {
+          active-color   "#e47167"
+          inactive-color "#8d160c"
+          urgent-color   "#cd736b"
+      }
+
+      insert-hint {
+          color "#e4716780"
+      }
+      '' else ""}
 
       struts {
       }
   }
+
+  ${if noctalia then ''
+  recent-windows {
+      highlight {
+          active-color "#e47167"
+          urgent-color "#cd736b"
+      }
+  }
+  '' else ""}
 
   /-layer-rule {
       match namespace="^quickshell$"

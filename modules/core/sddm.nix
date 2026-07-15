@@ -13,7 +13,7 @@ let
     themeConfig =
       if lib.hasSuffix "sakura_static.png" config.stylix.image then
         {
-          FormPosition = "left";
+          FormPosition = "center";
           Blur = "2.0";
           HourFormat = "h:mm AP";
         }
@@ -41,7 +41,7 @@ let
         }
       else
         {
-          FormPosition = "left";
+          FormPosition = "center";
           Blur = "4.0";
           Background = "${toString config.stylix.image}";
           HeaderTextColor = "#${textColor}";

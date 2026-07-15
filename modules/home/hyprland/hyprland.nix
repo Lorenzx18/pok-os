@@ -46,10 +46,6 @@ in
   };
   # Place Files Inside Home Directory
   home.file = {
-    "Pictures/Wallpapers" = {
-      source = ../../../wallpapers;
-      recursive = true;
-    };
     ".face.icon".source = ./face.jpg;
     ".config/face.jpg".source = ./face.jpg;
   };
@@ -85,7 +81,7 @@ in
         else if actualBarChoice == "noctalia" then
           [
             # Launch Noctalia Shell
-            "killall -q noctalia;sleep .5 && noctalia-shell"
+            "killall -q noctalia;sleep .5 && noctalia --daemon"
           ]
         else
           [

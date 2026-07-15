@@ -44,6 +44,7 @@
             host = hostname;
             inherit profile;
             inherit username;
+            repoPath = inputs.self;
             zen-browser = inputs.zen-browser.packages.${system}.default;
             helium-browser = inputs.helium-browser.packages.${system}.helium-browser;
           };

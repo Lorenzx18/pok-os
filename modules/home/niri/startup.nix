@@ -11,7 +11,7 @@ let
   # Note: waybar and dms are handled by systemd services, not spawn-at-startup
   barStartupCommand =
     if barChoice == "noctalia" then
-      ''spawn-at-startup "noctalia-shell"''
+      ''spawn-at-startup "noctalia" "--daemon"''
     else
       ''// ${barChoice} started via systemd service'';
 in
@@ -21,6 +21,4 @@ in
   spawn-at-startup "bash" "-c" "awww-daemon && sleep 1 && awww img '${stylixImage}'"
   spawn-at-startup "wal" "-R"
   spawn-at-startup "${pkgs.mate-polkit}/libexec/polkit-mate-authentication-agent-1"
-  spawn-at-startup "vesktop"
-  spawn-at-startup "Telegram"
 ''

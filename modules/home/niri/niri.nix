@@ -33,7 +33,7 @@ let
       ;
   };
   windowrulesModule = import ./windowrules.nix { inherit host; };
-  layoutModule = import ./layout.nix { };
+  layoutModule = import ./layout.nix { inherit barChoice; };
   startupModule = import ./startup.nix {
     inherit
       host
@@ -260,10 +260,6 @@ in
 
   # Place wallpapers in home directory
   home.file = {
-    "Pictures/Wallpapers" = {
-      source = ../../../wallpapers;
-      recursive = true;
-    };
     ".face.icon".source = ../hyprland/face.jpg;
     ".config/face.jpg".source = ../hyprland/face.jpg;
   };

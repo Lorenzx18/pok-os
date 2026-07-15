@@ -8,7 +8,7 @@
 
     #!/usr/bin/env zsh
     # Set defaults
-    export PATH=/home/don/Development/Repos/flutter/bin:$PATH
+    export PATH="$HOME/Development/Repos/flutter/bin:$PATH"
     export CHROME_EXECUTABLE=${pkgs.google-chrome}/bin/google-chrome
     export CHROME_EXECUTABLE=/run/current-system/sw/bin/google-chrome-stable
     export PATH="$HOME/.local/bin:$PATH"

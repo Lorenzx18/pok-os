@@ -11,17 +11,6 @@
         separator = " ➜  ";
       };
 
-      logo = {
-        source = ./blackdontrans.png;
-        type = "kitty-direct";
-        height = 10;
-        width = 20;
-        padding = {
-          top = 2;
-          left = 2;
-        };
-      };
-
       modules = [
         "break"
         {
