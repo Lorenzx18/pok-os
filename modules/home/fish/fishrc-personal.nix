@@ -6,7 +6,7 @@
     # Below are examples migrated from zshrc-personal
 
     # Environment variables
-    set -gx CHROME_EXECUTABLE /run/current-system/sw/bin/google-chrome-stable
+    set -gx CHROME_EXECUTABLE /run/current-system/sw/bin/helium-browser
     set -gx BROWSER "flatpak run app.zen_browser.zen"
     set -gx EDITOR "zeditor"
     # set -gx VISUAL "nvim"

@@ -7,7 +7,7 @@ pkgs.writeShellScriptBin "webapp-install" ''
     set -euo pipefail
 
     # Pok OS Web App Installer
-    # Creates desktop entries for web applications using Chromium browser
+    # Creates desktop entries for web applications using Helium browser
     VERSION="1.0.0"
 
     # --- Helper Functions ---
@@ -109,12 +109,12 @@ pkgs.writeShellScriptBin "webapp-install" ''
       fi
     fi
 
-    # Use custom exec if provided, otherwise use Chromium in app mode
+    # Use custom exec if provided, otherwise use Helium in app mode
     if [[ -n $CUSTOM_EXEC ]]; then
       EXEC_COMMAND="$CUSTOM_EXEC"
     else
-      # Chromium browser in app mode - creates a standalone window without browser UI
-      EXEC_COMMAND="${pkgs.chromium}/bin/chromium --app=\"$APP_URL\""
+      # Helium browser in app mode - creates a standalone window without browser UI
+      EXEC_COMMAND="/run/current-system/sw/bin/helium-browser --app=\"$APP_URL\""
     fi
 
     # Create application .desktop file
