@@ -153,7 +153,7 @@ in
     # Create symlink to DMS QML files from nix profile
     # The dms CLI expects the shell files at ~/.config/quickshell/dms
     home.file.".config/quickshell/dms".source =
-      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nix-profile/etc/xdg/quickshell/dms";
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nix-profile/share/quickshell/dms";
 
     # XDG directories are already managed by home-manager's xdg module
 
