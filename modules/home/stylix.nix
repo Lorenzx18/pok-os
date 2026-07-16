@@ -26,4 +26,24 @@ lib.mkIf stylixEnable {
   home.pointerCursor.enable = true;
 
   services.nwg-drawer-stylix.enable = true;
+
+  # Force home-manager to overwrite GTK/Qt config files instead of backing them
+  # up. Needed so switching bars (DMS <-> Noctalia) never aborts on a leftover
+  # file from the other bar (e.g. DMS's gtk.css symlink, or a stale .backup).
+  # gtk.css is only forced when NOT DMS — under DMS home-manager doesn't write
+  # it (extraConfig cleared) and forcing it would create an empty file.
+  xdg.configFile =
+    {
+      # settings.ini is written in both bars (gtk.theme is always set).
+      "gtk-3.0/settings.ini".force = true;
+      "gtk-4.0/settings.ini".force = true;
+    }
+    // lib.optionalAttrs (!dmsBar) {
+      # gtk.css and the Qt configs are only written when NOT DMS (under DMS
+      # they're cleared/disabled, so forcing them would create empty files).
+      "gtk-3.0/gtk.css".force = true;
+      "gtk-4.0/gtk.css".force = true;
+      "qt5ct/qt5ct.conf".force = true;
+      "qt6ct/qt6ct.conf".force = true;
+    };
 }
