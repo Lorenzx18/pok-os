@@ -196,7 +196,7 @@ in
       Install.WantedBy = [ "graphical-session.target" ];
     };
     systemd.user.paths."dms-border-colors" = {
-      pathConfig = {
+      Path = {
         PathChanged = [
           "%h/.cache/DankMaterialShell/dms-colors.json"
           "%h/.config/gtk-3.0/dank-colors.css"
