@@ -29,6 +29,17 @@
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Dank Material Shell (optional bar, enabled via barChoice = "dms").
+    # Pinned to the v1.5.1 release tag so the QML shell and the dms backend
+    # (packaged separately below) stay API-compatible and reproducible.
+    dms = {
+      url = "github:AvengeMedia/DankMaterialShell/v1.5.1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    dgop = {
+      url = "github:AvengeMedia/dgop/45e8a9430134a6761c7fd3a29b50d351ef7387bf";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     helium-browser = {
       url = "github:fpletz/flake";
       inputs.nixpkgs.follows = "nixpkgs";

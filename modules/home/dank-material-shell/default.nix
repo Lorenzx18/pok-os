@@ -13,8 +13,6 @@ let
   enableDMSLegacy = variables.enableDankMaterialShell or false;
   enableDMS = (barChoice == "dms") || enableDMSLegacy;
 
-  cfg = config.programs.dankMaterialShell;
-
   # Material Symbols Rounded font derivation
   material-symbols-rounded = pkgs.stdenvNoCC.mkDerivation {
     pname = "material-symbols-rounded";
@@ -40,6 +38,10 @@ let
       platforms = platforms.all;
     };
   };
+
+  # The DMS flake's `default` package (pinned v1.5.1 release tag) ships both
+  # the QML shell and the `bin/dms` backend CLI/API server, all built from the
+  # same source — no imperative `dms-install` download is needed.
 in
 {
   options.programs.dankMaterialShell = {
@@ -50,69 +52,17 @@ in
     # Disable waybar when DMS is enabled to prevent conflicts
     programs.waybar.enable = lib.mkForce false;
 
-    # Install DankMaterialShell and recommended dependencies
+    # DMS + its dependencies, all pinned/reproducible via flake inputs.
+    # No imperative `dms-install` is needed — everything comes from the flake.
     home.packages = with pkgs; [
-      # Quickshell - the shell that runs DMS
+      # Quickshell - the shell engine that runs the DMS QML
       inputs.quickshell.packages.${pkgs.system}.default
 
-      # DMS installer script
-      (writeShellScriptBin "dms-install" ''
-        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-        echo "🎨 Installing Dank Material Shell"
-        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-        echo ""
-        echo "📦 Installing DMS QML shell from GitHub flake (release v1.5.1)..."
-        # Pin the shell to the SAME release as the CLI below. Mixing a rolling
-        # master shell with a stale CLI (or vice-versa) breaks the DMS API
-        # (e.g. "unknown method: matugen.queue" / "theme worker failed (1)").
-        nix profile install github:AvengeMedia/DankMaterialShell/v1.5.1
-        echo ""
-        echo "📦 Installing dgop for system monitoring..."
-        nix profile install github:AvengeMedia/dgop
-        echo ""
-        echo "📦 Installing DMS CLI binary (v1.5.1, matching the shell)..."
-        DMS_VERSION="1.5.1"
-        DMS_CLI_URL="https://github.com/AvengeMedia/DankMaterialShell/releases/download/v$DMS_VERSION/dms-cli-amd64.gz"
-        INSTALL_DIR="$HOME/.local/bin"
+      # DMS QML shell + backend CLI (pinned v1.5.1 release tag)
+      inputs.dms.packages.${pkgs.system}.default
 
-        mkdir -p "$INSTALL_DIR"
-        echo "   Downloading dms CLI from GitHub releases..."
-        ${pkgs.curl}/bin/curl -L "$DMS_CLI_URL" -o "/tmp/dms-cli-amd64.gz"
-        ${pkgs.gzip}/bin/gunzip -f "/tmp/dms-cli-amd64.gz"
-        ${pkgs.coreutils}/bin/chmod +x "/tmp/dms-cli-amd64"
-        ${pkgs.coreutils}/bin/mv "/tmp/dms-cli-amd64" "$INSTALL_DIR/dms"
-        echo "   Installed dms CLI to $INSTALL_DIR/dms"
-        echo ""
-        echo "✅ DMS installed successfully!"
-        echo "🚀 The 'dms' command is now available"
-        echo "📝 Configure it in ~/.config/dms/"
-        echo ""
-      '')
-
-      # DMS uninstaller script
-      (writeShellScriptBin "dms-uninstall" ''
-        echo "🗑️  Removing Dank Material Shell..."
-        nix profile remove github:AvengeMedia/DankMaterialShell 2>/dev/null || true
-        nix profile remove github:AvengeMedia/dgop 2>/dev/null || true
-        rm -f "$HOME/.local/bin/dms"
-        echo "✅ DMS uninstalled"
-      '')
-
-      # DMS launcher script (for manual start or Niri autostart)
-      (writeShellScriptBin "dms-start" ''
-        echo "🚀 Starting Dank Material Shell..."
-        killall -q quickshell 2>/dev/null || true
-        sleep 0.5
-        quickshell -c DankMaterialShell &
-        echo "✅ DMS started"
-      '')
-
-      # DMS stop script
-      (writeShellScriptBin "dms-stop" ''
-        echo "🛑 Stopping Dank Material Shell..."
-        killall -q quickshell 2>/dev/null || true
-        echo "✅ DMS stopped"
-      '')
+      # System monitoring backend used by DMS widgets
+      inputs.dgop.packages.${pkgs.system}.dgop
 
       # Required fonts for DMS
       material-symbols-rounded # Material Symbols Rounded (Google icon font)
@@ -127,7 +77,6 @@ in
       matugen # Material Design color generation
 
       # System monitoring dependencies
-      # dgop will be installed via dms-install script since it's not in nixpkgs
       lm_sensors # Hardware temperature monitoring
       pciutils # lspci for GPU detection
 
@@ -149,7 +98,7 @@ in
 
     # Run DMS as a graphical-session service so switching bars via
     # `nixos-rebuild switch` starts/stops it live (no re-login needed).
-    # dms is installed imperatively (dms-install) to ~/.local/bin/dms.
+    # Uses the pinned backend derivation (not an imperatively installed binary).
     systemd.user.services.dms = {
       Unit = {
         Description = "Dank Material Shell";
@@ -157,7 +106,7 @@ in
         After = [ "graphical-session.target" ];
       };
       Service = {
-        ExecStart = "%h/.local/bin/dms run";
+        ExecStart = "${inputs.dms.packages.${pkgs.system}.default}/bin/dms run";
         Restart = "on-failure";
         RestartSec = 2;
       };
@@ -167,42 +116,11 @@ in
     # Font configuration
     fonts.fontconfig.enable = true;
 
+    # Point the shell at the pinned DMS QML from the flake package.
+    home.file.".config/quickshell/dms".source =
+      "${inputs.dms.packages.${pkgs.system}.default}/share/quickshell/dms";
+
     # Ensure XDG directories exist for DMS
     xdg.configFile."dms/.keep".text = "";
-
-    # Create symlink to DMS QML files from nix profile
-    # The dms CLI expects the shell files at ~/.config/quickshell/dms
-    home.file.".config/quickshell/dms".source =
-      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nix-profile/share/quickshell/dms";
-
-    # XDG directories are already managed by home-manager's xdg module
-
-    # Warning message in home activation
-    home.activation.dmsWarning = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      $DRY_RUN_CMD echo ""
-      $DRY_RUN_CMD echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-      $DRY_RUN_CMD echo "🎨 Dank Material Shell (DMS) is ENABLED"
-      $DRY_RUN_CMD echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-      $DRY_RUN_CMD echo ""
-      $DRY_RUN_CMD echo "⚠️  Waybar has been automatically disabled"
-      $DRY_RUN_CMD echo ""
-      $DRY_RUN_CMD echo "📦 If not yet installed, run: dms-install"
-      $DRY_RUN_CMD echo ""
-      $DRY_RUN_CMD echo "🚀 Available commands:"
-      $DRY_RUN_CMD echo "   dms-start   - Start DMS manually"
-      $DRY_RUN_CMD echo "   dms-stop    - Stop DMS"
-      $DRY_RUN_CMD echo ""
-      $DRY_RUN_CMD echo "📝 For Niri users: Add to ~/.config/niri/config.kdl:"
-      $DRY_RUN_CMD echo "   spawn-at-startup \"dms-start\""
-      $DRY_RUN_CMD echo ""
-      $DRY_RUN_CMD echo "   (Hyprland users: autostart is already configured)"
-      $DRY_RUN_CMD echo ""
-      $DRY_RUN_CMD echo "⚙️  Configure at: ~/.config/dms/"
-      $DRY_RUN_CMD echo "🗑️  To uninstall: dms-uninstall"
-      $DRY_RUN_CMD echo ""
-      $DRY_RUN_CMD echo "📚 Docs: https://github.com/AvengeMedia/DankMaterialShell"
-      $DRY_RUN_CMD echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-      $DRY_RUN_CMD echo ""
-    '';
   };
 }
