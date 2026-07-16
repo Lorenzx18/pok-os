@@ -81,6 +81,34 @@ nrs   # sudo nixos-rebuild switch --flake .#default
 nfu   # nix flake update && sudo nixos-rebuild switch --flake .#default
 ```
 
+## ✅ Post-install checklist
+
+A few things are **per-machine** or **not declarative** and must be done by hand
+after installing. Do these once on every new laptop:
+
+1. **Set your user password** (required — the config uses `mutableUsers = true`
+   and ships no password, so `nixos-install` only sets `root`). From the
+   installer chroot, or a TTY after first boot:
+   ```bash
+   passwd pok          # replace 'pok' if you changed username in flake.nix
+   ```
+   Without this you cannot log in at SDDM.
+
+2. **Confirm hardware + GPU is correct for this machine:**
+   - `hosts/default/hardware.nix` was regenerated (install step 4).
+   - `intelID` / `nvidiaID` in `variables.nix` match `lspci | grep VGA`.
+   - `profile` in `flake.nix` matches the GPU (`nvidia-laptop`, `amd`, `intel`, …).
+
+3. **Dynamic window-border colors (Noctalia bar):** borders follow Noctalia's
+   palette automatically. To make them track the **wallpaper**, open the
+   Noctalia settings (`SUPER + ,` → Color Scheme) and enable **"Use wallpaper
+   colors"**. Then change/re-apply the wallpaper once so Noctalia renders the
+   color files (`~/.config/niri/noctalia-colors.kdl`, `~/.config/hypr/noctalia-colors.conf`).
+
+4. **Only if you switch `barChoice = "dms"`:** DMS is installed imperatively —
+   after rebuilding, run `dms-install` once (needs network). Noctalia (the
+   default) needs no such step.
+
 ## 📁 Project Structure
 
 ```
