@@ -144,6 +144,23 @@ in
       gammastep # Screen temperature adjustment (blue light filter)
     ];
 
+    # Run DMS as a graphical-session service so switching bars via
+    # `nixos-rebuild switch` starts/stops it live (no re-login needed).
+    # dms is installed imperatively (dms-install) to ~/.local/bin/dms.
+    systemd.user.services.dms = {
+      Unit = {
+        Description = "Dank Material Shell";
+        PartOf = [ "graphical-session.target" ];
+        After = [ "graphical-session.target" ];
+      };
+      Service = {
+        ExecStart = "%h/.local/bin/dms run";
+        Restart = "on-failure";
+        RestartSec = 2;
+      };
+      Install.WantedBy = [ "graphical-session.target" ];
+    };
+
     # Font configuration
     fonts.fontconfig.enable = true;
 

@@ -1,6 +1,7 @@
 {
   host,
   config,
+  lib,
   pkgs,
   inputs,
   ...
@@ -74,23 +75,12 @@ in
         "systemctl --user start hyprpolkitagent"
         "killall -q awww-daemon;sleep .5 && awww-daemon"
       ]
-      ++ (
-        if actualBarChoice == "dms" then
-          [
-            # Launch Dank Material Shell via quickshell
-            "killall -q quickshell;sleep .5 && $HOME/.local/bin/dms run"
-          ]
-        else if actualBarChoice == "noctalia" then
-          [
-            # Launch Noctalia Shell
-            "killall -q noctalia;sleep .5 && noctalia --daemon"
-          ]
-        else
-          [
-            # Launch waybar (default)
-            "killall -q waybar;sleep .5 && waybar"
-          ]
-      )
+      # noctalia and dms are started as systemd user services (see their
+      # modules) so they swap seamlessly on `nixos-rebuild switch`. Only
+      # waybar is launched here as a fallback.
+      ++ lib.optionals (actualBarChoice == "waybar") [
+        "killall -q waybar;sleep .5 && waybar"
+      ]
       ++ [
         "killall -q swaync;sleep .5 && swaync"
         "nm-applet --indicator"

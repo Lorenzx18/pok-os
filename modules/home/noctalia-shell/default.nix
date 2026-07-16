@@ -19,5 +19,21 @@ in
     # built-in defaults until you customize it from the GUI.
     programs.waybar.enable = lib.mkForce false;
     home.packages = [ inputs.noctalia.packages.${pkgs.system}.default ];
+
+    # Run Noctalia as a graphical-session service so switching bars via
+    # `nixos-rebuild switch` starts/stops it live (no re-login needed).
+    systemd.user.services.noctalia = {
+      Unit = {
+        Description = "Noctalia shell/bar";
+        PartOf = [ "graphical-session.target" ];
+        After = [ "graphical-session.target" ];
+      };
+      Service = {
+        ExecStart = "${inputs.noctalia.packages.${pkgs.system}.default}/bin/noctalia --daemon";
+        Restart = "on-failure";
+        RestartSec = 2;
+      };
+      Install.WantedBy = [ "graphical-session.target" ];
+    };
   };
 }
