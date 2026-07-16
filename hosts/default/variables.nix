@@ -68,7 +68,7 @@
   enableHyprlock = false;
 
   # Bar/Shell Choice
-  barChoice = "dms"; # Options: "dms" or "noctalia"
+  barChoice = "noctalia"; # Options: "dms" or "noctalia"
   # DMS is fully declarative: dms + dgop come from pinned flake inputs
   # (see flake.nix) and run via the dms systemd user service. No imperative
   # 'dms-install' is required — just rebuild and switch.

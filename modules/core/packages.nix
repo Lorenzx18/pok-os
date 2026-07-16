@@ -66,6 +66,7 @@
     lolcat # Add Colors To Your Terminal Command Output
     lshw # Detailed Hardware Information
     mpv # Incredible Video Player
+    mpvpaper
     ncdu # Disk Usage Analyzer With Ncurses Interface
     nitch # small fetch util
     zip
