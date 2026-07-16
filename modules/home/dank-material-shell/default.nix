@@ -61,14 +61,17 @@ in
         echo "🎨 Installing Dank Material Shell"
         echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
         echo ""
-        echo "📦 Installing DMS QML shell from GitHub flake..."
-        nix profile install github:AvengeMedia/DankMaterialShell
+        echo "📦 Installing DMS QML shell from GitHub flake (release v1.5.1)..."
+        # Pin the shell to the SAME release as the CLI below. Mixing a rolling
+        # master shell with a stale CLI (or vice-versa) breaks the DMS API
+        # (e.g. "unknown method: matugen.queue" / "theme worker failed (1)").
+        nix profile install github:AvengeMedia/DankMaterialShell/v1.5.1
         echo ""
         echo "📦 Installing dgop for system monitoring..."
         nix profile install github:AvengeMedia/dgop
         echo ""
-        echo "📦 Installing DMS CLI binary..."
-        DMS_VERSION="0.2.3"
+        echo "📦 Installing DMS CLI binary (v1.5.1, matching the shell)..."
+        DMS_VERSION="1.5.1"
         DMS_CLI_URL="https://github.com/AvengeMedia/DankMaterialShell/releases/download/v$DMS_VERSION/dms-cli-amd64.gz"
         INSTALL_DIR="$HOME/.local/bin"
 
