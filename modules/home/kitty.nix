@@ -20,6 +20,10 @@ in
       enable_audio_bell = false;
       background_opacity = lib.mkForce "0.85";
       dynamic_background_opacity = true;
+      # Solid base color; opacity makes it translucent glass over the opaque
+      # dark session background (no wallpaper leaking through). Kitty does not
+      # accept 8-digit hex with alpha.
+      background = "#1e1e2e";
       mouse_hide_wait = 60;
       cursor_trail = 1;
       tab_fade = 1;

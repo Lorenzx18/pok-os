@@ -2,6 +2,10 @@
   description = "Pok OS (Based on ZaneyOS)";
 
   inputs = {
+    # Inputs track their upstream branches, so `nix flake update` (the `nfu`
+    # alias) always pulls the latest commit. The committed `flake.lock` freezes
+    # them between updates, so the build is reproducible run-to-run and you can
+    # roll back. Only `dms`/`dgop` are pinned (see below) for DMS API stability.
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager";

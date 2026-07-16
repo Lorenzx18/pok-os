@@ -17,7 +17,7 @@ Pok-OS is a personal, flake-based NixOS configuration built on the foundation of
 
 ### **🌊 Is Pok-OS stable or bleeding-edge?**
 
-**Bleeding-edge, on purpose.** `nixpkgs` tracks `nixos-unstable` and other inputs follow it. This gives you the newest packages (recent Niri, Noctalia v5, Hyprland from unstable) at the cost of occasional breakage.
+**Bleeding-edge, on purpose.** Inputs track their upstream branches (e.g. `nixos-unstable`, `main`) and `nix flake update` pulls the latest commits. This gives you the newest packages (recent Niri, Noctalia v5, Hyprland from unstable) at the cost of occasional breakage.
 
 Two things keep it safe:
 - The committed **`flake.lock` freezes everything** — the system never changes until *you* run `nix flake update` (`nfu`).

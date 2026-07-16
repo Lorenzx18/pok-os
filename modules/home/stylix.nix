@@ -3,47 +3,44 @@
   lib,
   ...
 }: let
-  inherit (import ../../hosts/${host}/variables.nix) stylixEnable barChoice;
-  # When DMS is the bar it themes GTK/Qt itself (gtk.css symlink ->
-  # dank-colors.css, qt*ct color configs). Stylix must not also manage
-  # those files, or every `switch` clobbers DMS's runtime edits.
-  dmsBar = barChoice == "dms";
+  inherit (import ../../hosts/${host}/variables.nix) stylixEnable;
+  # The active bar (DMS or Noctalia) owns the runtime GTK/Qt color scheme:
+  #   - DMS: gtk.css -> dank-colors.css (wired by dms-gtk-sh)
+  #   - Noctalia: its matugen templates + noctalia-gtk-sh
+  # Stylix must not also manage those files, or every `switch` clobbers the
+  # bar's runtime edits. Stylix keeps only its SDDM color target so the
+  # astronaut login screen follows the wallpaper palette.
 in
 lib.mkIf stylixEnable {
+  # Every app owns its own hardcoded colors now (see each module); Stylix is
+  # only allowed to theme SDDM. Disable all other targets so a `switch` can
+  # never clobber the bars' runtime GTK/Qt theming or app colors.
   stylix.targets = {
     waybar.enable = false;
     rofi.enable = false;
     hyprland.enable = false;
     hyprlock.enable = false;
     ghostty.enable = false;
-    # mkForce: Stylix's own targets set enable=true and are applied after
-    # this module, so a plain `false` would be overridden. mkForce wins.
-    qt.enable = lib.mkForce (!dmsBar);
-    gtk.enable = lib.mkForce (!dmsBar);
+    fish.enable = false;
+    kitty.enable = false;
+    alacritty.enable = false;
+    tmux.enable = false;
+    bat.enable = false;
+    fzf.enable = false;
+    starship.enable = false;
+    lazygit.enable = false;
+    vscode.enable = false;
+    vim.enable = false;
+    swaync.enable = false;
+    dunst.enable = false;
+    gtk.enable = lib.mkForce false;
+    qt.enable = lib.mkForce false;
   };
 
-  # Explicitly enable cursor config generation (silences home-manager deprecation)
-  home.pointerCursor.enable = true;
+  services.nwg-drawer-stylix.enable = false;
 
-  services.nwg-drawer-stylix.enable = true;
-
-  # Force home-manager to overwrite GTK/Qt config files instead of backing them
-  # up. Needed so switching bars (DMS <-> Noctalia) never aborts on a leftover
-  # file from the other bar (e.g. DMS's gtk.css symlink, or a stale .backup).
-  # gtk.css is only forced when NOT DMS — under DMS home-manager doesn't write
-  # it (extraConfig cleared) and forcing it would create an empty file.
-  xdg.configFile =
-    {
-      # settings.ini is written in both bars (gtk.theme is always set).
-      "gtk-3.0/settings.ini".force = true;
-      "gtk-4.0/settings.ini".force = true;
-    }
-    // lib.optionalAttrs (!dmsBar) {
-      # gtk.css and the Qt configs are only written when NOT DMS (under DMS
-      # they're cleared/disabled, so forcing them would create empty files).
-      "gtk-3.0/gtk.css".force = true;
-      "gtk-4.0/gtk.css".force = true;
-      "qt5ct/qt5ct.conf".force = true;
-      "qt6ct/qt6ct.conf".force = true;
-    };
+  # Stylix's cursor module relies on home.pointerCursor being set implicitly.
+  # Explicitly disable it so the bar owns the cursor theme and the deprecation
+  # warning goes away.
+  home.pointerCursor.enable = lib.mkForce false;
 }

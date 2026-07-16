@@ -1,8 +1,8 @@
 # Lazygit is a simple terminal UI for git commands.
 { config, lib, ... }:
 let
-  accent = "#${config.lib.stylix.colors.base0D}";
-  muted = "#${config.lib.stylix.colors.base03}";
+  accent = "#7aa2f7";
+  muted = "#34344a";
 in {
   programs.lazygit = {
     enable = true;

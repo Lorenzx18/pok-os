@@ -86,7 +86,9 @@ in
         "killall -q swaync;sleep .5 && swaync"
         "nm-applet --indicator"
         "pypr &"
-        "sleep 1.5 && awww img ${stylixImage}"
+        # Opaque dark background so transparent terminals (kitty/ghostty/etc.)
+        # show neutral glass instead of the SDDM/login wallpaper leaking through.
+        "sleep 1.5 && awww clear 1e1e2e"
       ]
       ++ startupApps;
 
@@ -115,8 +117,8 @@ in
         border_size = 3;
         resize_on_border = true;
         "col.active_border" =
-          "rgb(${config.lib.stylix.colors.base08}) rgb(${config.lib.stylix.colors.base0C}) 45deg";
-        "col.inactive_border" = "rgb(${config.lib.stylix.colors.base01})";
+          "rgb(f7768e) rgb(7dcfff) 45deg";
+        "col.inactive_border" = "rgb(16161e)";
       };
 
       misc = {

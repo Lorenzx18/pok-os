@@ -6,8 +6,8 @@
   ...
 }:
 let
-  accent = "#${config.lib.stylix.colors.base0D}";
-  background-alt = "#${config.lib.stylix.colors.base01}";
+  accent = "#7aa2f7";
+  background-alt = "#16161e";
 
   # Import variables to check shell choice
   variables = import ../../hosts/${host}/variables.nix;

@@ -206,14 +206,14 @@ in
             margin: 0px;
           }
           window#waybar {
-            background: #${config.lib.stylix.colors.base00};
+            background: #1a1b26;
             padding: 2px;
             border-radius: 4px;
           }
           #workspaces {
-            color: #${config.lib.stylix.colors.base00};
-            background: #${config.lib.stylix.colors.base00};
-            border: 2px solid #${config.lib.stylix.colors.base0B};
+            color: #1a1b26;
+            background: #1a1b26;
+            border: 2px solid #9ece6a;
             margin: 2px 4px;
             padding: 5px 5px;
             border-radius: 4px;
@@ -223,8 +223,8 @@ in
             padding: 0px 5px;
             margin: 0px 3px;
             border-radius: 16px;
-            color: #${config.lib.stylix.colors.base0B};
-            background: #${config.lib.stylix.colors.base00};
+            color: #9ece6a;
+            background: #1a1b26;
 
           }
           #workspaces button.active {
@@ -232,8 +232,8 @@ in
             padding: 0px 5px;
             margin: 0px 3px;
             border-radius: 4px;
-            color: #${config.lib.stylix.colors.base00};
-            background: #${config.lib.stylix.colors.base0B};
+            color: #1a1b26;
+            background: #9ece6a;
             transition: ${betterTransition};
             opacity: 1.0;
             min-width: 40px;
@@ -241,34 +241,34 @@ in
           #workspaces button:hover {
             font-weight: bold;
             border-radius: 4px;
-            color: #${config.lib.stylix.colors.base00};
-            background: #${config.lib.stylix.colors.base0B};
+            color: #1a1b26;
+            background: #9ece6a;
             opacity: 0.8;
           }
           tooltip {
-            background: #${config.lib.stylix.colors.base00};
-            border: 1px solid #${config.lib.stylix.colors.base08};
+            background: #1a1b26;
+            border: 1px solid #f7768e;
             border-radius: 12px;
           }
           tooltip label {
-            color: #${config.lib.stylix.colors.base08};
+            color: #f7768e;
           }
           #window, #pulseaudio, #temperature, #cpu, #memory, #idle_inhibitor, #disk {
             font-weight: bold;
             margin: 2px 0px;
             margin-right: 7px;
             padding: 0px 18px;
-            background: #${config.lib.stylix.colors.base00};
-            color: #${config.lib.stylix.colors.base0B};
-            border: 2px solid #${config.lib.stylix.colors.base0B};
+            background: #1a1b26;
+            color: #9ece6a;
+            border: 2px solid #9ece6a;
             border-radius: 4px;
           }
           #idle_inhibitor {
           font-size: 28px;
           }
           #custom-startmenu {
-            color: #${config.lib.stylix.colors.base00};
-            background: #${config.lib.stylix.colors.base0B};
+            color: #1a1b26;
+            background: #9ece6a;
             font-size: 22px;
             padding: 0px 5px 0px 5px;
             border-radius: 4px;
@@ -281,11 +281,11 @@ in
           #custom-notification, #clock, #custom-exit {
             /* font-weight: bold; */
             font-size: 20px;
-            background: #${config.lib.stylix.colors.base00};
-            color: #${config.lib.stylix.colors.base0B};
+            background: #1a1b26;
+            color: #9ece6a;
             margin: 2px 0px;
             margin-right: 7px;
-            border: 2px solid #${config.lib.stylix.colors.base0B};
+            border: 2px solid #9ece6a;
             border-radius: 4px;
             padding: 0px 12px;
           }
@@ -293,9 +293,9 @@ in
             font-weight: bold;
             font-size: 16px;
             margin: 0px;
-            background: #${config.lib.stylix.colors.base0B};
-            color: #${config.lib.stylix.colors.base00};
-            border: 2px solid #${config.lib.stylix.colors.base0B};
+            background: #9ece6a;
+            color: #1a1b26;
+            border: 2px solid #9ece6a;
             padding: 0px 18px;
             margin: 0px 0px;
             border-radius: 4px;

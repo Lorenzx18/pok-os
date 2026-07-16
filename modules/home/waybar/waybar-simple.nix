@@ -216,87 +216,87 @@ in
             min-height: 0px;
           }
           window#waybar {
-            background: #${config.lib.stylix.colors.base00};
-            color: #${config.lib.stylix.colors.base05};
+            background: #1a1b26;
+            color: #c0caf5;
           }
           #workspaces button {
             padding: 0px 5px;
             background: transparent;
-            color: #${config.lib.stylix.colors.base04};
+            color: #565f89;
           }
           #workspaces button.active {
-            color: #${config.lib.stylix.colors.base08};
+            color: #f7768e;
           }
           #workspaces button:hover {
-            color: #${config.lib.stylix.colors.base08};
+            color: #f7768e;
           }
           tooltip {
-            background: #${config.lib.stylix.colors.base00};
-            border: 1px solid #${config.lib.stylix.colors.base05};
+            background: #1a1b26;
+            border: 1px solid #c0caf5;
             border-radius: 12px;
           }
           tooltip label {
-            color: #${config.lib.stylix.colors.base05};
+            color: #c0caf5;
           }
           #window {
             padding: 0px 10px;
           }
           #pulseaudio, #cpu, #memory, #idle_inhibitor {
             padding: 0px 10px;
-            background: #${config.lib.stylix.colors.base04};
-            color: #${config.lib.stylix.colors.base00};
+            background: #565f89;
+            color: #1a1b26;
           }
           #custom-startmenu {
-            color: #${config.lib.stylix.colors.base02};
+            color: #2a2a37;
             padding: 0px 14px;
             font-size: 20px;
-            background: #${config.lib.stylix.colors.base0B};
+            background: #9ece6a;
           }
           #custom-hyprbindings, #network, #battery,
           #custom-notification, #custom-exit {
-            background: #${config.lib.stylix.colors.base0F};
-            color: #${config.lib.stylix.colors.base00};
+            background: #414868;
+            color: #1a1b26;
             padding: 0px 10px;
           }
           #tray {
-            background: #${config.lib.stylix.colors.base02};
-            color: #${config.lib.stylix.colors.base00};
+            background: #2a2a37;
+            color: #1a1b26;
             padding: 0px 10px;
           }
           #clock {
             font-weight: bold;
             padding: 0px 10px;
-            color: #${config.lib.stylix.colors.base00};
-            background: #${config.lib.stylix.colors.base0E};
+            color: #1a1b26;
+            background: #bb9af7;
           }
           #custom-arrow1 {
             font-size: 24px;
-            color: #${config.lib.stylix.colors.base0E};
-            background: #${config.lib.stylix.colors.base02};
+            color: #bb9af7;
+            background: #2a2a37;
           }
           #custom-arrow2 {
             font-size: 24px;
-            color: #${config.lib.stylix.colors.base02};
-            background: #${config.lib.stylix.colors.base0F};
+            color: #2a2a37;
+            background: #414868;
           }
           #custom-arrow3 {
             font-size: 24px;
-            color: #${config.lib.stylix.colors.base00};
-            background: #${config.lib.stylix.colors.base0F};
+            color: #1a1b26;
+            background: #414868;
           }
           #custom-arrow4 {
             font-size: 24px;
-            color: #${config.lib.stylix.colors.base0F};
+            color: #414868;
             background: transparent;
           }
           #custom-arrow6 {
             font-size: 24px;
-            color: #${config.lib.stylix.colors.base0B};
-            background: #${config.lib.stylix.colors.base04};
+            color: #9ece6a;
+            background: #565f89;
           }
           #custom-arrow7 {
             font-size: 24px;
-            color: #${config.lib.stylix.colors.base04};
+            color: #565f89;
             background: transparent;
           }
         ''

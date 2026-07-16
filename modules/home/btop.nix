@@ -7,6 +7,9 @@
     };
     settings = {
       vim_keys = true;
+      # Glassmorphism: transparent background (compositor adds the blur)
+      color_background = "#1e1e2eaa";
+      truecolor = true;
       rounded_corners = true;
       proc_tree = true;
       show_gpu_info = "on";

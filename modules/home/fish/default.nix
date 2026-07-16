@@ -5,7 +5,7 @@
   ...
 }:
 let
-  accent = "#${config.lib.stylix.colors.base0D}";
+  accent = "#7aa2f7";
 in
 {
   programs.fish = {

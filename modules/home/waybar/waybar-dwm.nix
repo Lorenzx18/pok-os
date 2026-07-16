@@ -200,16 +200,16 @@ in {
       };
     };
     style = ''
-      @define-color bg #${config.stylix.base16Scheme.base00};
-      @define-color fg #${config.stylix.base16Scheme.base05};
-      @define-color lbg #${config.stylix.base16Scheme.base01};
-      @define-color yellow #${config.stylix.base16Scheme.base0A};
-      @define-color lavender #${config.stylix.base16Scheme.base0E};
-      @define-color peach #${config.stylix.base16Scheme.base0A};
-      @define-color red #${config.stylix.base16Scheme.base08};
-      @define-color green #${config.stylix.base16Scheme.base0B};
-      @define-color blue #${config.stylix.base16Scheme.base0D};
-      @define-color border #${config.stylix.base16Scheme.base02};
+      @define-color bg #1a1b26;
+      @define-color fg #c0caf5;
+      @define-color lbg #16161e;
+      @define-color yellow #e0af68;
+      @define-color lavender #bb9af7;
+      @define-color peach #e0af68;
+      @define-color red #f7768e;
+      @define-color green #9ece6a;
+      @define-color blue #7aa2f7;
+      @define-color border #2a2a37;
 
       * {
         min-height: 0;

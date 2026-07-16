@@ -14,7 +14,7 @@ Home Manager. It is built on top of [ZaneyOS](https://gitlab.com/zaney/zaneyos).
 - 🎨 **Stylix theming** — system-wide color coordination from a single wallpaper
 - 📦 **Modular** — enable only the features you need in `variables.nix`
 - 🎮 **Multi-GPU** — NVIDIA (desktop + hybrid laptop), AMD, Intel, and VM profiles
-- 🔁 **Rolling but frozen** — `nixpkgs` tracks `nixos-unstable` (bleeding edge); the committed `flake.lock` freezes everything until you choose to update, and you can always roll back.
+- 🔁 **Rolling but frozen** — inputs track their upstream branches (e.g. `nixos-unstable`), so `nfu` pulls the latest commits; the committed `flake.lock` freezes everything between updates, and you can always roll back.
 
 ## 🚀 Installation
 
@@ -82,12 +82,12 @@ nrs   # sudo nixos-rebuild switch --flake .#default
 nfu   # nix flake update && sudo nixos-rebuild switch --flake .#default
 ```
 
-> **This is a rolling, bleeding-edge setup.** `nixpkgs` tracks `nixos-unstable`,
-> so `nfu` pulls the newest packages from everywhere at once. The `flake.lock`
-> is committed, so the system only changes when *you* run `nfu`. If an update
-> ever breaks something, roll back with `sudo nixos-rebuild switch --rollback`
-> (or revert `flake.lock` with `git checkout flake.lock`). Update deliberately,
-> not on a schedule.
+> **This is a rolling, bleeding-edge setup.** Inputs track their upstream
+> branches (e.g. `nixos-unstable`), so `nfu` pulls the newest commits from
+> everywhere at once. The `flake.lock` is committed, so the system only changes
+> when *you* run `nfu`. If an update ever breaks something, roll back with
+> `sudo nixos-rebuild switch --rollback` (or revert `flake.lock` with
+> `git checkout flake.lock`). Update deliberately, not on a schedule.
 
 ## ✅ Post-install checklist
 

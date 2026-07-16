@@ -6,6 +6,7 @@
     {
       enable = true;
       settings = {
+        background_opacity = 0.8;
         font = {
           normal = {
             family = font_family;

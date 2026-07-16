@@ -141,19 +141,24 @@ All optional features default to `false` for faster installation:
 - Includes Flutter development shell for mobile development
 
 **Input policy (important):**
-- `nixpkgs` tracks `nixos-unstable` (bleeding edge — kept on purpose).
-- Most inputs use `inputs.nixpkgs.follows = "nixpkgs"` to avoid duplicate
-  nixpkgs copies and version-mismatch breakage. Keep this when adding inputs.
+- Inputs track their upstream **branches** (e.g. `nixos-unstable`, `main`,
+  `master`), so `nix flake update` (the `nfu` alias) always pulls the latest
+  commit. The committed `flake.lock` freezes them *between* updates, so the
+  build is reproducible run-to-run and you can roll back.
+- All non-`nixpkgs` inputs use `inputs.nixpkgs.follows = "nixpkgs"` to avoid
+  duplicate nixpkgs copies and version-mismatch breakage. Keep this when adding
+  inputs.
 - **Hyprland is NOT a flake input** — it comes from nixpkgs via
   home-manager's `wayland.windowManager.hyprland`. Do NOT re-add the upstream
   Hyprland flake (it compiles `main` from source and breaks often).
 - **DMS (`dms`) and `dgop` ARE pinned flake inputs** — `dms` points at the
   DankMaterialShell **v1.5.1 release tag** and `dgop` at a pinned commit, both
   `follows nixpkgs`. They must stay pinned (do NOT use `main`/`master`) so the
-  DMS build is reproducible. The whole DMS shell + backend + monitor backend is
-  pulled from these inputs — there is no imperative `dms-install` step.
-- The committed `flake.lock` freezes everything; the system only changes on
-  an explicit `nix flake update`.
+  DMS build is reproducible and API-compatible. The whole DMS shell + backend +
+  monitor backend is pulled from these inputs — there is no imperative
+  `dms-install` step.
+- The committed `flake.lock` freezes everything; the system only changes on an
+  explicit `nix flake update`.
 
 ### Window Manager Implementation
 

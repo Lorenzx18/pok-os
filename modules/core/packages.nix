@@ -34,6 +34,13 @@
   virtualisation.libvirtd.enable = true;
 
   nixpkgs.config.allowUnfree = true;
+  # VS Code (enabled in modules/home/vscode.nix) is built on Electron. Recent
+  # nixpkgs bumped it onto electron-40.10.5, which is marked EOL/insecure, so
+  # Nix refuses to evaluate it. Permit this specific version so the build
+  # proceeds. NOTE: this is a moving target — on a future `nfu` the version may
+  # change (or the EOL flag may be dropped); update this list if the build
+  # complains about a different insecure electron.
+  nixpkgs.config.permittedInsecurePackages = [ "electron-40.10.5" ];
 
   environment.systemPackages = with pkgs; [
     amfora # Fancy Terminal Browser For Gemini Protocol

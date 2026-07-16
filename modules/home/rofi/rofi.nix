@@ -23,13 +23,13 @@
         "*" = {
           bg = mkLiteral "#1d1c2c";
           bg-alt = mkLiteral "#1d1c2cCC";
-          foreground = mkLiteral "#${config.stylix.base16Scheme.base01}";
-          selected = mkLiteral "#${config.stylix.base16Scheme.base08}";
-          active = mkLiteral "#${config.stylix.base16Scheme.base0B}";
-          text-selected = mkLiteral "#${config.stylix.base16Scheme.base00}";
-          text-color = mkLiteral "#${config.stylix.base16Scheme.base05}";
-          border-color = mkLiteral "#${config.stylix.base16Scheme.base0F}";
-          urgent = mkLiteral "#${config.stylix.base16Scheme.base0E}";
+          foreground = mkLiteral "#16161e";
+          selected = mkLiteral "#f7768e";
+          active = mkLiteral "#9ece6a";
+          text-selected = mkLiteral "#1a1b26";
+          text-color = mkLiteral "#c0caf5";
+          border-color = mkLiteral "#414868";
+          urgent = mkLiteral "#bb9af7";
         };
         "window" = {
           transparency = "real";
