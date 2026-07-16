@@ -56,8 +56,9 @@ in
     enable = true;
     # Keep legacy hyprlang config format (default changed to "lua" in home-manager)
     configType = "hyprlang";
-    # Use stable package from nixpkgs to avoid version parsing issues
-    # package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    # Hyprland package comes from nixpkgs (unstable) by default, which avoids
+    # version-parsing issues and source compiles. Do not point this at an
+    # upstream Hyprland flake input.
     systemd = {
       enable = true;
       enableXdgAutostart = true;

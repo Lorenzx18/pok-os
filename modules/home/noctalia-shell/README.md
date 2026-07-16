@@ -21,11 +21,23 @@ In your host's `variables.nix`:
 barChoice = "noctalia";
 ```
 
+### Dynamic border colors
+
+With Noctalia as the bar, window-manager borders follow Noctalia's active
+palette automatically. Noctalia renders color-only include files on every
+wallpaper/theme change (`~/.config/niri/noctalia-colors.kdl`,
+`~/.config/hypr/noctalia-colors.conf`) which Niri and Hyprland pick up live. To
+track the **wallpaper**, enable *"Use wallpaper colors"* in the Noctalia GUI
+(`SUPER + ,` → Color Scheme).
+
 ### Customization
 
-The default configuration uses Stylix colors automatically. You can override settings by modifying the `settings` attribute in `modules/home/noctalia-shell/default.nix`.
+Noctalia is configured via its own GUI, which writes
+`~/.config/noctalia/settings.toml`. Most options live there rather than in Nix
+(see `modules/home/noctalia-shell/default.nix` for the systemd service and the
+palette-template wiring).
 
-Available configuration sections:
+Available configuration sections (in the GUI):
 - **bar**: Position, density, widget layout
 - **general**: Avatar, animations, lock behavior
 - **location**: Time zone, weather, date formatting
@@ -37,11 +49,13 @@ Available configuration sections:
 
 Full documentation: https://docs.noctalia.dev
 
-## Switching Back to Waybar or DMS
+## Switching bars
 
-Simply change `barChoice` in your `variables.nix`:
-- `barChoice = "waybar"` - Use Waybar
-- `barChoice = "dms"` - Use Dank Material Shell
-- `barChoice = "noctalia"` - Use Noctalia Shell
+Change `barChoice` in your `variables.nix`:
+- `barChoice = "noctalia"` - Use Noctalia Shell (default)
+- `barChoice = "dms"` - Use Dank Material Shell (run `dms-install` once after rebuilding)
 
-Then rebuild: `dcli rebuild`
+Both Hyprland and Niri remain available at login. Then rebuild:
+```bash
+sudo nixos-rebuild switch --flake .#default   # alias: nrs
+```

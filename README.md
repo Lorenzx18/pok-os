@@ -10,10 +10,11 @@ Home Manager. It is built on top of [ZaneyOS](https://gitlab.com/zaney/zaneyos).
 ## ✨ Features
 
 - 🪟 **Dual Window Managers** — Hyprland and Niri, both available at login (no rebuild to switch)
+- 🎨 **Noctalia bar by default** — window borders follow Noctalia's palette (and the wallpaper)
 - 🎨 **Stylix theming** — system-wide color coordination from a single wallpaper
 - 📦 **Modular** — enable only the features you need in `variables.nix`
 - 🎮 **Multi-GPU** — NVIDIA (desktop + hybrid laptop), AMD, Intel, and VM profiles
-- 🔁 **Reproducible** — one `flake.nix`, rebuild anytime, roll back on failure
+- 🔁 **Rolling but frozen** — `nixpkgs` tracks `nixos-unstable` (bleeding edge); the committed `flake.lock` freezes everything until you choose to update, and you can always roll back.
 
 ## 🚀 Installation
 
@@ -80,6 +81,13 @@ Convenient shell aliases are provided:
 nrs   # sudo nixos-rebuild switch --flake .#default
 nfu   # nix flake update && sudo nixos-rebuild switch --flake .#default
 ```
+
+> **This is a rolling, bleeding-edge setup.** `nixpkgs` tracks `nixos-unstable`,
+> so `nfu` pulls the newest packages from everywhere at once. The `flake.lock`
+> is committed, so the system only changes when *you* run `nfu`. If an update
+> ever breaks something, roll back with `sudo nixos-rebuild switch --rollback`
+> (or revert `flake.lock` with `git checkout flake.lock`). Update deliberately,
+> not on a schedule.
 
 ## ✅ Post-install checklist
 
@@ -152,10 +160,16 @@ aiCodeEditorsEnable   = true;
 # flutterdevEnable    = false;   # intentionally off
 ```
 
-### Wallpaper
+### Wallpaper & dynamic borders
 
-The repo ships with a `wallpapers/placeholder.png` so the build works out of the
-box. Drop your own image into `wallpapers/` and point Stylix at it:
+With the default Noctalia bar, **window borders follow Noctalia's palette
+automatically**. To make them track the **wallpaper**, open the Noctalia
+settings (`SUPER + ,` → Color Scheme) and enable *"Use wallpaper colors"*, then
+re-apply the wallpaper once. Noctalia then writes color files that Niri and
+Hyprland pick up live.
+
+The repo ships with a pinned wallpaper in `wallpapers/` so the build stays pure
+and reproducible. Drop your own image into `wallpapers/` and point Stylix at it:
 
 ```nix
 stylixImage = ../../wallpapers/my-wallpaper.jpg;

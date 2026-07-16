@@ -116,10 +116,9 @@ Important settings to understand when working with host configurations:
 - `keyboardLayout`: Keyboard layout (us, uk, de, fr, etc.)
 
 #### Desktop Environment
-- `barChoice`: Status bar choice (waybar, dms, noctalia)
-- `waybarChoice`: Waybar theme file path
+- `barChoice`: Bar/shell choice (`"noctalia"` default, or `"dms"`)
 - `animChoice`: Hyprland animation style
-- `stylixImage`: Wallpaper for system theming
+- `stylixImage`: Wallpaper for system theming (pinned in `wallpapers/` for reproducibility)
 - `stylixEnable`: Enable/disable Stylix theming
 
 #### Feature Toggles
@@ -135,10 +134,21 @@ All optional features default to `false` for faster installation:
 - `enableProductivityApps`: Obsidian, GNOME Boxes, QuickEmu
 
 ### Flake Configuration (`flake.nix`)
-- Defines input sources (nixpkgs, home-manager, stylix, hyprland, niri, etc.)
+- Defines input sources (nixpkgs, home-manager, stylix, zen-browser, quickshell,
+  noctalia, helium-browser, flake-utils)
 - Creates host configurations using `mkHost` helper function
 - Maps hostnames to hardware profiles
 - Includes Flutter development shell for mobile development
+
+**Input policy (important):**
+- `nixpkgs` tracks `nixos-unstable` (bleeding edge — kept on purpose).
+- Most inputs use `inputs.nixpkgs.follows = "nixpkgs"` to avoid duplicate
+  nixpkgs copies and version-mismatch breakage. Keep this when adding inputs.
+- **Hyprland is NOT a flake input** — it comes from nixpkgs via
+  home-manager's `wayland.windowManager.hyprland`. Do NOT re-add the upstream
+  Hyprland flake (it compiles `main` from source and breaks often).
+- The committed `flake.lock` freezes everything; the system only changes on
+  an explicit `nix flake update`.
 
 ### Window Manager Implementation
 
@@ -247,11 +257,27 @@ sudo nixos-rebuild switch --flake .#default
 ## Repository Structure Notes
 
 - Based on ZaneyOS but heavily simplified for newcomers
-- Uses NixOS unstable for latest features
-- Integrates Stylix for system theming
+- Uses NixOS unstable for latest features (bleeding edge, by design)
+- Hyprland is sourced from nixpkgs-unstable (no upstream Hyprland flake input)
+- Integrates Stylix for system theming (static base16 scheme; `image` is the
+  wallpaper — the image-palette derivation is intentionally avoided)
+- Noctalia is the default bar; borders follow its palette (see below)
 - Home-manager for user environment management
 - Both Hyprland and Niri always available
 - Flake-utils for development environments (Flutter)
+- GC handled by `nh clean`; `/boot` capped by `systemd-boot.configurationLimit`
+
+### Dynamic Window Border Colors (Noctalia)
+When `barChoice = "noctalia"`, Noctalia renders the active palette into
+color-only include files on every wallpaper/theme change:
+- `modules/home/noctalia-shell/default.nix` defines the Noctalia user templates
+  (`~/.config/noctalia/templates.toml` + template inputs) that output
+  `~/.config/niri/noctalia-colors.kdl` and `~/.config/hypr/noctalia-colors.conf`.
+- `modules/home/niri/niri.nix` adds `include "noctalia-colors.kdl" optional=true`
+  **after** the layout block (overrides static colors; niri live-reloads).
+- `modules/home/hyprland/hyprland.nix` `source`s the generated conf; the
+  template's `post_hook` runs `hyprctl reload`.
+- Wallpaper tracking requires enabling "Use wallpaper colors" in the Noctalia GUI.
 
 ## Important Reminders for Claude
 

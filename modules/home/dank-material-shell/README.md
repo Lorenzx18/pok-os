@@ -18,10 +18,10 @@ Add the following to your host's `variables.nix`:
 
 ```nix
 # Enable Dank Material Shell (disables waybar automatically)
-enableDankMaterialShell = true;
+barChoice = "dms";  # legacy: enableDankMaterialShell = true
 ```
 
-Example for `hosts/nix-desktop/variables.nix`:
+Example for `hosts/default/variables.nix`:
 
 ```nix
 {
@@ -29,7 +29,7 @@ Example for `hosts/nix-desktop/variables.nix`:
   
   stylixEnable = true;
   syncthingEnable = true;
-  enableDankMaterialShell = true;  # Enable DMS here
+  barChoice = "dms";  # legacy: enableDankMaterialShell = true  # Enable DMS here
   
   # ... rest of config ...
 }
@@ -40,7 +40,7 @@ Example for `hosts/nix-desktop/variables.nix`:
 After enabling in your host variables, rebuild your system:
 
 ```bash
-dcli rebuild
+sudo nixos-rebuild switch --flake .#default  # alias: nrs
 ```
 
 ### Install DMS
@@ -117,7 +117,7 @@ Then rebuild your system.
 If waybar is still active after enabling DMS:
 
 1. Check that `enableDankMaterialShell = true` in your host's variables.nix
-2. Rebuild: `dcli rebuild`
+2. Rebuild: `sudo nixos-rebuild switch --flake .#default  # alias: nrs`
 3. Restart your session
 
 ### Missing fonts or icons
@@ -141,6 +141,6 @@ If the Material Symbols Rounded font is not showing up, the error message "Pleas
 To remove DMS:
 
 1. Set `enableDankMaterialShell = false` in variables.nix
-2. Rebuild: `dcli rebuild`
+2. Rebuild: `sudo nixos-rebuild switch --flake .#default  # alias: nrs`
 3. Remove the profile: `nix profile remove github:AvengeMedia/DankMaterialShell`
 4. Clean up config: `rm -rf ~/.config/dms/`

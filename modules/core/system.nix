@@ -11,12 +11,10 @@ in
         "nix-command"
         "flakes"
       ];
-      substituters = [
-        "https://hyprland.cachix.org"
-      ];
-      trusted-public-keys = [
-        "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-      ];
+      # Hyprland comes from nixpkgs (cache.nixos.org), so no extra substituter
+      # is needed. Add binary caches here if you later adopt upstream flakes.
+      substituters = [ ];
+      trusted-public-keys = [ ];
     };
   };
   time.timeZone = "${timeZone}";

@@ -56,6 +56,10 @@ in
     # Use configured shell based on defaultShell variable
     shell = shellPackage;
     ignoreShellProgramCheck = true;
+    # Fallback password so a freshly installed machine can log in at SDDM
+    # (mutableUsers = true means nixos-install only sets root). CHANGE IT after
+    # first login with `passwd`; your new password then persists across rebuilds.
+    initialPassword = "changeme";
   };
   nix.settings.allowed-users = [ "${username}" ];
 }

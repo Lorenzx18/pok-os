@@ -1,5 +1,46 @@
 # Pok-OS Changelog
 
+## Pok-OS v2.3.1 — Bleeding-edge hardening & Noctalia theming
+
+**Focus:** keep the rolling `nixos-unstable` base but make it robust for
+long-term daily use, and make theming follow the wallpaper end-to-end.
+
+### 🎨 Desktop / theming
+
+- **Window borders follow Noctalia's palette.** Noctalia renders the active
+  color scheme into color-only include files on every wallpaper/theme change:
+  - Niri `include`s `~/.config/niri/noctalia-colors.kdl` (live-reloaded).
+  - Hyprland `source`s `~/.config/hypr/noctalia-colors.conf` (re-applied via
+    `hyprctl reload` post-hook).
+  - Enable *"Use wallpaper colors"* in the Noctalia GUI to track the wallpaper.
+- **Noctalia is now the default bar** (`barChoice = "noctalia"`). DMS remains
+  available (`barChoice = "dms"`, needs a one-time `dms-install`).
+- Bars run as `graphical-session` **systemd user services**, so switching bars
+  via `nixos-rebuild switch` starts/stops them live (no re-login).
+
+### 🔒 Stability for a rolling setup
+
+- **Removed the upstream Hyprland flake input.** Hyprland now comes from
+  `nixpkgs-unstable` (still fresh, binary-cached) instead of compiling `main`
+  from source — removes ~25 sub-inputs and the biggest breakage vector.
+- **`stylix` and `zen-browser` now `follows nixpkgs`** — no duplicate nixpkgs,
+  fewer version-mismatch breakages.
+- Dropped the now-unused `hyprland.cachix.org` substituter.
+- **`boot.loader.systemd-boot.configurationLimit = 10`** — keeps `/boot` from
+  filling up on frequent rebuilds.
+- **`initialPassword` set for the primary user** so a fresh install can log in
+  at SDDM (change it with `passwd` after first login).
+- Garbage collection handled automatically by `nh clean` (`--keep-since 7d
+  --keep 5`).
+
+### 🏠 Structure
+
+- Single shipped host: **`default`** (rename/duplicate via `mkHost` in
+  `flake.nix` for more machines). The old multi-host `dcli`/install-script
+  tooling from v1.0 has been removed in favor of plain `nixos-rebuild`.
+
+---
+
 ## Pok-OS v1.0 -- Initial Release
 
 **Release Date:** January 2025

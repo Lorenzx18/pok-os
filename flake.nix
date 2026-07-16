@@ -7,10 +7,20 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    stylix.url = "github:danth/stylix";
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     flake-utils.url = "github:numtide/flake-utils";
-    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-    zen-browser.url = "github:0xc000022070/zen-browser-flake";
+    # NOTE: Hyprland is used from nixpkgs (unstable) via home-manager's
+    # wayland.windowManager.hyprland, not from the upstream flake. We do NOT
+    # pull the Hyprland flake because it compiles bleeding-edge `main` from
+    # source and is a frequent breakage source; nixpkgs-unstable already ships
+    # a very recent Hyprland with binary cache.
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     quickshell = {
       url = "github:outfoxxed/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";

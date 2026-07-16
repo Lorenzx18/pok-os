@@ -4,52 +4,65 @@ Quick solutions for common issues with Pok OS.
 
 ## Installation Issues
 
-### Installation Script Fails
+### Can't Log In After a Fresh Install
 
-**Error:** Script exits with error during installation
+**Problem:** No password works at SDDM on a brand-new install.
 
-**Common Causes:**
-- Missing dependencies
-- Network connectivity issues
-- Invalid hostname
+**Cause:** `nixos-install` only sets the **root** password. The user ships with
+a fallback `initialPassword = "changeme"` (`modules/core/user.nix`).
+
+**Solution:** Log in with `changeme`, then set your own password:
+```bash
+passwd    # persists across rebuilds (mutableUsers = true)
+```
+
+### Install / First Build Fails
+
+**Error:** Build exits with an error during `nixos-install` or first rebuild.
 
 **Solutions:**
 
-1. **Install required dependencies:**
+1. **Make sure hardware config was generated** (the shipped one is a placeholder):
    ```bash
-   nix-shell -p git pciutils
+   sudo ./generate-hardware-config.sh          # or --root / on a live system
    ```
 
 2. **Check network:**
    ```bash
-   ping google.com
+   ping nixos.org
    ```
 
-3. **Try manual installation:**
+3. **Build with a trace to see the real error:**
    ```bash
    cd ~/pok-os
-   sudo nixos-rebuild switch --flake .#YOUR-HOSTNAME --show-trace
+   sudo nixos-rebuild switch --flake .#default --show-trace
    ```
 
 ### Build Failures
 
 **Error:** `error: builder for '/nix/store/...' failed`
 
+> ⚠️ On this **bleeding-edge (unstable)** setup, a failure right after
+> `nix flake update` usually means an input regressed upstream. Don't "fix" it
+> by updating again — revert the lock instead.
+
 **Solutions:**
 
-1. **Update flake inputs:**
+1. **Check detailed errors:**
+   ```bash
+   sudo nixos-rebuild switch --flake .#default --show-trace
+   ```
+
+2. **If it broke after an update, revert the lock:**
    ```bash
    cd ~/pok-os
-   nix flake update
-   sudo nixos-rebuild switch --flake .#YOUR-HOSTNAME
+   git checkout flake.lock          # back to the last known-good pins
+   sudo nixos-rebuild switch --flake .#default
+   # already switched to a bad generation? roll back:
+   sudo nixos-rebuild switch --rollback
    ```
 
-2. **Check detailed errors:**
-   ```bash
-   sudo nixos-rebuild switch --flake .#YOUR-HOSTNAME --show-trace
-   ```
-
-3. **Verify your hostname exists:**
+3. **Verify the host exists:**
    ```bash
    ls ~/pok-os/hosts/
    nix flake show
@@ -66,25 +79,25 @@ Quick solutions for common issues with Pok OS.
    # Find your GPU bus IDs
    lspci | grep VGA
    
-   # Update in ~/pok-os/hosts/YOUR-HOSTNAME/variables.nix:
+   # Update in ~/pok-os/hosts/default/variables.nix:
    intelID = "PCI:0:2:0";    # Your Intel GPU ID
    nvidiaID = "PCI:1:0:0";   # Your NVIDIA GPU ID
    
    # Rebuild
-   sudo nixos-rebuild switch --flake ~/pok-os#YOUR-HOSTNAME
+   sudo nixos-rebuild switch --flake .#default
    ```
 
 2. **Regenerate hardware config if needed:**
    ```bash
-   sudo nixos-generate-config --show-hardware-config > ~/pok-os/hosts/YOUR-HOSTNAME/hardware.nix
-   sudo nixos-rebuild switch --flake ~/pok-os#YOUR-HOSTNAME
+   sudo nixos-generate-config --show-hardware-config > ~/pok-os/hosts/default/hardware.nix
+   sudo nixos-rebuild switch --flake .#default
    ```
 
 ## Display Issues
 
 ### Monitor Not Working or Wrong Resolution
 
-**Solution:** Update monitor configuration in `~/pok-os/hosts/YOUR-HOSTNAME/variables.nix`:
+**Solution:** Update monitor configuration in `~/pok-os/hosts/default/variables.nix`:
 
 ```bash
 # First, find your monitors (after logging in)
@@ -98,7 +111,7 @@ extraMonitorSettings = ''
 '';
 
 # Rebuild
-sudo nixos-rebuild switch --flake ~/pok-os#YOUR-HOSTNAME
+sudo nixos-rebuild switch --flake .#default
 ```
 
 ### Black Screen After Login
@@ -122,7 +135,7 @@ sudo nixos-rebuild switch --flake ~/pok-os#YOUR-HOSTNAME
 
 3. **Try rebuilding:**
    ```bash
-   sudo nixos-rebuild switch --flake ~/pok-os#YOUR-HOSTNAME
+   sudo nixos-rebuild switch --flake .#default
    ```
 
 ## Window Manager Issues
@@ -137,11 +150,28 @@ sudo nixos-rebuild switch --flake ~/pok-os#YOUR-HOSTNAME
 
 No rebuild needed!
 
+### Window Borders Don't Follow the Wallpaper
+
+**Problem:** Borders stay a fixed color instead of matching the wallpaper.
+
+**Solutions (Noctalia bar):**
+
+1. **Enable wallpaper colors:** Noctalia settings (`SUPER + ,` → Color Scheme)
+   → turn on **"Use wallpaper colors"**, then change/re-apply the wallpaper once.
+2. **Confirm the color files were written:**
+   ```bash
+   ls -l ~/.config/niri/noctalia-colors.kdl ~/.config/hypr/noctalia-colors.conf
+   ```
+   If missing, re-apply the wallpaper or check `noctalia theme --list-templates`
+   shows the `niri_colors` / `hyprland_colors` entries.
+3. **Niri** live-reloads the include automatically; for **Hyprland** the
+   template runs `hyprctl reload`. If borders still don't move, re-login.
+
 ### Hyprlock Interfering with Other Lock Screens
 
 **Problem:** Using DMS or Noctalia but hyprlock keeps activating
 
-**Solution:** Disable hyprlock in `~/pok-os/hosts/YOUR-HOSTNAME/variables.nix`:
+**Solution:** Disable hyprlock in `~/pok-os/hosts/default/variables.nix`:
 
 ```nix
 enableHyprlock = false;
@@ -149,7 +179,7 @@ enableHyprlock = false;
 
 Then rebuild:
 ```bash
-sudo nixos-rebuild switch --flake ~/pok-os#YOUR-HOSTNAME
+sudo nixos-rebuild switch --flake .#default
 ```
 
 ## Package Issues
@@ -170,7 +200,7 @@ nix search nixpkgs packagename
 
 **Problem:** Want Discord, extra browsers, or other apps
 
-**Solution:** Enable optional package groups in `~/pok-os/hosts/YOUR-HOSTNAME/variables.nix`:
+**Solution:** Enable optional package groups in `~/pok-os/hosts/default/variables.nix`:
 
 ```nix
 enableCommunicationApps = true;  # Discord, Teams, Zoom, Telegram
@@ -180,7 +210,7 @@ enableProductivityApps = true;   # Obsidian, GNOME Boxes
 
 Rebuild to install:
 ```bash
-sudo nixos-rebuild switch --flake ~/pok-os#YOUR-HOSTNAME
+sudo nixos-rebuild switch --flake .#default
 ```
 
 ## System Recovery
@@ -272,7 +302,7 @@ sudo systemctl restart bluetooth
 
 **Solution for NVIDIA:**
 
-Update `~/pok-os/hosts/YOUR-HOSTNAME/variables.nix`:
+Update `~/pok-os/hosts/default/variables.nix`:
 ```nix
 # In Hyprland settings, VRR is already configured
 # Try toggling vrr setting in hyprland.nix if needed
@@ -314,18 +344,17 @@ journalctl -xeu display-manager | tail -50
 
 ```bash
 # Rebuild current system
-sudo nixos-rebuild switch --flake ~/pok-os#YOUR-HOSTNAME
+sudo nixos-rebuild switch --flake .#default
 
 # Test build without switching
-sudo nixos-rebuild build --flake ~/pok-os#YOUR-HOSTNAME
+sudo nixos-rebuild build --flake .#default
 
 # Update flake inputs
 cd ~/pok-os
 nix flake update
 
-# Clean old generations
-sudo nix-collect-garbage -d
-sudo nixos-rebuild switch --flake ~/pok-os#YOUR-HOSTNAME
+# Clean old generations (automatic via nh clean; manual:)
+nh clean all
 
 # List generations
 sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
@@ -335,27 +364,23 @@ sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
 
 1. **Test before switching:**
    ```bash
-   nixos-rebuild build --flake .#YOUR-HOSTNAME
+   nixos-rebuild build --flake .#default
    # If successful, then:
-   sudo nixos-rebuild switch --flake .#YOUR-HOSTNAME
+   sudo nixos-rebuild switch --flake .#default
    ```
 
-2. **Commit your working configs:**
+2. **Commit your working configs (and lock):**
    ```bash
    cd ~/pok-os
    git add -A
    git commit -m "Working configuration"
    ```
+   Committing `flake.lock` on a known-good build is your safety net — you can
+   always `git checkout flake.lock` to return to it.
 
-3. **Don't use "default" as hostname** - it will be overwritten!
-
-4. **Update regularly:**
-   ```bash
-   cd ~/pok-os
-   git pull
-   nix flake update
-   sudo nixos-rebuild switch --flake .#YOUR-HOSTNAME
-   ```
+3. **Update deliberately, not on a schedule.** This is a rolling/unstable
+   setup, so only run `nix flake update` (or `nfu`) when you have time to test
+   and roll back if needed.
 
 ---
 
