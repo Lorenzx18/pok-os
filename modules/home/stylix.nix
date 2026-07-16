@@ -16,8 +16,10 @@ lib.mkIf stylixEnable {
     hyprland.enable = false;
     hyprlock.enable = false;
     ghostty.enable = false;
-    qt.enable = !dmsBar;
-    gtk.enable = !dmsBar;
+    # mkForce: Stylix's own targets set enable=true and are applied after
+    # this module, so a plain `false` would be overridden. mkForce wins.
+    qt.enable = lib.mkForce (!dmsBar);
+    gtk.enable = lib.mkForce (!dmsBar);
   };
 
   # Explicitly enable cursor config generation (silences home-manager deprecation)
