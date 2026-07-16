@@ -147,6 +147,11 @@ All optional features default to `false` for faster installation:
 - **Hyprland is NOT a flake input** — it comes from nixpkgs via
   home-manager's `wayland.windowManager.hyprland`. Do NOT re-add the upstream
   Hyprland flake (it compiles `main` from source and breaks often).
+- **DMS (`dms`) and `dgop` ARE pinned flake inputs** — `dms` points at the
+  DankMaterialShell **v1.5.1 release tag** and `dgop` at a pinned commit, both
+  `follows nixpkgs`. They must stay pinned (do NOT use `main`/`master`) so the
+  DMS build is reproducible. The whole DMS shell + backend + monitor backend is
+  pulled from these inputs — there is no imperative `dms-install` step.
 - The committed `flake.lock` freezes everything; the system only changes on
   an explicit `nix flake update`.
 
@@ -267,17 +272,30 @@ sudo nixos-rebuild switch --flake .#default
 - Flake-utils for development environments (Flutter)
 - GC handled by `nh clean`; `/boot` capped by `systemd-boot.configurationLimit`
 
-### Dynamic Window Border Colors (Noctalia)
-When `barChoice = "noctalia"`, Noctalia renders the active palette into
-color-only include files on every wallpaper/theme change:
+### Dynamic Window Border Colors (both bars)
+Window borders follow the **active bar's** palette. Each bar has its own
+generator that writes color-only files the WMs pick up live:
+
+**Noctalia (`barChoice = "noctalia"`):**
 - `modules/home/noctalia-shell/default.nix` defines the Noctalia user templates
   (`~/.config/noctalia/templates.toml` + template inputs) that output
   `~/.config/niri/noctalia-colors.kdl` and `~/.config/hypr/noctalia-colors.conf`.
 - `modules/home/niri/niri.nix` adds `include "noctalia-colors.kdl" optional=true`
-  **after** the layout block (overrides static colors; niri live-reloads).
+  **after** the layout block (niri live-reloads).
 - `modules/home/hyprland/hyprland.nix` `source`s the generated conf; the
   template's `post_hook` runs `hyprctl reload`.
 - Wallpaper tracking requires enabling "Use wallpaper colors" in the Noctalia GUI.
+
+**DMS (`barChoice = "dms"`):**
+- `modules/home/dank-material-shell/default.nix` ships a `dms-border-colors`
+  generator that reads DMS's active matugen palette from
+  `~/.config/gtk-3.0/dank-colors.css` (the file `gtk.css` symlinks to, always
+  reflecting the current dark/light mode) and writes
+  `~/.config/niri/dms-colors.kdl` and `~/.config/hypr/dms-colors.conf`.
+- A systemd user **oneshot** runs it at session start; a systemd user **path
+  unit** re-runs it whenever DMS rewrites its colors. niri live-reloads the
+  include; the generator also runs `hyprctl reload` for Hyprland.
+- Borders follow the DMS theme automatically — no wallpaper toggle needed.
 
 ## Important Reminders for Claude
 

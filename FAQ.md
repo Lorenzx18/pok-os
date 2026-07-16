@@ -10,7 +10,7 @@ Pok-OS is a personal, flake-based NixOS configuration built on the foundation of
 
 **Key Features:**
 - Dual Wayland compositors (Hyprland + Niri), chosen at login — no rebuild
-- Noctalia bar/shell by default; window borders follow the wallpaper palette
+- Noctalia bar/shell by default; window borders follow the active bar's palette (Noctalia or DMS)
 - NVIDIA GPU optimization (desktop and hybrid laptop), plus AMD/Intel/VM profiles
 - Stylix theming system
 - Flake-based, reproducible builds
@@ -127,11 +127,17 @@ in the repo so builds stay reproducible).
 
 ### **🟦 How do the window borders get their color?**
 
-With the Noctalia bar, borders follow Noctalia's active palette automatically.
-To make them track the **wallpaper**, open Noctalia settings (`SUPER + ,` →
-Color Scheme) and enable **"Use wallpaper colors"**, then re-apply the
-wallpaper once. Noctalia writes `~/.config/niri/noctalia-colors.kdl` and
-`~/.config/hypr/noctalia-colors.conf`, which Niri/Hyprland pick up live.
+Borders follow whichever bar is active:
+
+- **Noctalia (default):** borders follow Noctalia's active palette automatically.
+  To make them track the **wallpaper**, open Noctalia settings (`SUPER + ,` →
+  Color Scheme) and enable **"Use wallpaper colors"**, then re-apply the
+  wallpaper once. Noctalia writes `~/.config/niri/noctalia-colors.kdl` and
+  `~/.config/hypr/noctalia-colors.conf`, which Niri/Hyprland pick up live.
+- **DMS:** borders follow DMS's matugen theme automatically (no toggle needed).
+  A generator reads DMS's active palette from `~/.config/gtk-3.0/dank-colors.css`
+  and writes `~/.config/niri/dms-colors.kdl` and `~/.config/hypr/dms-colors.conf`,
+  refreshed on every DMS theme change.
 
 ### **🌍 How do I change my timezone?**
 

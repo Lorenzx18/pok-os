@@ -10,7 +10,7 @@ Home Manager. It is built on top of [ZaneyOS](https://gitlab.com/zaney/zaneyos).
 ## ✨ Features
 
 - 🪟 **Dual Window Managers** — Hyprland and Niri, both available at login (no rebuild to switch)
-- 🎨 **Noctalia bar by default** — window borders follow Noctalia's palette (and the wallpaper)
+- 🎨 **Noctalia bar by default** — window borders follow the active bar's palette (Noctalia or DMS)
 - 🎨 **Stylix theming** — system-wide color coordination from a single wallpaper
 - 📦 **Modular** — enable only the features you need in `variables.nix`
 - 🎮 **Multi-GPU** — NVIDIA (desktop + hybrid laptop), AMD, Intel, and VM profiles
@@ -107,15 +107,19 @@ after installing. Do these once on every new laptop:
    - `intelID` / `nvidiaID` in `variables.nix` match `lspci | grep VGA`.
    - `profile` in `flake.nix` matches the GPU (`nvidia-laptop`, `amd`, `intel`, …).
 
-3. **Dynamic window-border colors (Noctalia bar):** borders follow Noctalia's
-   palette automatically. To make them track the **wallpaper**, open the
-   Noctalia settings (`SUPER + ,` → Color Scheme) and enable **"Use wallpaper
-   colors"**. Then change/re-apply the wallpaper once so Noctalia renders the
-   color files (`~/.config/niri/noctalia-colors.kdl`, `~/.config/hypr/noctalia-colors.conf`).
+ 3. **Dynamic window-border colors:** borders follow the active bar's palette
+    automatically.
+    - **Noctalia (default):** to make them track the **wallpaper**, open the
+      Noctalia settings (`SUPER + ,` → Color Scheme) and enable **"Use wallpaper
+      colors"**, then change/re-apply the wallpaper once. Noctalia writes
+      `~/.config/niri/noctalia-colors.kdl` and `~/.config/hypr/noctalia-colors.conf`.
+    - **DMS:** borders follow DMS's matugen theme with no extra step — a
+      generator reads DMS's active palette and writes `~/.config/niri/dms-colors.kdl`
+      and `~/.config/hypr/dms-colors.conf`.
 
-4. **Only if you switch `barChoice = "dms"`:** DMS is installed imperatively —
-   after rebuilding, run `dms-install` once (needs network). Noctalia (the
-   default) needs no such step.
+ 4. **If you switch `barChoice = "dms"`:** DMS is pulled in **declaratively** from
+    pinned flake inputs (`dms` v1.5.1 + `dgop`) — there is **no** `dms-install`
+    step. Just rebuild and switch. Noctalia (the default) works the same way.
 
 ## 📁 Project Structure
 
@@ -162,11 +166,15 @@ aiCodeEditorsEnable   = true;
 
 ### Wallpaper & dynamic borders
 
-With the default Noctalia bar, **window borders follow Noctalia's palette
-automatically**. To make them track the **wallpaper**, open the Noctalia
-settings (`SUPER + ,` → Color Scheme) and enable *"Use wallpaper colors"*, then
-re-apply the wallpaper once. Noctalia then writes color files that Niri and
-Hyprland pick up live.
+**Window borders follow the active bar's palette automatically.**
+
+- **Noctalia (default):** to make borders track the **wallpaper**, open the
+  Noctalia settings (`SUPER + ,` → Color Scheme) and enable *"Use wallpaper
+  colors"*, then re-apply the wallpaper once. Noctalia writes color files that
+  Niri and Hyprland pick up live.
+- **DMS:** borders follow DMS's matugen theme on every wallpaper/theme change
+  with no toggle needed — a generator reads DMS's active palette
+  (`~/.config/gtk-3.0/dank-colors.css`) and writes the same kind of color files.
 
 The repo ships with a pinned wallpaper in `wallpapers/` so the build stays pure
 and reproducible. Drop your own image into `wallpapers/` and point Stylix at it:

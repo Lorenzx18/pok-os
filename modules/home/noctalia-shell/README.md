@@ -53,7 +53,7 @@ Full documentation: https://docs.noctalia.dev
 
 Change `barChoice` in your `variables.nix`:
 - `barChoice = "noctalia"` - Use Noctalia Shell (default)
-- `barChoice = "dms"` - Use Dank Material Shell (run `dms-install` once after rebuilding)
+- `barChoice = "dms"` - Use Dank Material Shell (fully declarative — just rebuild)
 
 Both Hyprland and Niri remain available at login. Then rebuild:
 ```bash

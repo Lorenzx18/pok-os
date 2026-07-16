@@ -150,9 +150,10 @@ sudo nixos-rebuild switch --flake .#default
 
 No rebuild needed!
 
-### Window Borders Don't Follow the Wallpaper
+### Window Borders Don't Follow the Theme
 
-**Problem:** Borders stay a fixed color instead of matching the wallpaper.
+**Problem:** Borders stay a fixed color instead of matching the active bar's
+palette.
 
 **Solutions (Noctalia bar):**
 
@@ -166,6 +167,25 @@ No rebuild needed!
    shows the `niri_colors` / `hyprland_colors` entries.
 3. **Niri** live-reloads the include automatically; for **Hyprland** the
    template runs `hyprctl reload`. If borders still don't move, re-login.
+
+**Solutions (DMS bar):**
+
+1. DMS themes borders itself — confirm the generated files exist:
+   ```bash
+   ls -l ~/.config/niri/dms-colors.kdl ~/.config/hypr/dms-colors.conf
+   ```
+2. Force a regeneration (e.g. after switching bars or a fresh login):
+   ```bash
+   dms-border-colors        # regenerates both files + reloads Hyprland
+   ```
+3. The generator is driven by a systemd user path unit watching DMS's color
+   output; it re-runs automatically whenever DMS changes the theme. If it isn't
+   running, enable it:
+   ```bash
+   systemctl --user restart dms-border-colors.path dms-border-colors.service
+   ```
+4. For **Hyprland**, the generator runs `hyprctl reload`; for **Niri** the
+   `include` is live-reloaded, so no manual step is needed.
 
 ### Hyprlock Interfering with Other Lock Screens
 

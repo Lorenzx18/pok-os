@@ -1,5 +1,35 @@
 # Pok-OS Changelog
 
+## Pok-OS v2.3.2 — DMS reproducible & borders follow DMS theme
+
+**Focus:** make DMS fully declarative/reproducible and let window borders track
+the DMS matugen palette (previously they only followed Noctalia).
+
+### 🪟 DMS is now reproducible (no `dms-install`)
+
+- Added pinned flake inputs **`dms`** (DankMaterialShell **v1.5.1** release tag)
+  and **`dgop`** (pinned commit), both `follows nixpkgs`.
+- Rewrote `modules/home/dank-material-shell/default.nix` to pull the DMS QML
+  shell + `bin/dms` backend and `dgop` straight from those flake packages. The
+  `dms.service` ExecStarts the store-path backend.
+- Removed the imperative `dms-install` / `dms-uninstall` scripts. Switching to
+  `barChoice = "dms"` is now a plain rebuild, just like Noctalia.
+
+### 🎨 Borders follow the DMS theme
+
+- New `dms-border-colors` generator reads DMS's active matugen palette from
+  `~/.config/gtk-3.0/dank-colors.css` (always reflects dark/light) and writes
+  `~/.config/niri/dms-colors.kdl` + `~/.config/hypr/dms-colors.conf`.
+- A systemd user **oneshot** + **path unit** regenerate them at session start
+  and on every DMS theme change (niri live-reloads; `hyprctl reload` for
+  Hyprland). Mirrors Noctalia's border-colors mechanism.
+
+### 🔒 Stylix vs DMS theming
+
+- When `barChoice = "dms"`, Stylix no longer manages GTK/Qt themes
+  (`stylix.targets.gtk`/`qt` disabled) — DMS owns that theming, which avoids
+  home-manager clobbering DMS's runtime `gtk.css`/Qt color files on `switch`.
+
 ## Pok-OS v2.3.1 — Bleeding-edge hardening & Noctalia theming
 
 **Focus:** keep the rolling `nixos-unstable` base but make it robust for
@@ -14,7 +44,7 @@ long-term daily use, and make theming follow the wallpaper end-to-end.
     `hyprctl reload` post-hook).
   - Enable *"Use wallpaper colors"* in the Noctalia GUI to track the wallpaper.
 - **Noctalia is now the default bar** (`barChoice = "noctalia"`). DMS remains
-  available (`barChoice = "dms"`, needs a one-time `dms-install`).
+  available (`barChoice = "dms"`) and is now fully declarative — no `dms-install`.
 - Bars run as `graphical-session` **systemd user services**, so switching bars
   via `nixos-rebuild switch` starts/stops them live (no re-login).
 
