@@ -12,11 +12,13 @@ in
     enable = mkEnableOption "Enable Nvidia Prime Hybrid GPU Offload";
     intelBusID = mkOption {
       type = types.str;
-      default = "PCI:1:0:0";
+      # Intel iGPU is at 00:02.0 on essentially all Intel+NVIDIA laptops.
+      default = "PCI:0:2:0";
     };
     nvidiaBusID = mkOption {
       type = types.str;
-      default = "PCI:0:2:0";
+      # NVIDIA dGPU is at 01:00.0 on essentially all Intel+NVIDIA laptops.
+      default = "PCI:1:0:0";
     };
   };
   config = mkIf cfg.enable {

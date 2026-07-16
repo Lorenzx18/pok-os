@@ -817,15 +817,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1783673918,
-        "narHash": "sha256-cFG5vnmjJcZRVCSUaqQLOdwkX6iqF6bY8IvvmBSGSRs=",
+        "lastModified": 1777871389,
+        "narHash": "sha256-gU+VGpwGJ2vvg0mtYqVvj5u+2LteuHlpokH6JSAtueY=",
         "owner": "outfoxxed",
         "repo": "quickshell",
-        "rev": "4df562dfb2475a9057f0f33a8db75808efad8670",
+        "rev": "59e9c47b0eb48a9e4bcf9631fa062ee939bd2e83",
         "type": "github"
       },
       "original": {
         "owner": "outfoxxed",
+        "ref": "v0.3.0",
         "repo": "quickshell",
         "type": "github"
       }

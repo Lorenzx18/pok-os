@@ -20,8 +20,6 @@ in
       enable_audio_bell = false;
       background_opacity = lib.mkForce "0.8";
       dynamic_background_opacity = true;
-      # Clear glassmorphism: no solid background color, just transparency.
-      background = "#000000";
       mouse_hide_wait = 60;
       cursor_trail = 1;
       tab_fade = 1;

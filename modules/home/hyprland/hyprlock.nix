@@ -1,4 +1,4 @@
-{username, ...}: {
+{ ... }: {
   programs.hyprlock = {
     enable = true;
     settings = {
@@ -10,14 +10,17 @@
       };
       background = [
         {
-          path = "/home/${username}/Pictures/Wallpapers/dark-samurai-lily-valley-desktop-wallpaper-4k.jpg";
+          # Use the repo's lock screen asset (store path) instead of a
+          # user-home path that may not exist on a fresh install. A bare path
+          # literal is copied to the Nix store and coerced to its store path.
+          path = "${./../../img/lockscreen.png}";
           blur_passes = 3;
           blur_size = 8;
         }
       ];
       image = [
         {
-          path = "/home/${username}/pok-os/img/lockscreen.png";
+          path = "${./../../img/lockscreen.png}";
           size = 150;
           border_size = 4;
           border_color = "rgb(0C96F9)";

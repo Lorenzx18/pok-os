@@ -28,6 +28,9 @@
         # ToDo: Pull default terminal from config
         "TERMINAL,kitty"
         "XDG_TERMINAL_EMULATOR,kitty"
+        # Cursor theme (matches the Bibata set via home.pointerCursor/system)
+        "XCURSOR_THEME,Bibata-Modern-Ice"
+        "XCURSOR_SIZE,24"
       ];
     };
   };

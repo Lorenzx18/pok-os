@@ -1,5 +1,6 @@
 {
   host,
+  pkgs,
   lib,
   ...
 }: let
@@ -39,8 +40,9 @@ lib.mkIf stylixEnable {
 
   services.nwg-drawer-stylix.enable = false;
 
-  # Stylix's cursor module relies on home.pointerCursor being set implicitly.
-  # Explicitly disable it so the bar owns the cursor theme and the deprecation
-  # warning goes away.
-  home.pointerCursor.enable = lib.mkForce false;
+  # The cursor is a system resource (not app color theming) and is already set
+  # by the system-level Stylix cursor module. Just enable it explicitly here to
+  # silence the home-manager deprecation warning; the package/name/size come
+  # from modules/core/stylix.nix.
+  home.pointerCursor.enable = true;
 }

@@ -26,7 +26,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     quickshell = {
-      url = "github:outfoxxed/quickshell";
+      # Pinned to the v0.3.0 release tag so a `nix flake update` can't pull a
+      # breaking API change out from under the DMS/Noctalia QML shells.
+      url = "github:outfoxxed/quickshell/v0.3.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     noctalia = {

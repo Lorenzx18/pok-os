@@ -48,11 +48,11 @@
             # 'c' to new window
             bind-key  c new-window
 
-            # 'n' next  window
+            # 'n' next window
             bind-key  n next-window
 
-            # 'p' next  previous
-            bind-key  n previous-window
+            # 'p' previous window
+            bind-key  p previous-window
 
             unbind r
             bind r source-file ~/.config/tmux/tmux.conf
