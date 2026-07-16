@@ -68,7 +68,7 @@
   enableHyprlock = false;
 
   # Bar/Shell Choice
-  barChoice = "noctalia"; # Options: "dms" or "noctalia"
+  barChoice = "dms"; # Options: "dms" or "noctalia"
   # NOTE: If you change barChoice to "dms", you must run 'dms-install' after rebuilding
 
   # Shell Choice

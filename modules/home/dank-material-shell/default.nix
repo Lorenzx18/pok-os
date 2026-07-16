@@ -21,8 +21,8 @@ let
     version = "2024-09-01";
 
     src = pkgs.fetchurl {
-      url = "https://github.com/google/material-design-icons/raw/master/variablefont/MaterialSymbolsRounded%5BFILL%2CGRAD%2Copsz%2Cwght%5D.ttf";
-      hash = "sha256-1xnyL97ifjRLB+Rub6i1Cx/OPPywPUqE8D+vvwgS/CI=";
+      url = "https://github.com/google/material-design-icons/raw/819d78680a849ceef4c78f863d8753e3160b7c89/variablefont/MaterialSymbolsRounded%5BFILL%2CGRAD%2Copsz%2Cwght%5D.ttf";
+      hash = "sha256-gt8deKs+RHx+IpV3R9kXhLZ196hZJgFiFbHue//AWls=";
     };
 
     dontUnpack = true;

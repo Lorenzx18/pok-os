@@ -13,6 +13,10 @@ in
     enable = mkEnableOption "Enable Nvidia Drivers";
   };
   config = mkIf cfg.enable {
+    # `services.xserver.videoDrivers = ["nvidia"]` is what actually enables the
+    # NVIDIA driver (it flips the read-only `hardware.nvidia.enabled` internally).
+    # This works even with `services.xserver.enable = false` (Wayland-only setup);
+    # the driver modules still load via PCI auto-probe + modeset=1 modprobe config.
     services.xserver.videoDrivers = [ "nvidia" ];
     hardware.nvidia = {
       # Modesetting is required.

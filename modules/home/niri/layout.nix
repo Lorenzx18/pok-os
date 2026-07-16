@@ -17,7 +17,6 @@ in
       keyboard {
           xkb {
           }
-          numlock
       }
       touchpad {
           // Natural scrolling inverts scroll direction

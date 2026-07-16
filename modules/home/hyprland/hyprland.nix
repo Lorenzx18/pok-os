@@ -29,6 +29,8 @@ in
     ydotool
     hyprpolkitagent
     hyprland-qtutils # needed for banners and ANR messages
+    cliphist # clipboard history (used by exec-once wl-paste watch)
+    networkmanagerapplet # provides nm-applet (used by exec-once)
   ];
   systemd.user.targets.hyprland-session.Unit.Wants = [
     "xdg-desktop-autostart.target"
@@ -103,7 +105,7 @@ in
           "grp:alt_caps_toggle"
           "caps:super"
         ];
-        numlock_by_default = true;
+        numlock_by_default = false;
         repeat_delay = 300;
         follow_mouse = 1;
         float_switch_override_focus = 0;
@@ -116,7 +118,6 @@ in
       };
 
       general = {
-        "$modifier" = "SUPER";
         layout = "dwindle";
         gaps_in = 5;
         gaps_out = 7;
@@ -135,9 +136,9 @@ in
         disable_hyprland_logo = true;
         disable_splash_rendering = true;
         enable_swallow = false;
-        vrr = 2; # Variable Refresh Rate  Might need to set to 0 for NVIDIA/AQ_DRM_DEVICES
+        vrr = 0; # Variable Refresh Rate. Set to 0 for NVIDIA stability (1 = fullscreen only, 2 = always)
         # Screen flashing to black momentarily or going black when app is fullscreen
-        # Try setting vrr to 0
+        # Try setting vrr to 1 if you want VRR on fullscreen windows
 
         #  Application not responding (ANR) settings
         enable_anr_dialog = true;
@@ -192,17 +193,15 @@ in
     };
 
     extraConfig = ''
-      monitor=,preferred,auto,auto
-      monitor=Virtual-1,1920x1080@60,auto,1
       ${extraMonitorSettings}
-      # Enable blur on bar
+      # Enable blur on the active bar
       ${
         if actualBarChoice == "dms" then
-          "layerrule = blur,quickshell"
+          "layerrule = blur on, match:namespace quickshell"
         else if actualBarChoice == "noctalia" then
-          "layerrule = blur,noctalia"
+          "layerrule = blur on, match:namespace noctalia"
         else
-          "layerrule = blur,waybar"
+          "layerrule = blur on, match:namespace waybar"
       }
     '';
   };

@@ -9,22 +9,22 @@ let
   # Import host-specific binds
   hostBinds = import ./hosts/${host}/binds.nix { inherit host; };
 
-  # Determine launcher command based on barChoice
+   # Determine launcher command based on barChoice
   launcherCommand =
     if barChoice == "noctalia" then
-      "noctalia ipc call launcher toggle"
+      "noctalia msg panel-toggle launcher"
     else if barChoice == "dms" then
       "$HOME/.local/bin/dms ipc call spotlight toggle"
     else
       "rofi-launcher";
 
-  # Noctalia-specific keybinds
+  # Noctalia-specific keybinds (Noctalia v5 IPC: `noctalia msg <command>`)
   noctaliaBinds =
     if barChoice == "noctalia" then
       [
-        "$modifier,comma,exec,noctalia ipc call settings toggle"
-        "$modifier ALT,S,exec,noctalia ipc call settings toggle"
-        "$modifier SHIFT,C,exec,noctalia ipc call controlCenter toggle"
+        "$modifier,comma,exec,noctalia msg settings-toggle"
+        "$modifier ALT,S,exec,noctalia msg settings-toggle"
+        "$modifier SHIFT,C,exec,noctalia msg panel-toggle control-center"
       ]
     else
       [ ];
@@ -76,23 +76,23 @@ let
     "$modifier,G,exec,telegram-desktop"
     "$modifier SHIFT,T,exec,pypr toggle term"
     "$modifier,M,exec,pavucontrol"
-    "$modifier,R,layoutmsg,colresize +conf"
-    "$modifier SHIFT,R,layoutmsg,colresize -conf"
-    "$modifier CTRL,R,layoutmsg,colresize 0.5"
+    "$modifier,R,layoutmsg,splitratio +0.1"
+    "$modifier SHIFT,R,layoutmsg,splitratio -0.1"
+    "$modifier CTRL,R,layoutmsg,splitratio 0.5 exact"
     "$modifier,minus,resizeactive,-10% -10%"
     "$modifier,equal,resizeactive,10% 10%"
     "$modifier SHIFT,minus,resizewindowpixel,-30% -30%"
     "$modifier SHIFT,equal,resizewindowpixel,30% 30%"
     "$modifier,Q,killactive,"
     "$modifier,P,pseudo,"
-    "$modifier SHIFT,I,togglesplit,"
+    "$modifier SHIFT,I,layoutmsg,togglesplit"
     "$modifier SHIFT,F,fullscreen,"
     "$modifier CTRL,F,fullscreen,1"
     "$modifier,F,exec,thunar"
     "$modifier,W,togglefloating,"
     "$modifier SHIFT CTRL,W,workspaceopt, allfloat"
-    "$modifier SHIFT,left,layoutmsg,swapcol l"
-    "$modifier SHIFT,right,layoutmsg,swapcol r"
+    "$modifier SHIFT,left,layoutmsg,swapsplit"
+    "$modifier SHIFT,right,layoutmsg,swapsplit"
     "$modifier SHIFT,up,swapwindow,u"
     "$modifier SHIFT,down,swapwindow,d"
     "$modifier SHIFT,h,movewindow,l"
@@ -172,9 +172,14 @@ let
 
 in
 {
-  wayland.windowManager.hyprland.settings = {
-    # Merge default binds with host-specific binds and conditional shell binds
-    bind = defaultBinds ++ noctaliaBinds ++ dmsBinds ++ hostBinds.bind;
-    bindm = defaultBindm ++ hostBinds.bindm;
-  };
+wayland.windowManager.hyprland.settings = {
+  # Define the primary modifier used by all binds below. Must be defined
+  # BEFORE the bind lines that reference it (hyprlang resolves vars top-down),
+  # so it lives here in binds.nix rather than inside the `general` block.
+  "$modifier" = "SUPER";
+
+  # Merge default binds with host-specific binds and conditional shell binds
+  bind = defaultBinds ++ noctaliaBinds ++ dmsBinds ++ hostBinds.bind;
+  bindm = defaultBindm ++ hostBinds.bindm;
+};
 }

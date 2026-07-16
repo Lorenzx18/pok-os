@@ -68,6 +68,10 @@
     mpv # Incredible Video Player
     ncdu # Disk Usage Analyzer With Ncurses Interface
     nitch # small fetch util
+    zip
+    unzip
+    gzip
+    _7zz
     # Nix Language Packages
     nixfmt # Nix Formatter
     nixd # Nix Language Server

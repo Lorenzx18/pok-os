@@ -18,7 +18,7 @@
         "easeOutCirc, 0, 0.55, 0.45, 1"
         "easeOutExpo, 0.16, 1, 0.3, 1"
         "softAcDecel, 0.26, 0.26, 0.15, 1"
-        "md2, 0.4, 0, 0.2, 1 # use with .2s duration"
+        "md2, 0.4, 0, 0.2, 1"
       ];
       animation = [
         "windows, 1, 3, md3_decel, popin 60%"
