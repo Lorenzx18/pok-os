@@ -86,9 +86,9 @@ in
         "killall -q swaync;sleep .5 && swaync"
         "nm-applet --indicator"
         "pypr &"
-        # Opaque dark background so transparent terminals (kitty/ghostty/etc.)
-        # show neutral glass instead of the SDDM/login wallpaper leaking through.
-        "sleep 1.5 && awww clear 1e1e2e"
+        # Clear glassmorphism: no background color, transparent terminals show
+        # straight through (compositor blurs). Don't set an opaque/solid bg.
+        "sleep 1.5 && awww clear 000000"
       ]
       ++ startupApps;
 

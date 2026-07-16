@@ -38,7 +38,6 @@ let
     inherit
       host
       pkgs
-      stylixImage
       startupApps
       barChoice
       ;

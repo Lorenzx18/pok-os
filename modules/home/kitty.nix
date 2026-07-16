@@ -18,12 +18,10 @@ in
       confirm_os_window_close = 0;
       scrollback_lines = 10000;
       enable_audio_bell = false;
-      background_opacity = lib.mkForce "0.85";
+      background_opacity = lib.mkForce "0.8";
       dynamic_background_opacity = true;
-      # Solid base color; opacity makes it translucent glass over the opaque
-      # dark session background (no wallpaper leaking through). Kitty does not
-      # accept 8-digit hex with alpha.
-      background = "#1e1e2e";
+      # Clear glassmorphism: no solid background color, just transparency.
+      background = "#000000";
       mouse_hide_wait = 60;
       cursor_trail = 1;
       tab_fade = 1;
