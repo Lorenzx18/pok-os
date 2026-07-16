@@ -264,8 +264,9 @@ sudo nixos-rebuild switch --flake .#default
 - Based on ZaneyOS but heavily simplified for newcomers
 - Uses NixOS unstable for latest features (bleeding edge, by design)
 - Hyprland is sourced from nixpkgs-unstable (no upstream Hyprland flake input)
-- Integrates Stylix for system theming (static base16 scheme; `image` is the
-  wallpaper — the image-palette derivation is intentionally avoided)
+- Integrates Stylix for system theming; the color scheme is derived from the
+  wallpaper (`stylixImage` in `hosts/*/variables.nix`) so Stylix follows the
+  wallpaper's palette. `image` is also used as the desktop/SDDM wallpaper.
 - Noctalia is the default bar; borders follow its palette (see below)
 - Home-manager for user environment management
 - Both Hyprland and Niri always available
