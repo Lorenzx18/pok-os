@@ -106,6 +106,20 @@ let
 
     exit 0
   '';
+
+  # DMS's `scripts/gtk.sh` is what wires the matugen palette into GTK: it
+  # symlinks ~/.config/gtk-3.0/gtk.css -> dank-colors.css and prepends an
+  # @import in ~/.config/gtk-4.0/gtk.css. Upstream this is done by the
+  # imperative `dms-install`; since we removed that, we must run it here so
+  # GTK actually picks up DMS's colors (otherwise apps fall back to the
+  # default light theme — "white" apps and an unthemed Thunar).
+  dmsGtkSh = pkgs.writeShellScriptBin "dms-gtk-sh" ''
+    #!/usr/bin/env bash
+    set -uo pipefail
+    SHELL_DIR=${inputs.dms.packages.${pkgs.system}.default}/share/quickshell/dms
+    # gtk.sh <config_dir> [is_light] [shell_dir]
+    exec "''${SHELL_DIR}/scripts/gtk.sh" "$HOME/.config" "" "''${SHELL_DIR}"
+  '';
 in
 {
   options.programs.dankMaterialShell = {
@@ -161,6 +175,10 @@ in
 
       # Optional but recommended
       gammastep # Screen temperature adjustment (blue light filter)
+
+      # Dark GTK theme so libadwaita/GTK3 apps render dark and pick up the
+      # matugen colors (DMS alone only overrides colors, not the theme).
+      pkgs.adw-gtk3
     ];
 
     # Run DMS as a graphical-session service so switching bars via
@@ -214,5 +232,51 @@ in
 
     # Ensure XDG directories exist for DMS
     xdg.configFile."dms/.keep".text = "";
+
+    # Pick a *dark* GTK theme so libadwaita/GTK3 apps actually render dark
+    # and absorb DMS's matugen colors (we only disabled Stylix above, which
+    # left no theme selected at all). We must keep home-manager's gtk module
+    # enabled (Stylix's gtk target normally turns it on; with that off it
+    # defaults to disabled and writes nothing) but must NOT let it write
+    # gtk.css — DMS owns that via the symlink/import created by dms-gtk-sh —
+    # so clear gtk3/gtk4 extraConfig under DMS.
+    gtk = {
+      enable = lib.mkForce true;
+      theme = {
+        name = "adw-gtk3-dark";
+        package = pkgs.adw-gtk3;
+      };
+      # iconTheme (Tela-purple-dark) is already set unconditionally in
+      # modules/home/gtk.nix; don't redefine it here (would collide).
+      gtk3.extraConfig = lib.mkForce { };
+      gtk4.extraConfig = lib.mkForce { };
+    };
+
+    # Wire DMS's matugen palette into GTK (the symlink/import that dms-install
+    # used to do). Runs once at session start and again whenever DMS rewrites
+    # its colors, mirroring the border-colors units above.
+    systemd.user.services."dms-gtk-sh" = {
+      Unit = {
+        Description = "Wire DMS matugen colors into GTK (gtk.css symlink/import)";
+        PartOf = [ "graphical-session.target" ];
+        After = [ "dms.service" "graphical-session.target" ];
+      };
+      Service = {
+        Type = "oneshot";
+        ExecStart = "${dmsGtkSh}/bin/dms-gtk-sh";
+        Restart = "on-failure";
+        RestartSec = 2;
+      };
+      Install.WantedBy = [ "graphical-session.target" ];
+    };
+    systemd.user.paths."dms-gtk-sh" = {
+      Path = {
+        PathChanged = [
+          "%h/.config/gtk-3.0/dank-colors.css"
+          "%h/.config/gtk-4.0/dank-colors.css"
+        ];
+      };
+      Install.WantedBy = [ "graphical-session.target" ];
+    };
   };
 }
