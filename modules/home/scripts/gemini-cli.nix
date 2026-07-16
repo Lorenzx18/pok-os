@@ -12,10 +12,10 @@ let
       # Source the API key from the file.
       source "$KEY_FILE"
       # Launch Gemini directly; it will pick up the exported key.
-      exec ${pkgs.kitty}/bin/kitty -e ${pkgs.gemini-cli}/bin/gemini
+      exec ${pkgs.ghostty}/bin/ghostty -e ${pkgs.gemini-cli}/bin/gemini
     else
-      # If the key file doesn't exist, launch kitty with an informational message, then start gemini.
-      exec ${pkgs.kitty}/bin/kitty -e bash -c "echo 'NOTE: Gemini API key file not found at ~/.gem.key.'; echo 'To use a key, create this file with content: export GEMINI_API_KEY=\"YOUR_KEY\"'; echo; echo 'Starting Gemini CLI, which will fall back to web-based login...'; echo; exec ${pkgs.gemini-cli}/bin/gemini"
+      # If the key file doesn't exist, launch ghostty with an informational message, then start gemini.
+      exec ${pkgs.ghostty}/bin/ghostty -e bash -c "echo 'NOTE: Gemini API key file not found at ~/.gem.key.'; echo 'To use a key, create this file with content: export GEMINI_API_KEY=\"YOUR_KEY\"'; echo; echo 'Starting Gemini CLI, which will fall back to web-based login...'; echo; exec ${pkgs.gemini-cli}/bin/gemini"
     fi
   '';
 
@@ -27,7 +27,7 @@ in
 
   xdg.desktopEntries.gemini-cli = {
     name = "Gemini CLI";
-    comment = "Launch the Gemini CLI in Kitty terminal";
+    comment = "Launch the Gemini CLI in Ghostty terminal";
     icon = "utilities-terminal";
     exec = "gemini-launcher";
     terminal = false;

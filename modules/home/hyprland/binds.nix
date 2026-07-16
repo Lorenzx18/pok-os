@@ -62,7 +62,7 @@ let
     "$modifier SHIFT,W,exec,web-search"
     "$modifier ALT,W,exec,wallsetter"
     "$modifier,B,exec,${browser}"
-    "$modifier,Y,exec,kitty -e yazi"
+    "$modifier,Y,exec,ghostty -e yazi"
     "$modifier CTRL,E,exec,emopicker9000"
     "$modifier SHIFT,S,exec,screenshootin"
     "$modifier,D,exec,vesktop"

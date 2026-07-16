@@ -26,8 +26,8 @@
         # To provent yazi from starting xterm when run from rofi menu
         # You can set to your preferred terminal if you you like
         # ToDo: Pull default terminal from config
-        "TERMINAL,kitty"
-        "XDG_TERMINAL_EMULATOR,kitty"
+        "TERMINAL,ghostty"
+        "XDG_TERMINAL_EMULATOR,ghostty"
         # Cursor theme (matches the Bibata set via home.pointerCursor/system)
         "XCURSOR_THEME,Bibata-Modern-Ice"
         "XCURSOR_SIZE,24"
