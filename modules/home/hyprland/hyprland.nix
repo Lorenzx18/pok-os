@@ -192,6 +192,13 @@ in
         # template's post_hook when the palette changes.
         source = ~/.config/hypr/noctalia-colors.conf
       ''}
+      ${lib.optionalString (actualBarChoice == "dms") ''
+        # Border colors generated from DMS's active matugen palette
+        # (see modules/home/dank-material-shell). Overrides col.active_border /
+        # col.inactive_border above; refreshed by `hyprctl reload` from the
+        # dms-border-colors service whenever DMS rewrites its colors.
+        source = ~/.config/hypr/dms-colors.conf
+      ''}
       # Enable blur on the active bar
       ${
         if actualBarChoice == "dms" then

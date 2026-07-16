@@ -42,6 +42,70 @@ let
   # The DMS flake's `default` package (pinned v1.5.1 release tag) ships both
   # the QML shell and the `bin/dms` backend CLI/API server, all built from the
   # same source — no imperative `dms-install` download is needed.
+
+  # Generate WM window-border colors from DMS's *active* matugen palette so the
+  # borders follow the DMS theme (the same job Noctalia's templates do). DMS
+  # writes its palette to ~/.config/gtk-3.0/dank-colors.css (the file gtk.css
+  # symlinks to), which always reflects the current dark/light mode.
+  dmsBorderColors = pkgs.writeShellScriptBin "dms-border-colors" ''
+    #!/usr/bin/env bash
+    set -uo pipefail
+
+    CSS="$HOME/.config/gtk-3.0/dank-colors.css"
+
+    get_color() {
+      local name="$1" fallback="$2" val=""
+      if [[ -f "$CSS" ]]; then
+        val=$(grep -oE "@define-color[[:space:]]+''${name}[[:space:]]+#?[0-9a-fA-F]{6}" "$CSS" \
+              | grep -oE "#?[0-9a-fA-F]{6}" | head -1)
+      fi
+      [[ -n "$val" ]] && echo "$val" || echo "$fallback"
+    }
+
+    ACCENT=$(get_color accent_bg_color "#89b4fa")
+    INACTIVE=$(get_color card_bg_color "")
+    [[ -z "$INACTIVE" ]] && INACTIVE=$(get_color window_bg_color "#313244")
+    URGENT=$(get_color error_bg_color "#f38ba8")
+
+    acc="''${ACCENT#\#}"; inc="''${INACTIVE#\#}"; urg="''${URGENT#\#}"
+
+    mkdir -p "$HOME/.config/niri" "$HOME/.config/hypr"
+
+    cat > "$HOME/.config/niri/dms-colors.kdl" <<KDL
+    layout {
+        border {
+            active-color "#$acc"
+            inactive-color "#$inc"
+            urgent-color "#$urg"
+        }
+        focus-ring {
+            active-color "#$acc"
+            inactive-color "#$inc"
+        }
+    }
+    KDL
+
+    cat > "$HOME/.config/hypr/dms-colors.conf" <<CONF
+    general {
+        col.active_border = rgb($acc)
+        col.inactive_border = rgb($inc)
+    }
+    CONF
+
+    # Reload the running compositor so borders pick up the new colors.
+    if command -v hyprctl >/dev/null 2>&1; then
+      if [[ -z "''${HYPRLAND_INSTANCE_SIGNATURE:-}" ]]; then
+        sigdir=$(ls -d "$XDG_RUNTIME_DIR"/hypr/*/ 2>/dev/null | head -1)
+        [[ -n "$sigdir" ]] && export HYPRLAND_INSTANCE_SIGNATURE="$(basename "$sigdir")"
+      fi
+      hyprctl reload >/dev/null 2>&1 || true
+    fi
+    if command -v niri >/dev/null 2>&1; then
+      niri msg reload >/dev/null 2>&1 || true
+    fi
+
+    exit 0
+  '';
 in
 {
   options.programs.dankMaterialShell = {
@@ -55,6 +119,9 @@ in
     # DMS + its dependencies, all pinned/reproducible via flake inputs.
     # No imperative `dms-install` is needed — everything comes from the flake.
     home.packages = with pkgs; [
+      # Generates WM border colors from DMS's active palette (see systemd units)
+      dmsBorderColors
+
       # Quickshell - the shell engine that runs the DMS QML
       inputs.quickshell.packages.${pkgs.system}.default
 
@@ -109,6 +176,31 @@ in
         ExecStart = "${inputs.dms.packages.${pkgs.system}.default}/bin/dms run";
         Restart = "on-failure";
         RestartSec = 2;
+      };
+      Install.WantedBy = [ "graphical-session.target" ];
+    };
+
+    # Keep WM window borders in sync with DMS's matugen palette. The oneshot
+    # runs at session start; the path unit re-runs whenever DMS rewrites its
+    # colors (mirrors Noctalia's border-colors post_hook).
+    systemd.user.services.dms-border-colors = {
+      Unit = {
+        Description = "Generate WM border colors from DMS palette";
+        PartOf = [ "graphical-session.target" ];
+        After = [ "dms.service" "graphical-session.target" ];
+      };
+      Service = {
+        Type = "oneshot";
+        ExecStart = "${dmsBorderColors}/bin/dms-border-colors";
+      };
+      Install.WantedBy = [ "graphical-session.target" ];
+    };
+    systemd.user.paths."dms-border-colors" = {
+      pathConfig = {
+        PathChanged = [
+          "%h/.cache/DankMaterialShell/dms-colors.json"
+          "%h/.config/gtk-3.0/dank-colors.css"
+        ];
       };
       Install.WantedBy = [ "graphical-session.target" ];
     };

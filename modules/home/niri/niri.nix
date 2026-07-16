@@ -89,6 +89,12 @@ in
       // file and live-reloads when Noctalia rewrites it.
       include "noctalia-colors.kdl" optional=true
     ''}
+    ${lib.optionalString (barChoice == "dms") ''
+      // Border/focus-ring colors generated from DMS's active matugen palette
+      // (see modules/home/dank-material-shell). niri watches this file and
+      // live-reloads when DMS rewrites its colors.
+      include "dms-colors.kdl" optional=true
+    ''}
 
     ${keybindsModule}
 
