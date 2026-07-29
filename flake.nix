@@ -73,9 +73,24 @@
             inherit username;
             repoPath = inputs.self;
             zen-browser = inputs.zen-browser.packages.${system}.default;
-            helium-browser = inputs.helium-browser.packages.${system}.helium-browser;
+            helium-browser = inputs.helium-browser.packages.${system}.helium-browser.override {
+              makeDesktopItem = args: nixpkgs.legacyPackages.${system}.makeDesktopItem ({
+                name = "helium-browser";
+                desktopName = "Helium";
+                exec = "helium-browser";
+              } // args);
+            };
           };
           modules = [
+            {
+              nixpkgs.overlays = [
+                (final: prev: {
+                  niri = prev.niri.override {
+                    libdisplay-info = prev.libdisplay-info_0_2;
+                  };
+                })
+              ];
+            }
             ./profiles/${profile}
           ];
         };
