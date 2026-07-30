@@ -1,6 +1,12 @@
 {
   description = "Pok OS (Based on ZaneyOS)";
 
+  # Binary cache for niri-flake pre-built packages.
+  nixConfig = {
+    extra-substituters = [ "https://niri.cachix.org" ];
+    extra-trusted-public-keys = [ "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964=" ];
+  };
+
   inputs = {
     # Inputs track their upstream branches, so `nix flake update` (the `nfu`
     # alias) always pulls the latest commit. The committed `flake.lock` freezes
@@ -27,12 +33,8 @@
     };
     quickshell = {
       # Pinned to the v0.3.0 release tag so a `nix flake update` can't pull a
-      # breaking API change out from under the DMS/Noctalia QML shells.
+      # breaking API change out from under the DMS QML shell.
       url = "github:outfoxxed/quickshell/v0.3.0";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # Dank Material Shell (optional bar, enabled via barChoice = "dms").
@@ -50,6 +52,11 @@
       url = "github:fpletz/flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Official Niri community flake — pre-built binaries via niri.cachix.org.
+    # Provides NixOS + home-manager modules and niri-stable/niri-unstable.
+    # IMPORTANT: Do NOT add inputs.nixpkgs.follows here. We use the flake's
+    # packages directly (inputs.niri.packages) so they match the binary cache.
+    niri.url = "github:sodiboo/niri-flake";
   };
 
   outputs =
@@ -82,15 +89,6 @@
             };
           };
           modules = [
-            {
-              nixpkgs.overlays = [
-                (final: prev: {
-                  niri = prev.niri.override {
-                    libdisplay-info = prev.libdisplay-info_0_2;
-                  };
-                })
-              ];
-            }
             ./profiles/${profile}
           ];
         };

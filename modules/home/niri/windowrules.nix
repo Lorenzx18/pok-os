@@ -12,49 +12,106 @@
       open-floating true
   }
 
-  // Global window styling
+  // Example: enable rounded corners for all windows
   window-rule {
       geometry-corner-radius 9
       clip-to-geometry true
       draw-border-with-background false
   }
 
-  // Opacity rules for specific applications
-  window-rule {
-      match app-id=r#"^(kitty|thunar|org\.telegram\.desktop|discord|vesktop|org\.gnome\.Nautilus|nemo)$"#
-      opacity 0.9
-  }
-
-  // Launch vesktop and Telegram on DP-3 monitor
-  window-rule {
-      match app-id=r#"^(vesktop|org\.telegram\.desktop)$"#
-      open-on-output "DP-3"
-  }
-
-  // OBS always opens at full width on DP-2
   window-rule {
       match app-id=r#"^com\.obsproject\.Studio$"#
-      default-column-width { proportion 1.0; }
-      open-on-output "DP-2"
+      default-column-width { proportion 0.7; }
   }
 
-  // Zen Browser and Zed settings
+  // Floating kitty window centered on screen
   window-rule {
-      match app-id=r#"^(zen-beta|dev\.zed\.Zed)$"#
-      opacity 0.98
-      default-column-width { proportion 0.75; }
+      match app-id=r#"^floating-kitty$"#
+      open-floating true
+      opacity 0.97
+      default-column-width { fixed 1000; }
+      default-window-height { fixed 700; }
   }
 
-  // Web apps and Steam opacity
+  // Transparency rules for various applications
   window-rule {
-      match app-id=r#"^(steam|chrome-app\.restream\.io__home-Default|chrome-claude\.ai__new-Default|chrome-github\.com__-Default|chrome-github\.com__Lorenzx18_pok-os-Default|chrome-mail\.proton\.me__u_0_inbox-Default|chrome-meet\.google\.com__-Default|chrome-messages\.google\.com__web_u_1_conversations-Default|chrome-web\.descript\.com__-Default)$"#
+      match app-id=r#"^dev\.zed\.Zed$"#
+      opacity 0.97
+      focus-ring { off; }
+  }
+
+  window-rule {
+      match app-id=r#"^dev\.zed\.Zed$"# is-focused=false
+      opacity 0.85
+  }
+
+  window-rule {
+      match app-id=r#"^vesktop$"#
       opacity 0.95
   }
 
-  // Commented out: Steam fullscreen rule
-  /-window-rule {
-      match app-id="steam"
-      exclude title="^Steam$"
-      open-fullscreen true
+  window-rule {
+      match app-id=r#"^vesktop$"# is-focused=false
+      opacity 0.85
+  }
+
+  window-rule {
+      match app-id=r#"^org\.kde\.dolphin$"#
+      opacity 0.95
+  }
+
+  window-rule {
+      match app-id=r#"^org\.kde\.dolphin$"# is-focused=false
+      opacity 0.85
+  }
+
+  window-rule {
+      match app-id=r#"^kitty$"#
+      opacity 0.95
+  }
+
+  window-rule {
+      match app-id=r#"^kitty$"# is-focused=false
+      opacity 0.85
+  }
+
+  window-rule {
+      match app-id=r#"^org\.telegram\.desktop$"#
+      opacity 0.95
+  }
+
+  window-rule {
+      match app-id=r#"^org\.telegram\.desktop$"# is-focused=false
+      opacity 0.85
+  }
+
+  window-rule {
+      match app-id=r#"^zen$"#
+      opacity 0.97
+  }
+
+  window-rule {
+      match app-id=r#"^zen$"# is-focused=false
+      opacity 0.85
+  }
+
+  window-rule {
+      match app-id=r#"^steam$"#
+      opacity 0.95
+  }
+
+  window-rule {
+      match app-id=r#"^steam$"# is-focused=false
+      opacity 0.85
+  }
+
+  window-rule {
+      match app-id=r#"^obsidian$"#
+      opacity 0.95
+  }
+
+  window-rule {
+      match app-id=r#"^obsidian$"# is-focused=false
+      opacity 0.85
   }
 ''

@@ -134,8 +134,8 @@ All optional features default to `false` for faster installation:
 - `enableProductivityApps`: Obsidian, GNOME Boxes, QuickEmu
 
 ### Flake Configuration (`flake.nix`)
-- Defines input sources (nixpkgs, home-manager, stylix, zen-browser, quickshell,
-  noctalia, helium-browser, flake-utils)
+- Defines input sources (nixpkgs, home-manager, stylix, niri, zen-browser,
+  quickshell, helium-browser, flake-utils)
 - Creates host configurations using `mkHost` helper function
 - Maps hostnames to hardware profiles
 - Includes Flutter development shell for mobile development
@@ -282,17 +282,7 @@ sudo nixos-rebuild switch --flake .#default
 Window borders follow the **active bar's** palette. Each bar has its own
 generator that writes color-only files the WMs pick up live:
 
-**Noctalia (`barChoice = "noctalia"`):**
-- `modules/home/noctalia-shell/default.nix` defines the Noctalia user templates
-  (`~/.config/noctalia/templates.toml` + template inputs) that output
-  `~/.config/niri/noctalia-colors.kdl` and `~/.config/hypr/noctalia-colors.conf`.
-- `modules/home/niri/niri.nix` adds `include "noctalia-colors.kdl" optional=true`
-  **after** the layout block (niri live-reloads).
-- `modules/home/hyprland/hyprland.nix` `source`s the generated conf; the
-  template's `post_hook` runs `hyprctl reload`.
-- Wallpaper tracking requires enabling "Use wallpaper colors" in the Noctalia GUI.
-
-**DMS (`barChoice = "dms"`):**
+**DMS (`barChoice = "dms"`):****
 - `modules/home/dank-material-shell/default.nix` ships a `dms-border-colors`
   generator that reads DMS's active matugen palette from
   `~/.config/gtk-3.0/dank-colors.css` (the file `gtk.css` symlinks to, always

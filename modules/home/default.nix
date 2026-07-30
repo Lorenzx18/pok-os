@@ -6,7 +6,6 @@
 }:
 let
   variables = import ../../hosts/${host}/variables.nix;
-  inherit (variables) waybarChoice;
 
   # New variable system
   barChoice = variables.barChoice or "waybar";
@@ -18,6 +17,9 @@ let
   enableDMS = variables.enableDankMaterialShell or false;
   legacyBarChoice = if enableDMS then "dms" else "waybar";
   actualBarChoice = if variables ? barChoice then barChoice else legacyBarChoice;
+
+  # Waybar config path - check for legacy waybarChoice or use default
+  waybarChoice = if variables ? waybarChoice then variables.waybarChoice else ./waybar/waybar-simple.nix;
 
 in
 {

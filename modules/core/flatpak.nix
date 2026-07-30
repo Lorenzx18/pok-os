@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ inputs, pkgs, ... }:
 {
   xdg.portal = {
     enable = true;
@@ -34,7 +34,7 @@
     };
     configPackages = [
       pkgs.hyprland
-      pkgs.niri
+      inputs.niri.packages.${pkgs.system}.niri-unstable
     ];
   };
   services = {

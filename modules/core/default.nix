@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }:
 {
   imports = [
     ./ai-code-editors.nix
@@ -32,5 +32,11 @@
     ./virtualisation.nix
     ./xserver.nix
     inputs.stylix.nixosModules.stylix
+    inputs.niri.nixosModules.niri
   ];
+
+  programs.niri = {
+    enable = true;
+    package = inputs.niri.packages.${pkgs.system}.niri-unstable;
+  };
 }

@@ -103,7 +103,6 @@ def main():
   config,
   lib,
   pkgs,
-  inputs,
   host,
   ...
 }}:
@@ -111,15 +110,12 @@ let
   variables = import ../../../hosts/${{host}}/variables.nix;
   barChoice = variables.barChoice or "waybar";
   enableNoctalia = barChoice == "noctalia";
+  noctaliaPackage = pkgs.noctalia-shell;
 in
 {{
-  imports = lib.optionals enableNoctalia [
-    inputs.noctalia.homeModules.default
-  ];
-
   config = lib.mkIf enableNoctalia {{
     programs.waybar.enable = lib.mkForce false;
-    home.packages = [ inputs.noctalia.packages.${{pkgs.system}}.default ];
+    home.packages = [ noctaliaPackage ];
 
     home.file.".config/noctalia/settings.json.template" = {{
       text = builtins.toJSON {settings};

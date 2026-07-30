@@ -12,19 +12,19 @@ let
    # Determine launcher command based on barChoice
   launcherCommand =
     if barChoice == "noctalia" then
-      "noctalia msg panel-toggle launcher"
+      "noctalia-shell ipc call launcher toggle"
     else if barChoice == "dms" then
       "$HOME/.local/bin/dms ipc call spotlight toggle"
     else
       "rofi-launcher";
 
-  # Noctalia-specific keybinds (Noctalia v5 IPC: `noctalia msg <command>`)
+  # Noctalia-specific keybinds (Noctalia v4 IPC: `noctalia-shell ipc call`)
   noctaliaBinds =
     if barChoice == "noctalia" then
       [
-        "$modifier,comma,exec,noctalia msg settings-toggle"
-        "$modifier ALT,S,exec,noctalia msg settings-toggle"
-        "$modifier SHIFT,C,exec,noctalia msg panel-toggle control-center"
+        "$modifier,comma,exec,noctalia-shell ipc call settings toggle"
+        "$modifier ALT,S,exec,noctalia-shell ipc call settings toggle"
+        "$modifier SHIFT,C,exec,noctalia-shell ipc call controlCenter toggle"
       ]
     else
       [ ];

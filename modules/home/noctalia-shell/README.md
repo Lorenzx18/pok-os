@@ -21,21 +21,11 @@ In your host's `variables.nix`:
 barChoice = "noctalia";
 ```
 
-### Dynamic border colors
-
-With Noctalia as the bar, window-manager borders follow Noctalia's active
-palette automatically. Noctalia renders color-only include files on every
-wallpaper/theme change (`~/.config/niri/noctalia-colors.kdl`,
-`~/.config/hypr/noctalia-colors.conf`) which Niri and Hyprland pick up live. To
-track the **wallpaper**, enable *"Use wallpaper colors"* in the Noctalia GUI
-(`SUPER + ,` → Color Scheme).
-
 ### Customization
 
 Noctalia is configured via its own GUI, which writes
 `~/.config/noctalia/settings.toml`. Most options live there rather than in Nix
-(see `modules/home/noctalia-shell/default.nix` for the systemd service and the
-palette-template wiring).
+(see `modules/home/noctalia-shell/default.nix` for the systemd service).
 
 Available configuration sections (in the GUI):
 - **bar**: Position, density, widget layout

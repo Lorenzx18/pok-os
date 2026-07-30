@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 {
   imports = [
     ./hardware.nix
@@ -11,9 +11,7 @@
   # Sysc-greet display manager
   services.sysc-greet.enable = false;
 
-  # Keep niri available at system level for ly display manager to detect it
-  programs.niri.package = pkgs.niri;
-
-  # Ensure niri session is available to display manager
-  services.displayManager.sessionPackages = [ pkgs.niri ];
+  # niri is installed and configured by the niri-flake NixOS module
+  # (imported via modules/core/default.nix). The niri-flake module also
+  # provides the display-manager session.
 }

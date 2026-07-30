@@ -52,50 +52,50 @@ in
 
       border {
           width 2
-          active-color   "${if noctalia then "#e47167" else "#cba6f7"}"
-          inactive-color "${if noctalia then "#291614" else "#45475b"}"
-          urgent-color   "${if noctalia then "#cd736b" else "#f5c2e7"}"
+          ${if noctalia then "" else ''active-color   "#cba6f7"''}
+          ${if noctalia then "" else ''inactive-color "#45475b"''}
+          ${if noctalia then "" else ''urgent-color   "#f5c2e7"''}
       }
 
       focus-ring {
           off
           width 6
-          active-color   "${if noctalia then "#e47167" else "#7fc8ff"}"
-          inactive-color "${if noctalia then "#291614" else "#505050"}"
+          ${if noctalia then "" else ''active-color   "#7fc8ff"''}
+          ${if noctalia then "" else ''inactive-color "#505050"''}
           ${if noctalia then ''urgent-color "#cd736b"'' else ""}
       }
 
       shadow {
-          ${if noctalia then ''color "#29161470"'' else ''color "#0007"''}
+          color "#00000060"
           softness 30
           spread 5
           offset x=0 y=5
       }
 
-      ${if noctalia then ''
+      ${if noctalia then "" else ''
       tab-indicator {
-          active-color   "#e47167"
-          inactive-color "#8d160c"
-          urgent-color   "#cd736b"
+          active-color   "#cba6f7"
+          inactive-color "#45475b"
+          urgent-color   "#f5c2e7"
       }
 
       insert-hint {
-          color "#e4716780"
+          color "#cba6f780"
       }
-      '' else ""}
+      ''}
 
       struts {
       }
   }
 
-  ${if noctalia then ''
+  ${if noctalia then "" else ''
   recent-windows {
       highlight {
-          active-color "#e47167"
-          urgent-color "#cd736b"
+          active-color "#cba6f7"
+          urgent-color "#f5c2e7"
       }
   }
-  '' else ""}
+  ''}
 
   /-layer-rule {
       match namespace="^quickshell$"
